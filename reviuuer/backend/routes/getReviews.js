@@ -3,28 +3,15 @@ var router = express.Router();
 var mysql = require('mysql');
 var mysqlConf = require('../config.js').mysql_pool;
 
-const fetchReviewsAll = (cb) => {
-  mysqlConf.getConnection(function (err, connection) {
-    connection.query({
-      sql: 'SELECT * FROM review',
-      timeout: 40000, // 40s
-      values: []
-    }, function (error, results, fields) {
-      connection.release();
-
-      if(error) console.error(error);
-      
-      cb(error, results);
-      console.log(results);
-      return;
-    });
-  });
-}
-
 const fetchReviewsSpecific = (id, type, cb) => {
   mysqlConf.getConnection(function (err, connection) {
     connection.query({
-      sql: 'SELECT * FROM review WHERE ' + type + ' = ?',
+      sql: 'SELECT r.*, c.name course_name, t.first_name, t.last_name ' +
+           'FROM review r ' +
+           'inner join course c on c.id = r.course_id ' +
+           'inner join teacher t on t.id = r.teacher_id ' +
+           'WHERE ' + type + ' = ? ' +
+           'ORDER BY r.id',
       timeout: 40000, // 40s
       values: [id]
     }, function (error, results, fields) {
@@ -39,10 +26,6 @@ const fetchReviewsSpecific = (id, type, cb) => {
   });
 }
 
-
-
-
-
 /* GET reviews. */
 router.get('/', function(req, res) {
   var review_id = req.param('review_id');
@@ -50,7 +33,7 @@ router.get('/', function(req, res) {
   var teacher_id = req.param('teacher_id');
 
   if(course_id === undefined && teacher_id === undefined && review_id === undefined) {
-    fetchReviewsAll((error, reviews) => {
+    fetchReviewsSpecific(1, 1, (error, reviews) => {    
         res.json(reviews);
       })
   } else if (course_id !== undefined && teacher_id === undefined && review_id === undefined) {
@@ -62,7 +45,7 @@ router.get('/', function(req, res) {
       res.json(reviews);
     })
   } else if (course_id === undefined && teacher_id === undefined && review_id !== undefined) {
-    fetchReviewsSpecific(review_id, 'id', (error, reviews) => {
+    fetchReviewsSpecific(review_id, 'r.id', (error, reviews) => {
       res.json(reviews);
     })
   }
