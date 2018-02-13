@@ -19,6 +19,9 @@ class Course extends React.Component{
     e.preventDefault();
     //TODO add so we remove the cookie
     console.log("HANDLE CLICK")
+      // const id = e.target.id;
+      // //TODO add so we remove the cookie
+      // this.props.history.push(`/portal/review?review_id=${id}`);
   }
 
   handleSingOut(e) {
@@ -84,9 +87,9 @@ class Course extends React.Component{
           <h3>Comments </h3>
         </div>
         <ul className = 'portalList'>
-        {this.state.courses.map(r =>
-        <li onClick={this.handleClick.bind(this)} id={r.id}>
-        {r.name}
+        {this.state.courses.map(c =>
+        <li onClick={this.handleClick.bind(this)} key={c.id} id={c.id}>
+        {c.name}
         </li>
       )}
         

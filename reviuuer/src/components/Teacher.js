@@ -11,6 +11,17 @@ class Teacher extends React.Component{
      this.handleSingOut = this.handleSingOut.bind(this);
   }
 
+  state = {
+    teachers: []
+   }
+
+   handleClick(e){
+     e.preventDefault()
+     console.log("HANDLE CLICK")
+     // const id = e.target.id;
+     // //TODO add so we remove the cookie
+     // this.props.history.push(`/portal/review?review_id=${id}`);
+   }
   handleSingOut(e) {
     e.preventDefault();
     //TODO add so we remove the cookie
@@ -36,6 +47,16 @@ class Teacher extends React.Component{
             console.log(access)
             if (access === true) {
                console.log("correct cookie ")
+               fetch('/api/teachers')
+                .then((res) => {
+                  if (res.status !== 200){
+                    console.log('Looks like there was a problem. Status Code: ' +
+                    res.status);
+                    return;
+                  }
+                  res.json()
+                    .then(teachers => this.setState({teachers}));
+                })
              }
             else {
               console.log("Wrong cookie ")
@@ -64,17 +85,11 @@ class Teacher extends React.Component{
             <h3>Comments </h3>
           </div>
           <ul className = 'portalList'>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
+          {this.state.teachers.map(t =>
+           <li onClick={this.handleClick.bind(this)} key={t.id} id={t.id}>
+            {t.first_name}
+           </li>
+          )}
           </ul>
         </div>
         <Footer/> 
