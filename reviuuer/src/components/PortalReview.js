@@ -16,6 +16,7 @@ import backArrow from '../img/back-arrow.png';
 import '../Style/Button.css';
 import '../Style/Portal.css';
 import '../Style/Img.css';
+import '../Style/Review.css';
 import 'typeface-roboto';
 
 class PortalReview extends React.Component {
@@ -63,17 +64,35 @@ class PortalReview extends React.Component {
     document.body.classList.add('portal'); //adding the correct background by setting the class of the body
   }
 
+  printGradedScale(rating) {
+    let filled = ["", "", "", "", ""];
+
+    for (let i = 0; i < rating; i++) {
+      filled[i] = "scaleItemFilled";
+    }
+
+    return(
+      <div className="gradedScaleBody">
+        <div className={"leftScaleItem " + filled[0]}/>
+        <div className={"middleScaleItem " + filled[1]}/>
+        <div className={"middleScaleItem " + filled[2]}/>
+        <div className={"middleScaleItem " + filled[3]}/>
+        <div className={"rightScaleItem " + filled[4]}/>
+      </div>
+    );
+  }
+
   printReview() {
     const { review } = this.state;
 
     return(
-      <div>
-        <p>Course id: {review.course_id}</p>
-        <p>Teacher id: {review.teacher_id}</p>
-        <p>Quality: {review.quality}/5</p>
-        <p>Difficulty: {review.difficulty}/5</p>
-        <p>Worth credits: {review.worth_credit}/5</p>
-        <p>Percentage mandatory: {review.percentage_mand}/5</p>
+      <div className="reviewContainer">
+        <h2 className="courseName">{review.course_name}</h2>
+        <h2 className="teacherName">with {review.first_name} {review.last_name}</h2>
+        <h2 className="gradedAttributes">Quality<br/> {this.printGradedScale(review.quality)}</h2>
+        <h2 className="gradedAttributes">Difficulty<br/> {this.printGradedScale(review.difficulty)}</h2>
+        <h2 className="gradedAttributes">Worth credits<br/> {this.printGradedScale(review.worth_credits)}</h2>
+        <h2 className="gradedAttributes">Percentage mandatory<br/> {this.printGradedScale(review.percentage_mand)}</h2>
         <p>Books required: {review.can_recommend ? 'yes' : 'no'}</p>
         <p>Has exam: {review.exam ? 'yes' : 'no'}</p>
         <p>Can reccommend: {review.can_recommend ? 'yes' : 'no'}</p>

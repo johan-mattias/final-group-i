@@ -68,7 +68,7 @@ class PortalHome extends React.Component {
                   console.log(res)
                   res.json()
                     .then(reviews => this.setState({ reviews }));
-                })
+                  })
             }
             else {
               console.log("Wrong cookie ")
@@ -92,7 +92,7 @@ class PortalHome extends React.Component {
         <ul>
           {this.state.reviews.map( r => 
             <li onClick={this.handleClick.bind(this)} key={r.id} id={r.id} style={{color: 'black'}}>
-              Review: {r.course_review} Quality: {r.quality}/5
+              Course: {r.course_name} Quality: {r.quality}/5
             </li>
           )}
         </ul>
