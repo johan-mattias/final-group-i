@@ -11,6 +11,16 @@ class Course extends React.Component{
      this.handleSingOut = this.handleSingOut.bind(this);
   }
 
+  state = {
+    courses: []
+  }
+
+  handleClick(e) {
+    e.preventDefault();
+    //TODO add so we remove the cookie
+    console.log("HANDLE CLICK")
+  }
+
   handleSingOut(e) {
     e.preventDefault();
     //TODO add so we remove the cookie
@@ -36,6 +46,16 @@ class Course extends React.Component{
             console.log(access)
             if (access === true) {
                console.log("correct cookie ")
+               fetch('/api/courses')
+               .then((res) => {
+                 if(res.status !== 200){
+                  console.log('Looks like there was a problem. Status Code: ' +
+                  res.status);
+                  return;
+                 }
+                 res.json()
+                  .then(courses => this.setState({courses}));
+               })
              }
             else {
               console.log("Wrong cookie ")
@@ -64,17 +84,12 @@ class Course extends React.Component{
           <h3>Comments </h3>
         </div>
         <ul className = 'portalList'>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
+        {this.state.courses.map(r =>
+        <li onClick={this.handleClick.bind(this)} id={r.id}>
+        {r.name}
+        </li>
+      )}
+        
         </ul>
         </div>
         <Footer/> 

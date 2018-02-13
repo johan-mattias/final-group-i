@@ -16,6 +16,7 @@ body.portal{
 
 .portalList{
     background-color: white;
+    color: black;
     border:1px dotted black;
     padding: 0;
     display:table;
@@ -39,8 +40,7 @@ body.portal{
 }
 
 .portalList li:nth-child(odd) { 
-    background: #56CCF2;
-    opacity: 0.25;
+    background: rgba(86,204,242, 0.25);
     height: 45px;
      
 }

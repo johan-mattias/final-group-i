@@ -54,14 +54,22 @@ button.nav{
       flex-grow: 1;
       width: 100%;
       outline: none;
-      
-   
 }
+
+button.add{
+      background-color: #27AE60; 
+}
+
+.selectedAdd button.add{
+      background-color: #1b7943;
+ }
+  
 
 .selected button.nav {
       background-color: #3B5E8F;
 }
- 
+
+
 
 button.home {
       margin-bottom: 15px;
