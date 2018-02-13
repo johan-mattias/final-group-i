@@ -66,19 +66,21 @@ class PortalReview extends React.Component {
   printReview() {
     const { review } = this.state;
 
-    <div>
-      <p>Course id: {review.course_id}</p>
-      <p>Teacher id: {review.teacher_id}</p>
-      <p>Quality: {review.quality}/5</p>
-      <p>Difficulty: {review.difficulty}/5</p>
-      <p>Worth credits: {review.worth_credit}/5</p>
-      <p>Percentage mandatory: {review.percentage_mand}/5</p>
-      <p>Books required: {review.can_recommend ? 'yes' : 'no'}</p>
-      <p>Has exam: {review.exam ? 'yes' : 'no'}</p>
-      <p>Can reccommend: {review.can_recommend ? 'yes' : 'no'}</p>
-      <p>Course review: {review.course_review}</p>
-      <p>Teacher review: {review.teacher_review}</p>
-    </div>
+    return(
+      <div>
+        <p>Course id: {review.course_id}</p>
+        <p>Teacher id: {review.teacher_id}</p>
+        <p>Quality: {review.quality}/5</p>
+        <p>Difficulty: {review.difficulty}/5</p>
+        <p>Worth credits: {review.worth_credit}/5</p>
+        <p>Percentage mandatory: {review.percentage_mand}/5</p>
+        <p>Books required: {review.can_recommend ? 'yes' : 'no'}</p>
+        <p>Has exam: {review.exam ? 'yes' : 'no'}</p>
+        <p>Can reccommend: {review.can_recommend ? 'yes' : 'no'}</p>
+        <p>Course review: {review.course_review}</p>
+        <p>Teacher review: {review.teacher_review}</p>
+      </div>
+    );
   };
 
   render() {
@@ -94,7 +96,7 @@ class PortalReview extends React.Component {
           </div>
         </div>
         <div>
-          {review ? this.printReview.bind(this) : undefined}
+          {review ? this.printReview() : undefined}
         </div>
         <Footer/> 
       </div>
