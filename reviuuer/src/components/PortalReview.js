@@ -9,13 +9,20 @@ import Reviews from './Reviews.js';
 import Footer from './Footer';
 import Home from './Home.js';
 import Course from './Course.js';
-import Teacher from './Teacher.js'
+import Teacher from './Teacher.js';
+
+import backArrow from '../img/back-arrow.png';
 
 import '../Style/Button.css';
 import '../Style/Portal.css';
+import '../Style/Img.css';
 import 'typeface-roboto';
 
 class PortalReview extends React.Component {
+  static contextTypes = {
+    router: () => null, // replace with PropTypes.object if you use them
+  }
+
   constructor(props) {
     super(props);
 
@@ -56,17 +63,39 @@ class PortalReview extends React.Component {
     document.body.classList.add('portal'); //adding the correct background by setting the class of the body
   }
 
+  printReview() {
+    const { review } = this.state;
+
+    <div>
+      <p>Course id: {review.course_id}</p>
+      <p>Teacher id: {review.teacher_id}</p>
+      <p>Quality: {review.quality}/5</p>
+      <p>Difficulty: {review.difficulty}/5</p>
+      <p>Worth credits: {review.worth_credit}/5</p>
+      <p>Percentage mandatory: {review.percentage_mand}/5</p>
+      <p>Books required: {review.can_recommend ? 'yes' : 'no'}</p>
+      <p>Has exam: {review.exam ? 'yes' : 'no'}</p>
+      <p>Can reccommend: {review.can_recommend ? 'yes' : 'no'}</p>
+      <p>Course review: {review.course_review}</p>
+      <p>Teacher review: {review.teacher_review}</p>
+    </div>
+  };
+
   render() {
-    console.log(this.state.review);
+    const { review } = this.state;
+
+    console.log(review);
     return (
       <div className="portal">
-        <div className = 'header'>
-          <h1>Back</h1>
+        <div className='header'>
+          <img onClick={this.context.router.history.goBack} src={backArrow} className="backArrow" />
           <div className = "signOutContainer">
             <button className="signOut" onClick={this.handleSingOut}>SIGN OUT</button>
           </div>
         </div>
-        <div className="blueStripe"/>
+        <div>
+          {review ? this.printReview.bind(this) : undefined}
+        </div>
         <Footer/> 
       </div>
     );

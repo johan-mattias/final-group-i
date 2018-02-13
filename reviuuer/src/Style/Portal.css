@@ -7,13 +7,6 @@ body.portal{
     width: 100%;
 }
 
-.blueStripe{
-    background-color: #2F80ED;
-    height: 15px;
-    width: 100%;
-    margin-top: -15px;
-}
-
 .portalList{
     background-color: white;
     color: black;
@@ -58,6 +51,8 @@ body.portal{
     display: flex;
     top: 0px;
     width: 100%;
+    border-bottom: 15px solid #2F80ED;
+
 }
 
 h1{
@@ -66,15 +61,21 @@ h1{
     font-size: 42px;
     margin-left: 34px;
     margin-top: 24px;
-    
+}
+
+h1.back{
+    color: black;
+    font-size: 42px;
+    margin-left: 8px;
+    margin-top: 24px;
 }
 
 .signOutContainer{
     display: flex;
     justify-content: flex-end;
     margin-top: 24px;
+    margin-bottom: 24px;
     flex-grow: 1;
-    /* margin-right: -2em; */
 }
 
 button.signOut{

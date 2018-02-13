@@ -40,7 +40,6 @@ class PortalHome extends React.Component {
     console.log("HANDLE CLICK")
   }
   
-
   componentWillMount() {
     const c = new Cookies();
     var cookieFromUser = c.get('user')
@@ -90,10 +89,9 @@ class PortalHome extends React.Component {
             <button className="signOut" onClick={this.handleSingOut}>SIGN OUT</button>
           </div>
         </div>
-        <div className="blueStripe"/>
         <ul>
           {this.state.reviews.map( r => 
-            <li onClick={this.handleClick.bind(this)} id={r.id} style={{color: 'black'}}>
+            <li onClick={this.handleClick.bind(this)} key={r.id} id={r.id} style={{color: 'black'}}>
               Review: {r.course_review} Quality: {r.quality}/5
             </li>
           )}

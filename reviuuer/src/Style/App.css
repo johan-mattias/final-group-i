@@ -36,6 +36,8 @@ h1 {
     color: #FFFFFF;
     text-align: center; 
     font-weight: lighter;
+    padding: 0px;
+    margin: 0px;
 }
 
 h2 {

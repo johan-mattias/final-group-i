@@ -22,3 +22,9 @@
     width: 22px;
     height: 22px;
 }
+.backArrow {
+    margin-left: 32px;
+    margin-top: 16px;
+    width: 40px;
+    height: 60px;
+}

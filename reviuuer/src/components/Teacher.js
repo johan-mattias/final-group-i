@@ -77,7 +77,6 @@ class Teacher extends React.Component{
             <button className="signOut" onClick={this.handleSingOut}>SIGN OUT</button>
           </div>
         </div>
-        <div className="blueStripe"/>
         <div className = 'teacherPage'>
           <div className = 'columnHeader'>
             <h3>Teacher </h3>
