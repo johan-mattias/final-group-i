@@ -4,6 +4,7 @@ import json
 from tkinter import *
 from tkinter.messagebox import showinfo
 from functools import partial   
+from tkinter import ttk
 
 class Window(Frame):
 
@@ -21,14 +22,23 @@ class Window(Frame):
 
     #print reviews
     def reviews_popup(self, to_print, course_name):
-        win = tk.Toplevel()
-        win.wm_title(course_name)
-        
-        l = tk.Label(win, text=to_print)
-        l.grid(row=0, column=0, sticky="ns")
+        #win = tk.Toplevel()
+        #win.wm_title(course_name)
+        #l = tk.Label(win, text=to_print)
+        #l.grid(row=0, column=0, sticky="ns")
+        #b = tk.Button(win, text="Okay", command=win.destroy)
+        #b.grid(row=1, column=0)
+        asdf = Tk()
+        S = Scrollbar(asdf)
+        T = Text(asdf, height=800, width=400)
+        S.pack(side=RIGHT, fill=Y)
+        T.pack(side=LEFT, fill=Y)
+        S.config(command=T.yview)
+        T.config(yscrollcommand=S.set)
+        T.insert(END, to_print)
 
-        b = tk.Button(win, text="Okay", command=win.destroy)
-        b.grid(row=1, column=0)
+
+
 
 
     #print courses
@@ -58,7 +68,7 @@ class Window(Frame):
             #review += "Quality: " + quality + "\nCourse ID: " + course_id + "\nTeacher review: " + teacher_review + "\nBooks required: " + books_req + "\nCourse review: " + course_review + "\nRecommendation: " + can_recommend + "\nPercentage mandatory: " + percentage_mand + "\nworth_credits" + worth_credits + "\nDifficulty: " +difficulty + "\nExam: " +exam + "\n\n\n"
             
             if(name_id == course_id):
-                review += "Quality: " + quality +  "\nTeacher review: " + teacher_review + "\nBooks required: " + books_req + "\nCourse review: " + course_review + "\nRecommendation: " + can_recommend + "\nPercentage mandatory: " + percentage_mand + "\nworth_credits" + worth_credits + "\nDifficulty: " +difficulty + "\nExam: " +exam + "\n\n\n"   
+                review += "Quality: " + quality +  "\nTeacher review: " + teacher_review + "\nBooks required: " + books_req + "\nCourse review: " + course_review + "\nRecommendation: " + can_recommend + "\nPercentage mandatory: " + percentage_mand + "\nWorth credits: " + worth_credits + "\nDifficulty: " +difficulty + "\nExam: " +exam + "\n\n\n"   
                 
 
         #Creation of init_window
@@ -110,11 +120,6 @@ class Window(Frame):
             column_num = column_num + 1
             forloop = forloop + 1
             index = index + 1
-
-
-
-
-            
 
 
         # creating a button instance
