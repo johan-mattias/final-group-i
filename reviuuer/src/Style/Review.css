@@ -27,6 +27,12 @@ h2 {
     font-size: 20px;
 }
 
+.boolAttributes {
+    display: inline-block;
+    font-weight: lighter;
+    font-size: 20px;
+}
+
 .gradedScaleBody {
     display: flex;
     width: 300px;
@@ -57,4 +63,34 @@ h2 {
 
 .scaleItemFilled {
     background-color: #2F80ED;
+}
+
+.radioWhiteBoarder {
+    background-color: 0;
+    border: 1px solid #ffffff;
+    border-radius: 45px;
+    width: 16px;
+    height: 16px;
+}
+
+.radioTrue {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #2F80ED;
+    border: 1px solid #2F80ED;
+    border-radius: 45px;
+    width: 20px;
+    height: 20px;
+}
+
+.radioFalse {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    border: 1px solid #2F80ED;
+    border-radius: 45px;
+    width: 20px;
+    height: 20px;
 }

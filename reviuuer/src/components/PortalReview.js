@@ -82,6 +82,22 @@ class PortalReview extends React.Component {
     );
   }
 
+  printRadio(bool) {
+    if(bool) {
+      return(
+        <div className="radioTrue">
+          <div className="radioWhiteBoarder" />
+        </div>
+      );
+    } else {
+      return(
+        <div className="radioFalse">
+          <div className="radioWhiteBoarder" />
+        </div>
+      );
+    }
+  }
+
   printReview() {
     const { review } = this.state;
 
@@ -93,9 +109,9 @@ class PortalReview extends React.Component {
         <h2 className="gradedAttributes">Difficulty<br/> {this.printGradedScale(review.difficulty)}</h2>
         <h2 className="gradedAttributes">Worth credits<br/> {this.printGradedScale(review.worth_credits)}</h2>
         <h2 className="gradedAttributes">Percentage mandatory<br/> {this.printGradedScale(review.percentage_mand)}</h2>
-        <p>Books required: {review.can_recommend ? 'yes' : 'no'}</p>
-        <p>Has exam: {review.exam ? 'yes' : 'no'}</p>
-        <p>Can reccommend: {review.can_recommend ? 'yes' : 'no'}</p>
+        <h2 className="boolAttributes">Books required: </h2> {review.books_req ? this.printRadio(true) : this.printRadio(false)}
+        <h2 className="boolAttributes">Has exam: </h2> {review.exam ? this.printRadio(true) : this.printRadio(false)}
+        <h2 className="boolAttributes">Can reccommend: </h2> {review.can_recommend ? this.printRadio(true) : this.printRadio(false)}
         <p>Course review: {review.course_review}</p>
         <p>Teacher review: {review.teacher_review}</p>
       </div>
