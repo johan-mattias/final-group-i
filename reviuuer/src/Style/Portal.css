@@ -17,6 +17,7 @@ body.portal{
     box-sizing:border-box;
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
+    margin-top: 80px;
     
 }
 
@@ -49,10 +50,12 @@ body.portal{
 
 .header{
     display: flex;
+    background-color: white;
     top: 0px;
     width: 100%;
     border-bottom: 15px solid #2F80ED;
-
+    position: fixed;
+    z-index: 999;
 }
 
 h1{

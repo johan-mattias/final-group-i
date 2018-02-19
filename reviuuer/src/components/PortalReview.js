@@ -12,6 +12,8 @@ import Course from './Course.js';
 import Teacher from './Teacher.js';
 
 import backArrow from '../img/back-arrow.png';
+import thumbGreen from '../img/thumb_green.png';
+import thumbRed from '../img/thumb_red.png';
 
 import '../Style/Button.css';
 import '../Style/Portal.css';
@@ -105,15 +107,24 @@ class PortalReview extends React.Component {
       <div className="reviewContainer">
         <h2 className="courseName">{review.course_name}</h2>
         <h2 className="teacherName">with {review.first_name} {review.last_name}</h2>
-        <h2 className="gradedAttributes">Quality<br/> {this.printGradedScale(review.quality)}</h2>
-        <h2 className="gradedAttributes">Difficulty<br/> {this.printGradedScale(review.difficulty)}</h2>
-        <h2 className="gradedAttributes">Worth credits<br/> {this.printGradedScale(review.worth_credits)}</h2>
-        <h2 className="gradedAttributes">Percentage mandatory<br/> {this.printGradedScale(review.percentage_mand)}</h2>
-        <h2 className="boolAttributes">Books required: </h2> {review.books_req ? this.printRadio(true) : this.printRadio(false)}
-        <h2 className="boolAttributes">Has exam: </h2> {review.exam ? this.printRadio(true) : this.printRadio(false)}
-        <h2 className="boolAttributes">Can reccommend: </h2> {review.can_recommend ? this.printRadio(true) : this.printRadio(false)}
-        <p>Course review: {review.course_review}</p>
-        <p>Teacher review: {review.teacher_review}</p>
+        <hr/>
+        <h2 className="attributesStyle">Quality<br/> {this.printGradedScale(review.quality)}</h2>
+        <h2 className="attributesStyle">Difficulty<br/> {this.printGradedScale(review.difficulty)}</h2>
+        <h2 className="attributesStyle">Worth credits<br/> {this.printGradedScale(review.worth_credits)}</h2>
+        <h2 className="attributesStyle">Percentage mandatory<br/> {this.printGradedScale(review.percentage_mand)}</h2>
+        <h2 className="attributesStyle">Books required: </h2> 
+        {review.books_req ? this.printRadio(true) : this.printRadio(false)}
+        <h2 className="attributesStyle">Has exam: </h2> 
+        {review.exam ? this.printRadio(true) : this.printRadio(false)}
+        <h2 className="attributesStyle">Can reccommend: </h2> 
+        {review.can_recommend ? 
+        <img onClick={this.context.router.history.goBack} src={thumbGreen} className="thumb" /> : 
+        <img onClick={this.context.router.history.goBack} src={thumbRed} className="thumb" />}
+        <hr/>
+        <h2 className="attributesStyle">Course review: </h2> 
+        <p className="reviewText">{review.course_review}</p>
+        <h2 className="attributesStyle">Teacher review: </h2> 
+        <p className="reviewText">{review.teacher_review}</p>
       </div>
     );
   };

@@ -89,7 +89,7 @@ class PortalHome extends React.Component {
             <button className="signOut" onClick={this.handleSingOut}>SIGN OUT</button>
           </div>
         </div>
-        <ul>
+        <ul style={{marginTop: "110px"}}>
           {this.state.reviews.map( r => 
             <li onClick={this.handleClick.bind(this)} key={r.id} id={r.id} style={{color: 'black'}}>
               Course: {r.course_name} Quality: {r.quality}/5
