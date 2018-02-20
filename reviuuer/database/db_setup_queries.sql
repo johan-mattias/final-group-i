@@ -55,7 +55,7 @@ CREATE TABLE reviuuer.comment (
 	id int NOT NULL AUTO_INCREMENT,
 	user_id int,
 	review_id int,
-	comment_text varchar(255),
+	comment_text MEDIUMTEXT,
 	date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (id),
 	FOREIGN KEY (user_id) REFERENCES reviuuer.user(id),
