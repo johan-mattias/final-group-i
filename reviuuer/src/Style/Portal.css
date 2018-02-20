@@ -18,7 +18,7 @@ body.portal{
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
     margin-top: 80px;
-    
+
 }
 
 .portalList ul li {
@@ -26,17 +26,17 @@ body.portal{
 
 }
 
-.portalList li:nth-child(even) { 
+.portalList li:nth-child(even) {
     background: white;
     opacity: 1;
     height: 45px;
-     
+
 }
 
-.portalList li:nth-child(odd) { 
+.portalList li:nth-child(odd) {
     background: rgba(86,204,242, 0.25);
     height: 45px;
-     
+
 }
 
 .columnHeader{
@@ -101,4 +101,18 @@ button.signOut{
 
 *:focus {
     outline: none;
+}
+
+ul.reviueHomeul{
+    margin-top: 115px;
+    padding: 0;
+    list-style-type: none;
+}
+
+li.reviueHomeli{
+    padding: 30px;
+    margin: 10px;
+    color: black;
+    border: 1px #2F80ED solid;
+    border-radius: 25px;
 }

@@ -21,7 +21,7 @@ class PortalHome extends React.Component {
      this.handleSingOut = this.handleSingOut.bind(this);
   }
 
-  state = { 
+  state = {
     reviews: []
   }
 
@@ -39,21 +39,21 @@ class PortalHome extends React.Component {
     this.props.history.push(`/portal/review?review_id=${id}`);
     console.log("HANDLE CLICK")
   }
-  
+
   componentWillMount() {
     const c = new Cookies();
     var cookieFromUser = c.get('user')
     var fetchURL = `/api/auth?cookie=${cookieFromUser}`;
     fetch( fetchURL )
     .then(
-        (res) => { 
+        (res) => {
         if(res.status !== 200) {
           console.log('Looks like there was a problem. Status Code: ' +
             res.status);
           return;
         }
       res.json()
-          .then((json) => { 
+          .then((json) => {
             const access = json.accessCookie
             console.log(access)
             if (access === true) {
@@ -89,14 +89,14 @@ class PortalHome extends React.Component {
             <button className="signOut" onClick={this.handleSingOut}>SIGN OUT</button>
           </div>
         </div>
-        <ul style={{marginTop: "110px"}}>
-          {this.state.reviews.map( r => 
-            <li onClick={this.handleClick.bind(this)} key={r.id} id={r.id} style={{color: 'black'}}>
+        <ul className="reviueHomeul">
+          {this.state.reviews.map( r =>
+            <li className="reviueHomeli" onClick={this.handleClick.bind(this)} key={r.id} id={r.id}>
               Course: {r.course_name} Quality: {r.quality}/5
             </li>
           )}
         </ul>
-        <Footer/> 
+        <Footer/>
       </div>
     );
   };
