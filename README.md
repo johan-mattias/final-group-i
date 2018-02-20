@@ -20,7 +20,7 @@ npm install concurrently -g
 ```
 
 ## How to run
-Run all the queries from database/db_setup_queries.sql with the database config given above
+Run all the queries from ```database/db_setup_queries.sql``` with the database config given above
 
 Then run
 ```
