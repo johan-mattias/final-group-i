@@ -12,6 +12,7 @@ import Course from './Course.js';
 import Teacher from './Teacher.js';
 
 import backArrow from '../img/back-arrow.png';
+import addComment from '../img/addButton.png';
 import thumbGreen from '../img/thumb_green.png';
 import thumbRed from '../img/thumb_red.png';
 
@@ -33,7 +34,9 @@ class PortalReview extends React.Component {
   }
 
   state = { 
-    review: undefined
+    review: undefined,
+    comments: [],
+    addComment: false,
   }
 
   handleSingOut(e) {
@@ -46,8 +49,8 @@ class PortalReview extends React.Component {
   componentWillMount() {
     const review_id = qs.parse(this.props.location.search).review_id;
 
-    let fetchURL = `/api/reviews?review_id=${review_id}`;
-    fetch( fetchURL )
+    let fetchURLreview = `/api/reviews?review_id=${review_id}`;
+    fetch( fetchURLreview )
       .then((res) => {
         if(res.status !== 200) {
           console.log('Looks like there was a problem. Status Code: ' +
@@ -60,7 +63,21 @@ class PortalReview extends React.Component {
             const data = review[0]
             this.setState({ review: data })
           });
-           
+      })
+
+    let fetchURLcomment = `/api/comments?review_id=${review_id}`;
+    fetch( fetchURLcomment )
+      .then((res) => {
+        if(res.status !== 200) {
+          console.log('Looks like there was a problem. Status Code: ' +
+            res.status);
+          return;
+        }
+        console.log(res)
+        res.json()
+          .then(comments => {
+            this.setState({ comments })
+          });
       })
     document.body.classList.remove('home');
     document.body.classList.add('portal'); //adding the correct background by setting the class of the body
@@ -100,14 +117,35 @@ class PortalReview extends React.Component {
     }
   }
 
+  // Parses date from 2018-02-19T13:53:04.000Z into 13:53 2018-02-19
+  parseTimeStamp(ts) {
+    const tsSplit = ts.split("T");
+
+    const date = tsSplit[0].split("-");
+    const year = date[0];
+    const month = date[1];
+    const day = date[2];
+
+    const time = tsSplit[1].split(":");
+    const hour = time[0];
+    const minute = time[1];
+
+    return(year + "-" + month + "-" + day + " " + hour + ":" + minute);
+  }
+
+  renderAddComment() {
+    const toggleState = this.state.addComment ? false : true;
+    this.setState({ addComment: toggleState })
+  }
+
   printReview() {
-    const { review } = this.state;
+    const { review, comments } = this.state;
 
     return(
       <div className="reviewContainer">
         <h2 className="courseName">{review.course_name}</h2>
         <h2 className="teacherName">with {review.first_name} {review.last_name}</h2>
-        <hr/>
+        <hr className="review"/>
         <h2 className="attributesStyle">Quality<br/> {this.printGradedScale(review.quality)}</h2>
         <h2 className="attributesStyle">Difficulty<br/> {this.printGradedScale(review.difficulty)}</h2>
         <h2 className="attributesStyle">Worth credits<br/> {this.printGradedScale(review.worth_credits)}</h2>
@@ -120,11 +158,33 @@ class PortalReview extends React.Component {
         {review.can_recommend ? 
         <img onClick={this.context.router.history.goBack} src={thumbGreen} className="thumb" /> : 
         <img onClick={this.context.router.history.goBack} src={thumbRed} className="thumb" />}
-        <hr/>
+        <hr className="review"/>
         <h2 className="attributesStyle">Course review: </h2> 
         <p className="reviewText">{review.course_review}</p>
         <h2 className="attributesStyle">Teacher review: </h2> 
         <p className="reviewText">{review.teacher_review}</p>
+        <hr className="review"/>
+        <div style={{display: "flex"}}>
+          <h2 className="attributesStyle">User comments</h2>
+          <img onClick={this.renderAddComment.bind(this)} src={addComment} className="addComment" />
+
+          {this.state.addComment ? 
+          <p>Add comment here!</p>
+          :
+          <p>Can't add comment right now</p>
+          }
+        </div>
+        <ul style={{margin: 0, padding: 0, width: "100%"}}>
+          {comments.map( c => 
+            <li key={c.id} id={c.id} style={{color: 'black', listStyleType: "none"}}>
+            <div>
+              <p className="commentEmail">{c.email}</p>
+              <p className="commentDate"> {this.parseTimeStamp(c.date)} </p>
+            </div>
+              <p className="reviewText">{c.comment_text}</p>
+            </li>
+          )}
+        </ul>
       </div>
     );
   };

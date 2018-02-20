@@ -7,7 +7,7 @@
     margin-top: 110px;
 }
 
-hr { 
+hr.review { 
     height: 10px;
     border: 0;
     width: 100%;
@@ -106,6 +106,22 @@ h2 {
 .reviewText {
     font-family: roboto;
     font-weight: lighter;
+    color: #000000;
+    margin: 5px 15px 10px 15px;
+}
+
+.commentEmail {
+    display: inline-block;
+    font-family: roboto;
+    font-weight: normal;
+    color: #000000;
+    margin: 5px 15px 10px 15px;
+}
+
+.commentDate {
+    float: right;
+    font-family: roboto;
+    font-weight: normal;
     color: #000000;
     margin: 5px 15px 10px 15px;
 }

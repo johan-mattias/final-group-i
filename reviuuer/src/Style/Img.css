@@ -28,8 +28,12 @@
     width: 40px;
     height: 60px;
 }
-
 .thumb {
     height: 60px;
     margin-bottom: 10px;
+}
+.addComment {
+    height: 20px;
+    float: right;
+    margin-right: 10px;
 }
