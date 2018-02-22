@@ -94,7 +94,7 @@ class Register extends Component {
         <div className="flex-container">
           <div className="row"> 
             <form className="login-column" onSubmit={this.handleSubmit}>
-              <input className="login" placeholder="Email" value={this.state.email} onChange={this.EmailClick.bind(this)} /> {/*TODO add type="email"*/}
+              <input className="login" placeholder="Email" type="email" value={this.state.email} onChange={this.EmailClick.bind(this)} /> {/*TODO add type="email"*/}
               <input className="login" type="password" placeholder="Password" value={this.state.password} onChange={this.PwdClick.bind(this)} />
               <input className="login" type="password" placeholder="Password" value={this.state.passwordVerify} onChange={this.PwdClickCheck.bind(this)} />
               <input className="submit" type="submit" value="REGISTER" />

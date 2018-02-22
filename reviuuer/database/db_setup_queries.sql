@@ -116,7 +116,7 @@ CREATE INDEX comment_id_index ON likeAndDislike (comment_id) USING HASH;
 
 -- Mock data
 -- user
-insert into user (id, email, password) values (1, 'admin', '1234');
+insert into user (id, email, password) values (1, 'admin@reviuuer.se', '$2a$10$JRyL8idfsqGNFj9V5aS49elEW6e.tJ8/5GZz6/aU8tw8doJqDE39O');
 insert into user (id, email, password) values (2, 'lgodden1', 'yRZaCdPo');
 insert into user (id, email, password) values (3, 'mnealand2', 'F2ifBuNfvP');
 insert into user (id, email, password) values (4, 'ebrandoni3', 'GbPMZ8x');

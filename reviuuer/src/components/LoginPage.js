@@ -37,8 +37,8 @@ class Login extends React.Component {
     event.preventDefault();
     // var email = this.state.email 
     // var pwd = this.state.password
-    var email = 'abc123' // TODO remove this later 
-    var pwd = 'abc123'  // TODO remove this later 
+    var email = 'admin@reviuuer.se' // TODO remove this later 
+    var pwd = 'admin'  // TODO remove this later 
     var fetchURL = `/api/auth?email=${email}&password=${pwd}`;
     fetch( fetchURL )
       .then(
@@ -76,7 +76,7 @@ class Login extends React.Component {
       <hr/>
       <div className="flex-container">
         <form className="login-column" onSubmit={this.handleSubmit}>
-          <input className="login" placeholder="Email" value={this.state.email} onChange={this.EmailClick.bind(this)} /> {/*TODO addtype="email"*/}
+          <input className="login" placeholder="Email" type="email" value={this.state.email} onChange={this.EmailClick.bind(this)} />
           <input className="login" type="password" placeholder="Password" value={this.state.password} onChange={this.PwdClick.bind(this)} />
           <input className="submit" type="submit" value="LOGIN" />
         </form>
