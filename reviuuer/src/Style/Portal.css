@@ -8,16 +8,9 @@ body.portal{
 }
 
 .portalList{
-    background-color: white;
-    color: black;
-    border:1px dotted black;
+    margin-top: 115px;
     padding: 0;
-    display:table;
-    width:100%;
-    box-sizing:border-box;
-    -moz-box-sizing:border-box;
-    -webkit-box-sizing:border-box;
-    margin-top: 80px;
+    list-style-type: none;
 
 }
 
@@ -27,15 +20,20 @@ body.portal{
 }
 
 .portalList li:nth-child(even) {
-    background: white;
-    opacity: 1;
-    height: 45px;
+    padding: 30px;
+    margin: 10px;
+    color: black;
+    border: 1px #2F80ED solid;
+    border-radius: 25px;
 
 }
 
 .portalList li:nth-child(odd) {
-    background: rgba(86,204,242, 0.25);
-    height: 45px;
+    padding: 30px;
+    margin: 10px;
+    color: black;
+    border: 1px #2F80ED solid;
+    border-radius: 25px;
 
 }
 
