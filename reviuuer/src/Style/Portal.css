@@ -19,16 +19,8 @@ body.portal{
 
 }
 
-.portalList li:nth-child(even) {
-    padding: 30px;
-    margin: 10px;
-    color: black;
-    border: 1px #2F80ED solid;
-    border-radius: 25px;
-
-}
-
-.portalList li:nth-child(odd) {
+.portalList li {
+    display: flex;
     padding: 30px;
     margin: 10px;
     color: black;

@@ -71,6 +71,7 @@ class Course extends React.Component{
   }
 
   render() {
+    console.log(this.state.courses);
     return (
       <div className="portal">
         <div className = 'header'>
@@ -88,7 +89,7 @@ class Course extends React.Component{
         <ul className = 'portalList'>
         {this.state.courses.map(c =>
         <li onClick={this.handleClick.bind(this)} key={c.id} id={c.id}>
-        {c.name} <br></br> Hello
+        {c.name} Average score <br></br> {c.first_name} {c.last_name} Click for more info
         </li>
       )}
         
