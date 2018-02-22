@@ -42,7 +42,13 @@ class PortalHome extends React.Component {
 
   componentWillMount() {
     const c = new Cookies();
-    var cookieFromUser = c.get('user')
+    var cookieFromUser = c.get('user');
+    console.log(cookieFromUser);
+
+    if(cookieFromUser == undefined){
+      console.log("Wrong cookie ")
+      this.props.history.push('/')
+    } else {
     var fetchURL = `/api/auth?cookie=${cookieFromUser}`;
     fetch( fetchURL )
     .then(
@@ -57,8 +63,8 @@ class PortalHome extends React.Component {
             const access = json.accessCookie
             console.log(access)
             if (access === true) {
-              console.log("correct cookie ")
-              fetch('/api/reviews')
+               console.log("correct cookie ")
+                            fetch('/api/reviews')
                 .then((res) => {
                   if(res.status !== 200) {
                     console.log('Looks like there was a problem. Status Code: ' +
@@ -69,13 +75,13 @@ class PortalHome extends React.Component {
                   res.json()
                     .then(reviews => this.setState({ reviews }));
                   })
-            }
-            else {
-              console.log("Wrong cookie ")
-              this.props.history.push('/')
+              } else {
+                console.log("Wrong cookie ")
+                this.props.history.push('/')
             }
           })
         })
+      }
     document.body.classList.remove('home');
     document.body.classList.add('portal'); //adding the correct background by setting the class of the body
   }

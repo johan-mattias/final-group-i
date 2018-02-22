@@ -30,21 +30,26 @@ class Course extends React.Component{
     this.props.history.push('/');
     console.log("TRY TO SIGN OUT")
   }
-  
+
   componentWillMount() {
     const c = new Cookies();
     var cookieFromUser = c.get('user')
+
+    if(cookieFromUser == undefined){
+      console.log("Wrong cookie ")
+      this.props.history.push('/')
+    }
     var fetchURL = `/api/auth?cookie=${cookieFromUser}`;
     fetch( fetchURL )
     .then(
-        (res) => { 
+        (res) => {
         if(res.status !== 200) {
           console.log('Looks like there was a problem. Status Code: ' +
             res.status);
           return;
         }
       res.json()
-          .then((json) => { 
+          .then((json) => {
             const access = json.accessCookie
             console.log(access)
             if (access === true) {
@@ -92,10 +97,10 @@ class Course extends React.Component{
         {c.name} Average score<br></br> {c.averageRating}<br></br> {c.first_name} {c.last_name} Click for more info
         </li>
       )}
-        
+
         </ul>
         </div>
-        <Footer/> 
+        <Footer/>
       </div>
     )
   }

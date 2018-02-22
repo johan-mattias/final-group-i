@@ -18,7 +18,14 @@ class Portal extends React.Component {
 
   componentWillMount() {
     const c = new Cookies();
-    var cookieFromUser = c.get('user')
+    var cookieFromUser = c.get('user');
+    console.log(cookieFromUser);
+
+    if(cookieFromUser == undefined){
+      console.log("Wrong cookie ")
+      this.props.history.push('/')
+    }
+    else{
     var fetchURL = `/api/auth?cookie=${cookieFromUser}`;
     fetch( fetchURL )
     .then(
@@ -41,6 +48,7 @@ class Portal extends React.Component {
             }
           })
         })
+      }
   }
 
   render() {

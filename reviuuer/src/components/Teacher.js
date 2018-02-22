@@ -32,17 +32,21 @@ class Teacher extends React.Component{
   componentWillMount() {
     const c = new Cookies();
     var cookieFromUser = c.get('user')
+    if(cookieFromUser == undefined){
+      console.log("Wrong cookie ")
+      this.props.history.push('/')
+    } else {
     var fetchURL = `/api/auth?cookie=${cookieFromUser}`;
     fetch( fetchURL )
     .then(
-        (res) => { 
+        (res) => {
         if(res.status !== 200) {
           console.log('Looks like there was a problem. Status Code: ' +
             res.status);
           return;
         }
       res.json()
-          .then((json) => { 
+          .then((json) => {
             const access = json.accessCookie
             console.log(access)
             if (access === true) {
@@ -64,6 +68,7 @@ class Teacher extends React.Component{
             }
           })
         })
+    }
     document.body.classList.remove('home');
     document.body.classList.add('portal'); //adding the correct background by setting the class of the body
   }
@@ -91,7 +96,7 @@ class Teacher extends React.Component{
           )}
           </ul>
         </div>
-        <Footer/> 
+        <Footer/>
       </div>
 
     )
