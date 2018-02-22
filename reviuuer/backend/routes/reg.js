@@ -7,6 +7,20 @@ var bodyParser = require('body-parser');
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+var secretJWT = '@Q4&SuqQegjJwUkQy@rMNW2@hetjsZwKgs&@guV^MvG^$tbrvN34GKn^D#Mz5^cmrHzjWbvF$YqQzy6Mr'
+var jwt  = require('jsonwebtoken');
+
+function generateToken(email, admin, access){
+  var u = {
+   email: email,
+   admin: admin,//user.admin, // TODO add so we can manage admin in DB
+   access: access, //remove this and add a user id for each user THIS is no good
+  };
+  return token = jwt.sign(u, secretJWT,{
+     expiresIn: 60 * 60 * 24 * 30 // expires in 30 days
+  });
+}
+
 const registerUser = (email, password, cb) => {
   mysqlConf.getConnection(function (err, connection) {
     connection.query({
@@ -36,12 +50,15 @@ router.post('/', function(req, res) {
       bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
         registerUser(email, hash, (error, added) => {
           if(added) {
-              console.log('New user added')
-              res.json({added: true,
-                        token: true}); //TODO set the real cookie 
-          } 
+            var admin = false;
+            var access = true;
+            var tokenToSet = generateToken(email, admin, access);
+            console.log('New user added')
+            res.json({added: true,
+                      token: tokenToSet}); //TODO set the real cookie
+          }
         });
-      }); 
+      });
     } else {
       console.log('Invalid inputs')
       res.json({added: false});

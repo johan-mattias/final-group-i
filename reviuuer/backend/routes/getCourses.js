@@ -6,7 +6,9 @@ var mysqlConf = require('../config.js').mysql_pool;
 const fetchCourses = (cb) => {
   mysqlConf.getConnection(function (err, connection) {
     connection.query({
-      sql: 'SELECT * FROM course',
+      sql: 'SELECT c.*, t.* FROM course c ' + 
+           'INNER JOIN courseAndTeacher cat ON c.id = cat.course_id ' +
+           'INNER JOIN teacher t ON t.id = cat.teacher_id ',
       timeout: 40000, // 40s
       values: []
     }, function (error, results, fields) {
