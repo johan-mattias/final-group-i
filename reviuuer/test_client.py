@@ -38,13 +38,8 @@ frame = tk.Frame(canvas)
 canvas.create_window((0,0), window=frame, anchor='nw')
 
 #print reviews
-def reviews_popup(to_print, course_name):
-    #win = tk.Toplevel()
-    #win.wm_title(course_name)
-    #l = tk.Label(win, text=to_print)
-    #l.grid(row=0, column=0, sticky="ns")
-    #b = tk.Button(win, text="Okay", command=win.destroy)
-    #b.grid(row=1, column=0)
+def reviews_popup(to_print, course_name): 
+    
     asdf = Tk()
     S = Scrollbar(asdf)
     T = Text(asdf, height=800, width=400)
@@ -53,7 +48,6 @@ def reviews_popup(to_print, course_name):
     S.config(command=T.yview)
     T.config(yscrollcommand=S.set)
     T.insert(END, to_print)
-
 
 
 
@@ -91,7 +85,8 @@ def course_popup(name_id, course_name):
     #Creation of init_window
     reviews_popup(review, course_name)
 
-l = tk.Label(frame)
+label = tk.Label(frame)
+
 
 #Get Mock courses data
 get_course_data = open('./database/mock_courses.json')
@@ -120,7 +115,7 @@ for i in range(len(mock_course_data)):
         
     
     
-    Buttonz[i] = Button(l, text="" + str(course_name[i]), command=lambda i=i: course_popup(course_id[i], course_name[i]), height = 5, width = 10).pack()
+    Buttonz[i] = Button(label, text="" + str(course_name[i]), command=lambda i=i: course_popup(course_id[i], course_name[i]), height = 5, width = 10).pack()
     column_num = column_num + 1
     forloop = forloop + 1
     index = index + 1
@@ -135,7 +130,9 @@ for i in range(len(mock_course_data)):
 #Buttony = Button(l, text="mupp").pack()
 
 
-l.pack()
+label.pack()
+def frame_raise(frame):
+    frame.tkraise()
 
 
 root.geometry("800x400")

@@ -3,17 +3,12 @@ var router = express.Router();
 var mysql = require('mysql');
 var mysqlConf = require('../config.js').mysql_pool;
 
-const fetchCourses = (cb) => {
+const fetchUser = (cb) => {
   mysqlConf.getConnection(function (err, connection) {
     connection.query({
-      // TODO: support courses with multiple teachers
-      sql: 'SELECT c.*, t.*, (SUM(r.quality)/COUNT(r.id)) as averageRating FROM course c ' + 
-           'INNER JOIN courseAndTeacher cat ON c.id = cat.course_id ' +
-           'INNER JOIN teacher t ON t.id = cat.teacher_id ' +
-           'INNER JOIN review r ON r.course_id = c.id ' +
-           'GROUP BY c.id ',
+      sql: 'SELECT * FROM user WHERE email = ?',
       timeout: 40000, // 40s
-      values: []
+      values: [email]
     }, function (error, results, fields) {
       connection.release();
 
@@ -28,8 +23,10 @@ const fetchCourses = (cb) => {
 
 /* GET teachers. */
 router.get('/', function(req, res) {
-  fetchCourses((error, reviews) => {
-      res.json(reviews);
+  var email = req.param('email');
+
+  fetchUser(email, (error, user) => {
+      res.json(user);
     })
 });
 
