@@ -7,7 +7,7 @@ const fetchCourses = (cb) => {
   mysqlConf.getConnection(function (err, connection) {
     connection.query({
       // TODO: support courses with multiple teachers
-      sql: 'SELECT c.*, t.*, (SUM(r.quality)/COUNT(r.id)) as averageRating FROM course c ' + 
+      sql: 'SELECT c.*, t.first_name, t.last_name, (SUM(r.quality)/COUNT(r.id)) as averageRating FROM course c ' + 
            'INNER JOIN courseAndTeacher cat ON c.id = cat.course_id ' +
            'INNER JOIN teacher t ON t.id = cat.teacher_id ' +
            'INNER JOIN review r ON r.course_id = c.id ' +
