@@ -12,6 +12,8 @@
 - password: 'root',
 - database: 'reviuuer'
 
+Run all the queries from ```database/db_setup_queries.sql``` with the database config given above
+
 ## Setup: 
 ```
 npm install -g create-react-app
@@ -20,9 +22,7 @@ npm install concurrently -g
 ```
 
 ## How to run
-Run all the queries from ```database/db_setup_queries.sql``` with the database config given above
-
-Then run
+Run
 ```
 make install
 make start
