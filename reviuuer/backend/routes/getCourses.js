@@ -6,9 +6,12 @@ var mysqlConf = require('../config.js').mysql_pool;
 const fetchCourses = (cb) => {
   mysqlConf.getConnection(function (err, connection) {
     connection.query({
-      sql: 'SELECT c.*, t.* FROM course c ' + 
+      // TODO: support courses with multiple teachers
+      sql: 'SELECT c.*, t.*, (SUM(r.quality)/COUNT(r.id)) as averageRating FROM course c ' + 
            'INNER JOIN courseAndTeacher cat ON c.id = cat.course_id ' +
-           'INNER JOIN teacher t ON t.id = cat.teacher_id ',
+           'INNER JOIN teacher t ON t.id = cat.teacher_id ' +
+           'INNER JOIN review r ON r.course_id = c.id ' +
+           'GROUP BY c.id ',
       timeout: 40000, // 40s
       values: []
     }, function (error, results, fields) {
