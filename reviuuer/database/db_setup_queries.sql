@@ -4,8 +4,8 @@ CREATE DATABASE reviuuer CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE reviuuer.user (
     id int NOT NULL AUTO_INCREMENT,
-    email varchar(255),
-    password varchar(255),
+    email varchar(255) NOT NULL UNIQUE,
+    password varchar(255) NOT NULL,
 	date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (id)
 );
