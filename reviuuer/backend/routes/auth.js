@@ -59,19 +59,19 @@ const authenticateUser = (email, myPlaintextPassword, cb) => {
 //TODO validate cookie here
 const authenticateCookie = (cookie, cb) => {
     jwt.verify(cookie, secretJWT, function(err, user) {
-    if (err) throw err;
     if (user.access === true){
       console.log("True callback i funktion");
       console.log(user);
-      cb( true );
+      cb(true);
+      return;
+    }
+    else{
+      console.log("False callback i funktion");
+      cb(false);
       return;
     }
 
-    console.log("False callback i funktion");
-    cb( false );
-    return;
-
-    });
+  });
 }
 
 
@@ -96,7 +96,7 @@ router.get('/', function(req, res) {
         }
       });
     } else if (cookie !== undefined) { // redan inloggad
-      authenticateCookie(cookie, (accessCookie) => {
+        authenticateCookie(cookie, (accessCookie) => {
         if(accessCookie === true){
             console.log('Authenticated')
             res.json({accessCookie: true });
@@ -107,7 +107,9 @@ router.get('/', function(req, res) {
       });
     } else {
       console.log('Authentication failed')
-      res.json({access: false});
+      res.json({access: false,
+                accessCookie: false,
+              });
     }
   });
 

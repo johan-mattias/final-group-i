@@ -33,7 +33,7 @@ class Register extends Component {
   PwdClickCheck(event) {
     this.setState({passwordVerify: event.target.value});
   }
-  
+
   handleSubmit(event) { //TODO LÄGGA IN SÅ VI KOLLAR I DB
     event.preventDefault();
     var pwd1 = this.state.password
@@ -60,14 +60,14 @@ class Register extends Component {
           })
       })
       .then(
-        (res) => { 
+        (res) => {
         if(res.status !== 200) {
           console.log('Looks like there was a problem. Status Code: ' +
             res.status);
           return;
         }
         res.json()
-          .then((json) => { 
+          .then((json) => {
             const added = json.added
             const token = json.token
             console.log(added)
@@ -84,7 +84,7 @@ class Register extends Component {
         })
       }
   }
-        
+
 
   render() {
     return (
@@ -92,7 +92,7 @@ class Register extends Component {
         <div><h1><Link className="link logo" to="/">ReviUUer</Link></h1></div>
         <hr/>
         <div className="flex-container">
-          <div className="row"> 
+          <div className="row">
             <form className="login-column" onSubmit={this.handleSubmit}>
               <input className="login" placeholder="Email" type="email" value={this.state.email} onChange={this.EmailClick.bind(this)} /> {/*TODO add type="email"*/}
               <input className="login" type="password" placeholder="Password" value={this.state.password} onChange={this.PwdClick.bind(this)} />

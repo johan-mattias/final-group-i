@@ -22,14 +22,14 @@ class Portal extends React.Component {
     var fetchURL = `/api/auth?cookie=${cookieFromUser}`;
     fetch( fetchURL )
     .then(
-        (res) => { 
+        (res) => {
         if(res.status !== 200) {
           console.log('Looks like there was a problem. Status Code: ' +
             res.status);
           return;
         }
       res.json()
-          .then((json) => { 
+          .then((json) => {
             const access = json.accessCookie
             console.log(access)
             if (access === true) {
@@ -51,7 +51,7 @@ class Portal extends React.Component {
             <Route path="/portal" exact component={ PortalHome }/>
             <Route path="/portal/review" exact component={ PortalReview }/>
             <Route path="/portal/course" component={ Course }/>
-            <Route path="/portal/teacher" component={Teacher}/> 
+            <Route path="/portal/teacher" component={Teacher}/>
             <Route path="/reviews" exact component={ Reviews }/>
           </div>
         </Router>
