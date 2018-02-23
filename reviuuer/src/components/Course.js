@@ -81,9 +81,6 @@ class Course extends React.Component{
       <div className="portal">
         <div className = 'header'>
           <h1>Courses</h1>
-          <div className = "signOutContainer">
-            <button className="signOut" onClick={this.handleSingOut}>SIGN OUT</button>
-          </div>
         </div>
         <div className = 'coursePage'>
         <div className = 'columnHeader'>

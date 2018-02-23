@@ -91,9 +91,6 @@ class PortalHome extends React.Component {
       <div className="portal">
         <div className = 'header'>
           <h1>Home</h1>
-          <div className = "signOutContainer">
-            <button className="signOut" onClick={this.handleSingOut}>SIGN OUT</button>
-          </div>
         </div>
         <ul className="reviueHomeul">
           {this.state.reviews.map( r =>

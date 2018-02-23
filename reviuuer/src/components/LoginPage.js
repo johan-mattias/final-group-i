@@ -18,7 +18,7 @@ class Login extends React.Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
- 
+
   componentWillMount() {
     const { cookies } = this.props;
     document.body.classList.remove('portal');
@@ -35,21 +35,21 @@ class Login extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    // var email = this.state.email 
+    // var email = this.state.email
     // var pwd = this.state.password
-    var email = 'admin@reviuuer.se' // TODO remove this later 
-    var pwd = 'admin'  // TODO remove this later 
+    var email = 'admin@reviuuer.se' // TODO remove this later
+    var pwd = 'admin'  // TODO remove this later
     var fetchURL = `/api/auth?email=${email}&password=${pwd}`;
     fetch( fetchURL )
       .then(
-        (res) => { 
+        (res) => {
         if(res.status !== 200) {
           console.log('Looks like there was a problem. Status Code: ' +
             res.status);
           return;
         }
         res.json()
-          .then((json) => { 
+          .then((json) => {
             const access = json.access
             const token = json.token
             console.log(access)

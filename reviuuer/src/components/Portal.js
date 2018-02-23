@@ -10,6 +10,7 @@ import Reviews from './Reviews.js';
 import Home from './Home.js';
 import Course from './Course.js';
 import Teacher from './Teacher.js'
+import myProfile from './MyProfile.js'
 
 class Portal extends React.Component {
   constructor(props) {
@@ -60,6 +61,7 @@ class Portal extends React.Component {
             <Route path="/portal/review" exact component={ PortalReview }/>
             <Route path="/portal/course" component={ Course }/>
             <Route path="/portal/teacher" component={Teacher}/>
+            <Route path="/portal/myProfile" component={myProfile}/>
             <Route path="/reviews" exact component={ Reviews }/>
           </div>
         </Router>
