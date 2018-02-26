@@ -3,7 +3,7 @@ var router = express.Router();
 var mysql = require('mysql');
 var mysqlConf = require('../config.js').mysql_pool;
 
-const fetchUser = (cb) => {
+const fetchUser = (email, cb) => {
   mysqlConf.getConnection(function (err, connection) {
     connection.query({
       sql: 'SELECT * FROM user WHERE email = ?',

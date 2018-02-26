@@ -37,6 +37,7 @@ class PortalReview extends React.Component {
     review: undefined,
     comments: [],
     addComment: false,
+    newComment: "",
   }
 
   handleSingOut(e) {
@@ -44,6 +45,69 @@ class PortalReview extends React.Component {
     //TODO add so we remove the cookie
     this.props.history.push('/');
     console.log("TRY TO SIGN OUT")
+  }
+
+  CommentClick(event) {
+    this.setState({newComment: event.target.value});
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    var email = 'admin@reviuuer.se' // TODO remove hard coding later
+    var comment = this.state.newComment;
+    var review_id = qs.parse(this.props.location.search).review_id;
+
+    var fetchURLUser = `/api/user?email=${email}`;
+    fetch( fetchURLUser )
+      .then(res => { 
+        if(res.status !== 200) {
+          console.log('Looks like there was a problem. Status Code: ' +
+            res.status);
+          return;
+        }
+        res.json()
+          .then(data => {
+            const user = data[0]
+
+            var fetchURLComment = `/api/addcomment`
+            fetch(fetchURLComment, {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                user_id: user.id,
+                review_id: review_id,
+                comment_text: comment
+              })
+            }).then(() => {
+              this.fetchComments()
+            })
+          })
+      })
+  }
+
+  fetchComments() {
+    const review_id = qs.parse(this.props.location.search).review_id;
+
+    let fetchURLcomment = `/api/comments?review_id=${review_id}`;
+    fetch( fetchURLcomment )
+      .then((res) => {
+        if(res.status !== 200) {
+          console.log('Looks like there was a problem. Status Code: ' +
+            res.status);
+          return;
+        }
+        console.log(res)
+        res.json()
+          .then(comments => {
+            this.setState({ 
+              comments: comments,
+              addComment: false,
+              newComment: "", })
+          });
+      })
   }
 
   componentWillMount() {
@@ -57,7 +121,6 @@ class PortalReview extends React.Component {
             res.status);
           return;
         }
-        console.log(res)
         res.json()
           .then(review => {
             const data = review[0]
@@ -65,20 +128,8 @@ class PortalReview extends React.Component {
           });
       })
 
-    let fetchURLcomment = `/api/comments?review_id=${review_id}`;
-    fetch( fetchURLcomment )
-      .then((res) => {
-        if(res.status !== 200) {
-          console.log('Looks like there was a problem. Status Code: ' +
-            res.status);
-          return;
-        }
-        console.log(res)
-        res.json()
-          .then(comments => {
-            this.setState({ comments })
-          });
-      })
+    this.fetchComments();
+
     document.body.classList.remove('home');
     document.body.classList.add('portal'); //adding the correct background by setting the class of the body
   }
@@ -164,21 +215,27 @@ class PortalReview extends React.Component {
         <h2 className="attributesStyle">Teacher review: </h2> 
         <p className="reviewText">{review.teacher_review}</p>
         <hr className="review"/>
-        <div style={{display: "flex"}}>
-          <h2 className="attributesStyle">User comments</h2>
+        <div className="user-comments-container margin">
+          <h2 className="attributesStyle user-comments">User comments</h2>
           <img onClick={this.renderAddComment.bind(this)} src={addComment} className="addComment" />
-
-          {this.state.addComment ? 
-          <p>Add comment here!</p>
-          :
-          <p>Can't add comment right now</p>
-          }
         </div>
+
+        {this.state.addComment ? 
+        <div style={{width: "90%"}}>
+          <p style={{margin: "5px 0 0 3px"}}>New comment:</p>
+          <form className="comment-form" onSubmit={this.handleSubmit.bind(this)}>
+            <textarea cols="40" rows="5" className="new-comment" placeholder="Write comment here..." value={this.state.newComment} onChange={this.CommentClick.bind(this)} />
+            <input className="comment-submit" type="submit" value="SUBMIT" />
+          </form>
+        </div>
+        :
+        undefined
+          }
         <ul style={{margin: 0, padding: 0, width: "100%"}}>
           {comments.map( c => 
             <li key={c.id} id={c.id} style={{color: 'black', listStyleType: "none"}}>
             <div>
-              <p className="commentEmail">{c.email}</p>
+              <p className="commentEmail">user#{c.user_id}</p>
               <p className="commentDate"> {this.parseTimeStamp(c.date)} </p>
             </div>
               <p className="reviewText">{c.comment_text}</p>
@@ -192,7 +249,6 @@ class PortalReview extends React.Component {
   render() {
     const { review } = this.state;
 
-    console.log(review);
     return (
       <div className="portal">
         <div className='header'>

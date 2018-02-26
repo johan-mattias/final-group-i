@@ -6,7 +6,7 @@ var mysqlConf = require('../config.js').mysql_pool;
 const fetchComments = (review_id, cb) => {
   mysqlConf.getConnection(function (err, connection) {
     connection.query({
-      sql: 'SELECT c.*, u.email FROM comment c INNER JOIN user u ON c.user_id = u.id WHERE review_id = ?',
+      sql: 'SELECT c.*, u.email FROM comment c INNER JOIN user u ON c.user_id = u.id WHERE review_id = ? ORDER BY date DESC',
       timeout: 40000, // 40s
       values: [review_id]
     }, function (error, results, fields) {
