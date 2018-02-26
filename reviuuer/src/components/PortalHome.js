@@ -4,7 +4,6 @@ import {ReactDOM, BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import Cookies from "universal-cookie";
 import {withRouter} from "react-router-dom";
 
-import Reviews from './Reviews.js';
 import Footer from './Footer';
 import Home from './Home.js';
 import Course from './Course.js';

@@ -6,7 +6,6 @@ import {withRouter} from "react-router-dom";
 
 import PortalHome from './PortalHome.js';
 import PortalReview from './PortalReview.js';
-import Reviews from './Reviews.js';
 import Home from './Home.js';
 import Course from './Course.js';
 import Teacher from './Teacher.js'
@@ -62,7 +61,6 @@ class Portal extends React.Component {
             <Route path="/portal/course" component={ Course }/>
             <Route path="/portal/teacher" component={Teacher}/>
             <Route path="/portal/myProfile" component={myProfile}/>
-            <Route path="/reviews" exact component={ Reviews }/>
           </div>
         </Router>
     );

@@ -6,7 +6,6 @@ import Cookies from "universal-cookie";
 import '../Style/App.css';
 import Login from './LoginPage.js';
 import Register from './RegisterPage';
-import Reviews from './Reviews.js';
 import AddReview from './AddReviewPage';
 import Splash from './Splash';
 import Portal from './Portal';
@@ -26,7 +25,6 @@ class Home extends React.Component {
               <Route path="/portal" exact component={ Portal }/>
               <Route path="/login" exact component={ Login }/>
               <Route path="/register" exact component={ Register }/>
-              <Route path="/reviews" exact component={ Reviews }/>
               <Route path="/addreview" exact component={ AddReview }/>
             </div>   
         </Router>
