@@ -23,10 +23,9 @@
     height: 22px;
 }
 .backArrow {
-    margin-left: 32px;
-    margin-top: 16px;
-    width: 40px;
-    height: 60px;
+    margin: 16px 0 12px 16px;
+    width: 25px;
+    height: 45px;
 }
 .thumb {
     height: 60px;

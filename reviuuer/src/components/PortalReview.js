@@ -253,9 +253,6 @@ class PortalReview extends React.Component {
       <div className="portal">
         <div className='header'>
           <img onClick={this.context.router.history.goBack} src={backArrow} className="backArrow" />
-          <div className = "signOutContainer">
-            <button className="signOut" onClick={this.handleSingOut}>SIGN OUT</button>
-          </div>
         </div>
         <div>
           {review ? this.printReview() : undefined}
