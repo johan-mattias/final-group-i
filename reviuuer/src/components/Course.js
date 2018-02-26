@@ -1,5 +1,6 @@
 import React from 'react'
 import Cookies from "universal-cookie";
+import {withRouter} from "react-router-dom";
 
 import Footer from './Footer';
 import '../Style/Portal.css';
@@ -101,4 +102,4 @@ class Course extends React.Component{
   }
 }
 
-export default Course
+export default withRouter(Course);

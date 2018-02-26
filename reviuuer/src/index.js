@@ -9,6 +9,10 @@ import Home from './components/Home';
 import Splash from './components/Splash';
 import Login from './components/LoginPage';
 import Register from './components/RegisterPage';
+import PortalReview from './components/PortalReview.js';
+import Course from './components/Course.js';
+import Teacher from './components/Teacher.js'
+import myProfile from './components/MyProfile.js'
 
 import './Style/index.css';
 
@@ -26,6 +30,10 @@ class App extends React.Component {
                 <Route exact path="/login" exact component={ Login }/>
                 <Route exact path="/register" exact component={ Register }/>
                 <Route exact path='/Portal' component={ Home }/>
+                <Route exact path="/portal/review/" exact component={ PortalReview }/>
+                <Route exact path="/portal/course/" exact component={ Course }/>
+                <Route exact path="/portal/teacher/" exact component={Teacher}/>
+                <Route exact path="/portal/myProfile/" exact component={myProfile}/>
             </div>
         </Router>
     )
