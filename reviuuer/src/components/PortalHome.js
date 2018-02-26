@@ -89,9 +89,9 @@ class PortalHome extends React.Component {
     return (
       <div className="portal">
         <div className = 'header'>
-          <h1>Home</h1>
+          <h1 className="headerText">ReviUUer</h1>
         </div>
-        <ul className="reviueHomeul">
+        <ul className="portalList">
           {this.state.reviews.map( r =>
             <li className="reviueHomeli" onClick={this.handleClick.bind(this)} key={r.id} id={r.id}>
               Course: {r.course_name} Quality: {r.quality}/5

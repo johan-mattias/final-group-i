@@ -58,9 +58,9 @@ class Portal extends React.Component {
             <Route path="/" exact component={ Home }/>
             <Route path="/portal" exact component={ PortalHome }/>
             <Route path="/portal/review" exact component={ PortalReview }/>
-            <Route path="/portal/course" component={ Course }/>
-            <Route path="/portal/teacher" component={Teacher}/>
-            <Route path="/portal/myProfile" component={myProfile}/>
+            <Route path="/portal/course" exact component={ Course }/>
+            <Route path="/portal/teacher" exact component={Teacher}/>
+            <Route path="/portal/myProfile" exact component={myProfile}/>
           </div>
         </Router>
     );

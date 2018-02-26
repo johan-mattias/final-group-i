@@ -8,27 +8,10 @@ class Course extends React.Component{
   constructor(props) {
     super(props);
 
-     this.handleSingOut = this.handleSingOut.bind(this);
-  }
-
-  state = {
-    courses: []
-  }
-
-  handleClick(e) {
-    e.preventDefault();
-    //TODO add so we remove the cookie
-    console.log("HANDLE CLICK")
-      // const id = e.target.id;
-      // //TODO add so we remove the cookie
-      // this.props.history.push(`/portal/review?review_id=${id}`);
-  }
-
-  handleSingOut(e) {
-    e.preventDefault();
-    //TODO add so we remove the cookie
-    this.props.history.push('/');
-    console.log("TRY TO SIGN OUT")
+    this.state = {
+      courses: [],
+      search: '',
+    }
   }
 
   componentWillMount() {
@@ -75,27 +58,42 @@ class Course extends React.Component{
     document.body.classList.add('portal'); //adding the correct background by setting the class of the body
   }
 
+  searchClick(e){
+    e.preventDefault();
+    this.setState({search: e.target.value});
+  }
+
+    handleClick(e) {
+    e.preventDefault();
+    console.log("HANDLE CLICK")
+      // const id = e.target.id;
+      // //TODO add so we remove the cookie
+      // this.props.history.push(`/portal/review?review_id=${id}`);
+    }
+
   render() {
-    console.log(this.state.courses);
+    let filteredCourses = this.state.courses.filter(
+      (course) => {
+        return course.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+      }
+    );
     return (
       <div className="portal">
         <div className = 'header'>
-          <h1>Courses</h1>
+          <div className="filter-list">
+            <form>
+                <input className="searchbar" type="text" placeholder="Search..." value={this.state.search || ''} onChange={this.searchClick.bind(this)}/>
+            </form>
+          </div>
         </div>
-        <div className = 'coursePage'>
-        <div className = 'columnHeader'>
-          <h3>Course </h3>
-          <h3>Rating </h3>
-          <h3>Comments </h3>
-        </div>
-        <ul className = 'portalList'>
-        {this.state.courses.map(c =>
-        <li onClick={this.handleClick.bind(this)} key={c.id} id={c.id}>
-        {c.name} Average score<br></br> {c.averageRating}<br></br> {c.first_name} {c.last_name} Click for more info
-        </li>
-      )}
-
-        </ul>
+        <div className='coursePage'>
+          <ul className = 'portalList'>
+          {filteredCourses.map(c =>
+            <li onClick={this.handleClick.bind(this)} key={c.id} id={c.id}>
+            {c.name} Average score<br></br> {c.averageRating}<br></br> {c.first_name} {c.last_name} Click for more info
+            </li>
+          )}
+          </ul>
         </div>
         <Footer/>
       </div>

@@ -8,25 +8,10 @@ class Teacher extends React.Component{
   constructor(props) {
     super(props);
 
-     this.handleSingOut = this.handleSingOut.bind(this);
-  }
-
-  state = {
-    teachers: []
-   }
-
-   handleClick(e){
-     e.preventDefault()
-     console.log("HANDLE CLICK")
-     // const id = e.target.id;
-     // //TODO add so we remove the cookie
-     // this.props.history.push(`/portal/review?review_id=${id}`);
-   }
-  handleSingOut(e) {
-    e.preventDefault();
-    //TODO add so we remove the cookie
-    this.props.history.push('/');
-    console.log("TRY TO SIGN OUT")
+    this.state = {
+      teachers: [],
+      search: '',
+    }
   }
 
   componentWillMount() {
@@ -73,20 +58,38 @@ class Teacher extends React.Component{
     document.body.classList.add('portal'); //adding the correct background by setting the class of the body
   }
 
+  searchClick(e){
+    e.preventDefault();
+    this.setState({search: e.target.value});
+  }
+
+  handleClick(e){
+     e.preventDefault()
+     console.log("HANDLE CLICK")
+     // const id = e.target.id;
+     // //TODO add so we remove the cookie
+     // this.props.history.push(`/portal/review?review_id=${id}`);
+   }
+
   render() {
+    let filteredTeachers = this.state.teachers.filter(
+      (teacher) => {
+        return teacher.first_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1; //Add here when we using the last name also.
+      }
+    );
+
     return(
       <div className="portal">
         <div className = 'header'>
-          <h1>Teachers</h1>
+          <div className="filter-list">
+            <form>
+                <input className="searchbar" type="text" placeholder="Search..." value={this.state.search || ''} onChange={this.searchClick.bind(this)}/>
+            </form>
+          </div>
         </div>
         <div className = 'teacherPage'>
-          <div className = 'columnHeader'>
-            <h3>Teacher </h3>
-            <h3>Rating </h3>
-            <h3>Comments </h3>
-          </div>
           <ul className = 'portalList'>
-          {this.state.teachers.map(t =>
+          {filteredTeachers.map(t =>
            <li onClick={this.handleClick.bind(this)} key={t.id} id={t.id}>
             {t.first_name}
            </li>
