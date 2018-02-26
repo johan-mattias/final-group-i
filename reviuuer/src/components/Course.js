@@ -101,7 +101,7 @@ class Course extends React.Component{
           <ul className = 'portalList'>
           {filteredCourses.map(c =>
             <li className="reviueHomeli" onClick={this.handleClick.bind(this)} key={c.id} id={c.id}>
-            <div className = "liLeftside"> 
+            <div className = "liLeftside">
               <div className="liCourse">{this.subString(c.name)}</div>
               <div className ="liTeachForm">{c.teaching_form}</div>
             </div>

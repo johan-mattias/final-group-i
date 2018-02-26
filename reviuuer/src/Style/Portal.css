@@ -8,12 +8,12 @@ body.portal{
 }
 
 /*
- * 
+ *
  * Portallist style
  * --------------------------------------------------------------
  */
 
- 
+
 .portalList{
     margin-top: 80px;
     padding: 0;
@@ -37,7 +37,7 @@ body.portal{
 }
 
 /*
- * 
+ *
  * Portallist home style
  * --------------------------------------------------------------
  */
@@ -92,11 +92,11 @@ li.reviueHomeli{
      opacity: 0.6;
  }
 
- 
+
 
 
 /*
- * 
+ *
  * Portallist course style
  * --------------------------------------------------------------
  */
@@ -105,7 +105,7 @@ li.reviueHomeli{
 .liLeftside{
     margin-left: 10px;
     flex: 1;
-     
+
  }
  .liCourse{
      font-size: 18px;
@@ -120,10 +120,10 @@ li.reviueHomeli{
      text-align: center;
      flex: 1;
      max-width: 150px;
- 
+
  }
 
- .liAvgHeader{     
+ .liAvgHeader{
     font-size: 16px;
  }
 
@@ -136,16 +136,16 @@ li.reviueHomeli{
     font-size: 14px;
     text-decoration:  none;
     opacity: 0.6;
-    
+
  }
  .courseNavLink:visited {
     /* Applies to all visited links */
     text-decoration:  none;
     color:            black;
-    
-    } 
 
-    
+    }
+
+
 
 .columnHeader{
     display: flex;
@@ -235,6 +235,3 @@ input.searchbar{
 input.searchbar{
 
 }
-
-
-
