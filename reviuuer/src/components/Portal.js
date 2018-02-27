@@ -10,6 +10,7 @@ import Home from './Home.js';
 import Course from './Course.js';
 import Teacher from './Teacher.js'
 import myProfile from './MyProfile.js'
+import PortalAddReview from './PortalAddReview.js';
 
 class Portal extends React.Component {
   constructor(props) {
@@ -56,11 +57,12 @@ class Portal extends React.Component {
         <Router>
           <div>
             <Route path="/" exact component={ Home }/>
-            <Route exact path="/portal/" exact component={ PortalHome }/>
-            <Route exact path="/portal/review/" component={ PortalReview }/>
-            <Route exact path="/portal/course/" component={ Course }/>
-            <Route exact path="/portal/teacher/" component={Teacher}/>
-            <Route exact path="/portal/myProfile/" component={myProfile}/>
+            <Route path="/portal" exact component={ PortalHome }/>
+            <Route path="/portal/review" exact component={ PortalReview }/>
+            <Route path="/portal/course" component={ Course }/>
+            <Route path="/portal/teacher" component={Teacher}/>
+            <Route path="/portal/myprofile" component={myProfile}/>
+            <Route path="/portal/addreview" exact component={ PortalAddReview }/>
           </div>
         </Router>
     );

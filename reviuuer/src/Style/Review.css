@@ -159,3 +159,9 @@ h2 {
     position: relative;
     width: 100%
 }
+
+.select-text {
+    margin-bottom: 2px;
+    font-weight: lighter;
+    font-size: 20px;
+}

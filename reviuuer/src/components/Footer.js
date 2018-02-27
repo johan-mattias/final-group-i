@@ -9,24 +9,24 @@ import '../Style/Button.css'
 import '../Style/Portal.css'
 import '../Style/Img.css'
 
-class Footer extends Component{    
+class Footer extends Component{
   render() {
     return(
-      <div className = "footer"> 
+      <div className = "footer">
         <NavLink to="/portal" exact activeClassName="selected" className = "navLink">
           <button className="nav" ><img src = {HomeIcon} className = "navIcon homeNavIcon"></img><br/>Home</button>
         </NavLink>
-        <NavLink to="/portal/Course" exact activeClassName="selected" className = "navLink" >
+        <NavLink to="/portal/course" exact activeClassName="selected" className = "navLink" >
           <button className="nav" ><img src = {CourseIcon} className = "navIcon courseNavIcon"></img><br/>Courses</button>
         </NavLink>
-        {/* <NavLink to="/portal/Teacher" exact activeClassName="selected" className = "navLink" >
-          <button className="nav"><img src = {TeacherIcon} className = "navIcon teachNavIcon"></img><br/>Teachers</button>    
-        </NavLink> */}
-        <NavLink to="/portal/myProfile" exact activeClassName="selected" className = "navLink" >
-          <button className="nav"><img src = {ProfileIcon} className = "navIcon profileNavIcon"></img><br/>My Profile</button>    
+        <NavLink to="/portal/teacher" exact activeClassName="selected" className = "navLink" >
+          <button className="nav"><img src = {TeacherIcon} className = "navIcon teachNavIcon"></img><br/>Teachers</button>
         </NavLink>
-        <NavLink to="/portal/Review" exact activeClassName="selectedAdd" className = "navLink" >
-          <button className="nav add"><img src = {AddIcon} className = "navIcon addNavIcon"></img><br/>Add Review</button>    
+        <NavLink to="/portal/myprofile" exact activeClassName="selected" className = "navLink" >
+          <button className="nav"><img src = {ProfileIcon} className = "navIcon profileNavIcon"></img><br/>My Profile</button>
+        </NavLink>
+        <NavLink to="/portal/addreview" exact activeClassName="selectedAdd" className = "navLink" >
+          <button className="nav add"><img src = {AddIcon} className = "navIcon addNavIcon"></img><br/>Add Review</button>
         </NavLink>
       </div>
     );
