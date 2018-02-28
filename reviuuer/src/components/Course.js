@@ -1,6 +1,6 @@
 import React from 'react'
 import Cookies from "universal-cookie";
-import {withRouter} from "react-router-dom";
+import {withRouter, NavLink, Link} from "react-router-dom";
 
 import Footer from './Footer';
 import '../Style/Portal.css';
@@ -91,7 +91,15 @@ class Course extends React.Component{
           <ul className = 'portalList'>
           {filteredCourses.map(c =>
             <li onClick={this.handleClick.bind(this)} key={c.id} id={c.id}>
-            {c.name} Average score<br></br> {c.averageRating}<br></br> {c.first_name} {c.last_name} Click for more info
+            <div className = "liLeftside"> 
+              <div className="liCourse">{c.name}</div>
+              <div className ="liTeachForm">{c.teaching_form}</div>
+            </div>
+            <div className = "liRightside">
+              <div className="liAvgHeader"> Average score </div>
+              <div className= "liAvgScore">{parseFloat(c.averageRating, 2)}</div>
+              <Link to="/portal" className = "courseNavLink" >Click for more info</Link>
+            </div>
             </li>
           )}
           </ul>
