@@ -19,9 +19,6 @@ class Footer extends Component{
         <NavLink to="/portal/course" exact activeClassName="selected" className = "navLink" >
           <button className="nav" ><img src = {CourseIcon} className = "navIcon courseNavIcon"></img><br/>Courses</button>
         </NavLink>
-        <NavLink to="/portal/teacher" exact activeClassName="selected" className = "navLink" >
-          <button className="nav"><img src = {TeacherIcon} className = "navIcon teachNavIcon"></img><br/>Teachers</button>
-        </NavLink>
         <NavLink to="/portal/myprofile" exact activeClassName="selected" className = "navLink" >
           <button className="nav"><img src = {ProfileIcon} className = "navIcon profileNavIcon"></img><br/>My Profile</button>
         </NavLink>

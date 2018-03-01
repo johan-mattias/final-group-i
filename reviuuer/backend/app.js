@@ -6,8 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
-var getTeachers = require('./routes/getTeachers');
 var getCourses = require('./routes/getCourses');
 var getReviews = require('./routes/getReviews');
 var getComments = require('./routes/getComments');
@@ -34,8 +32,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', index);
-app.use('/api/users', users);
-app.use('/api/teachers', getTeachers);
 app.use('/api/courses', getCourses);
 app.use('/api/reviews', getReviews);
 app.use('/api/comments', getComments);

@@ -7,7 +7,6 @@ import {withRouter} from "react-router-dom";
 import Footer from './Footer';
 import Home from './Home.js';
 import Course from './Course.js';
-import Teacher from './Teacher.js'
 
 import LikeThumbIcon from '../img/Thumb.png'
 import DislikeThumbIcon from '../img/DislikeThumb.png'
@@ -74,14 +73,16 @@ class PortalHome extends React.Component {
             console.log(access)
             if (access === true) {
                console.log("correct cookie ")
-                            fetch('/api/reviews')
+                fetch('/api/reviews')
                 .then((res) => {
                   if(res.status !== 200) {
                     console.log('Looks like there was a problem. Status Code: ' +
                       res.status);
                     return;
                   }
+                  console.log('RESULT');
                   console.log(res)
+                  console.log('RESULT');
                   res.json()
                     .then(reviews => this.setState({ reviews }));
                   })

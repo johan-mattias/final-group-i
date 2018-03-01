@@ -8,7 +8,6 @@ import qs from "query-string";
 import Footer from './Footer';
 import Home from './Home.js';
 import Course from './Course.js';
-import Teacher from './Teacher.js';
 import SelectCourse from './SelectCourse.js';
 
 import backArrow from '../img/back-arrow.png';
@@ -33,17 +32,15 @@ class PortalAddReview extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  state = { 
+  state = {
     review: undefined,
     comments: [],
     addComment: false,
     newComment: "",
 
     course_options: [],
-    teacher_options: [],
     user_id: '1',
     course_id: null,
-    teacher_id: null,
     quality: '',
     difficulty: '',
     can_recommend: '',
@@ -81,11 +78,11 @@ class PortalAddReview extends React.Component {
   }
 
   setupOptions(value, label) {
-    return { 
+    return {
       value: value,
       label: label
     };
-  } 
+  }
 
   fetchCourses() {
     let fetchURL = `/api/courses?all_courses=1`;
@@ -104,27 +101,6 @@ class PortalAddReview extends React.Component {
               options.push(this.setupOptions(c.id, c.name));
             })
             this.setState({ course_options: options });
-          });
-      })
-  }
-
-  fetchTeachers() {
-    let fetchURL = `/api/teachers`;
-    fetch( fetchURL )
-      .then((res) => {
-        if(res.status !== 200) {
-          console.log('Looks like there was a problem. Status Code: ' +
-            res.status);
-          return;
-        }
-        res.json()
-          .then(courses => {
-            let options = this.state.teacher_options;
-
-            courses.map( t => {
-              options.push(this.setupOptions(t.id, t.first_name + ' ' + t.last_name));
-            })
-            this.setState({ teacher_options: options });
           });
       })
   }
@@ -148,7 +124,6 @@ class PortalAddReview extends React.Component {
       })
 
     this.fetchCourses();
-    this.fetchTeachers();
 
     document.body.classList.remove('home');
     document.body.classList.add('portal'); //adding the correct background by setting the class of the body
@@ -209,17 +184,12 @@ class PortalAddReview extends React.Component {
     this.setState({course_id})
   }
 
-  cbChangeTeacher(teacher_id, error) {
-    this.setState({teacher_id})
-  }
 
-  
 
   render() {
     const { review } = this.state;
 
     console.log("Selected course_id = " + this.state.course_id);
-    console.log("Selected teacher_id = " + this.state.teacher_id);
 
     return (
       <div className="portal">
@@ -245,30 +215,29 @@ class PortalAddReview extends React.Component {
           <h2 className="select-text">Select course</h2>
           <SelectCourse value={this.state.course_id} onChangeCB={this.cbChangeCourse.bind(this)} options={this.state.course_options} />
           <h2 className="select-text">Select teacher</h2>
-          <SelectCourse value={this.state.teacher_id} onChangeCB={this.cbChangeTeacher.bind(this)} options={this.state.teacher_options} />
 
           <hr className="review"/>
           <h2 className="attributesStyle">Quality<br/> {this.printGradedScale(0)}</h2>
           <h2 className="attributesStyle">Difficulty<br/> {this.printGradedScale(0)}</h2>
           <h2 className="attributesStyle">Worth credits<br/> {this.printGradedScale(0)}</h2>
           <h2 className="attributesStyle">Percentage mandatory<br/> {this.printGradedScale(0)}</h2>
-          <h2 className="attributesStyle">Books required: </h2> 
+          <h2 className="attributesStyle">Books required: </h2>
           {0 ? this.printRadio(true) : this.printRadio(false)}
-          <h2 className="attributesStyle">Has exam: </h2> 
+          <h2 className="attributesStyle">Has exam: </h2>
           {0 ? this.printRadio(true) : this.printRadio(false)}
-          <h2 className="attributesStyle">Can reccommend: </h2> 
-          {0 ? 
-          <img onClick={this.context.router.history.goBack} src={thumbGreen} className="thumb" /> : 
+          <h2 className="attributesStyle">Can reccommend: </h2>
+          {0 ?
+          <img onClick={this.context.router.history.goBack} src={thumbGreen} className="thumb" /> :
           <img onClick={this.context.router.history.goBack} src={thumbRed} className="thumb" />}
           <hr className="review"/>
-          <h2 className="attributesStyle">Course review: </h2> 
+          <h2 className="attributesStyle">Course review: </h2>
           <p className="reviewText">{0}</p>
-          <h2 className="attributesStyle">Teacher review: </h2> 
+          <h2 className="attributesStyle">Teacher review: </h2>
           <p className="reviewText">{0}</p>
           <hr className="review"/>
         </div>
-        
-        <Footer/> 
+
+        <Footer/>
       </div>
     );
   };

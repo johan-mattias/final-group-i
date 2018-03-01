@@ -1,10 +1,9 @@
 CREATE DATABASE reviuuer CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
- 
--- CREATE USER 'student'@'%' IDENTIFIED BY 'student18';
 
 CREATE TABLE reviuuer.user (
     id int NOT NULL AUTO_INCREMENT,
-    email varchar(100) NOT NULL,
+	username varchar(255) NOT NULL,
+    email varchar(255) NOT NULL,
     password varchar(255) NOT NULL,
 	date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (id)
@@ -15,18 +14,10 @@ CREATE TABLE reviuuer.course (
 	name varchar(255),
  	c_level ENUM('G1', 'G2', 'A1', 'A2'),
 	pace_of_study  int,
-	teaching_form varchar(255),
-	course_language ENUM('English', 'Swedish', 'Other'),
+	distance bool,
+	course_language ENUM('english', 'swedish', 'other'),
 	app_code varchar(255),
 	course_online bool,
-	PRIMARY KEY (id)
-);
-
-CREATE TABLE reviuuer.teacher (
-	id int NOT NULL AUTO_INCREMENT,
-	first_name varchar(255),
-	last_name varchar(255),
-	title varchar(255),
 	PRIMARY KEY (id)
 );
 
@@ -34,9 +25,9 @@ CREATE TABLE reviuuer.review (
 	id int NOT NULL AUTO_INCREMENT,
 	user_id int,
 	course_id int,
-	teacher_id int,
+	teacher_name varchar(255),
 	quality ENUM('1','2','3','4','5'),
-	difficulty ENUM('1','2','3','4','5'), 
+	difficulty ENUM('1','2','3','4','5'),
 	can_recommend bool,
 	worth_credits ENUM('1','2','3','4','5'),
 	books_req bool,
@@ -46,9 +37,8 @@ CREATE TABLE reviuuer.review (
 	teacher_review MEDIUMTEXT,
 	date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (id),
-	FOREIGN KEY (user_id) REFERENCES reviuuer.user(id),	
-	FOREIGN KEY (course_id) REFERENCES reviuuer.course(id),
-	FOREIGN KEY (teacher_id) REFERENCES reviuuer.teacher(id)
+	FOREIGN KEY (user_id) REFERENCES reviuuer.user(id),
+	FOREIGN KEY (course_id) REFERENCES reviuuer.course(id)
 );
 
 CREATE TABLE reviuuer.comment (
@@ -64,7 +54,7 @@ CREATE TABLE reviuuer.comment (
 
 CREATE TABLE reviuuer.likeAndDislike (
 	id int NOT NULL AUTO_INCREMENT,
-	user_id int, 
+	user_id int,
 	review_id int,
 	comment_id int,
   	like_type ENUM('like', 'dislike'),
@@ -81,33 +71,6 @@ CREATE TABLE reviuuer.period (
 	PRIMARY KEY (id),
 	FOREIGN KEY (course_id) REFERENCES reviuuer.course(id)
 );
-
-CREATE TABLE reviuuer.courseAndTeacher (
-	id int NOT NULL AUTO_INCREMENT,
-	course_id int,
-	teacher_id int,
-	PRIMARY KEY (id),
-	FOREIGN KEY (course_id) REFERENCES reviuuer.course(id),
-	FOREIGN KEY (teacher_id) REFERENCES reviuuer.teacher(id)
-);
-
-CREATE TABLE reviuuer.program (
-	id int NOT NULL AUTO_INCREMENT,
-	name varchar(255),
-	credits int,
-	master bool,
-	PRIMARY KEY (id)
-);
-
-CREATE TABLE reviuuer.courseAndProgram (
-	id int NOT NULL AUTO_INCREMENT,
-	course_id int,
-	program_id int,
-	PRIMARY KEY (id),
-	FOREIGN KEY (course_id) REFERENCES reviuuer.course(id),
-	FOREIGN KEY (program_id) REFERENCES reviuuer.program(id)
-);
-
 USE reviuuer;
 
 -- Add indexes
@@ -116,254 +79,190 @@ CREATE INDEX comment_id_index ON likeAndDislike (comment_id) USING HASH;
 
 -- Mock data
 -- user
-insert into user (id, email, password) values (1, 'admin@reviuuer.se', '$2a$10$JRyL8idfsqGNFj9V5aS49elEW6e.tJ8/5GZz6/aU8tw8doJqDE39O');
-insert into user (id, email, password) values (2, 'lgodden1', 'yRZaCdPo');
-insert into user (id, email, password) values (3, 'mnealand2', 'F2ifBuNfvP');
-insert into user (id, email, password) values (4, 'ebrandoni3', 'GbPMZ8x');
-insert into user (id, email, password) values (5, 'jminthorpe4', '7cEeM40si0');
-insert into user (id, email, password) values (6, 'vrozenzweig5', 'UyLdAN31WJ');
-insert into user (id, email, password) values (7, 'cpedroli6', 'VQV8KyPq');
-insert into user (id, email, password) values (8, 'mpenreth7', '3VaaVq2');
-insert into user (id, email, password) values (9, 'jspadoni8', 'lkjqaepiW');
-insert into user (id, email, password) values (10, 'ahuckel9', 'OJ6A0L885');
-insert into user (id, email, password) values (11, 'bknolesa', '51moL8vaYKph');
-insert into user (id, email, password) values (12, 'cjosuweitb', 'X6W2LJXT9f5d');
-insert into user (id, email, password) values (13, 'astrangmanc', 'lMxISBsJS6');
-insert into user (id, email, password) values (14, 'dkelselld', 'qzcXZWLL');
-insert into user (id, email, password) values (15, 'smirandoe', 'nZRIjtQwtQM4');
-insert into user (id, email, password) values (16, 'drapinf', 'dgIHSefUy');
-insert into user (id, email, password) values (17, 'epurvessg', 'CAN01XDOz');
-insert into user (id, email, password) values (18, 'sdavidgeh', '6IvmO5O3h');
-insert into user (id, email, password) values (19, 'hklauseni', 'VLHXdCF');
-insert into user (id, email, password) values (20, 'dkohtlerj', 'z3uZ6IC7Ef');
-insert into user (id, email, password) values (21, 'jkynmank', 'fYPVZF');
-insert into user (id, email, password) values (22, 'moverill', '3K8veGg');
-insert into user (id, email, password) values (23, 'rblydem', 'neB77iOCob');
-insert into user (id, email, password) values (24, 'sdyen', 'jUJNpl');
-insert into user (id, email, password) values (25, 'awaterso', 'YPagu3h');
-insert into user (id, email, password) values (26, 'pprincep', 'aNkfWGzC');
-insert into user (id, email, password) values (27, 'kbedberryq', 'agaxjgM30jiK');
-insert into user (id, email, password) values (28, 'lorpinr', 'hCzF8o6Jo8');
-insert into user (id, email, password) values (29, 'cboulders', 'UA84rdvqg');
-insert into user (id, email, password) values (30, 'dmacekt', 'q2rCEn');
-insert into user (id, email, password) values (31, 'cmilbornu', 'v4dwOf');
-insert into user (id, email, password) values (32, 'dkenwardv', 'OyZBNqnSskc');
-insert into user (id, email, password) values (33, 'aharteganw', 'jzNGGin5IuyR');
-insert into user (id, email, password) values (34, 'gfutcherx', 'jGuCpvr');
-insert into user (id, email, password) values (35, 'theliety', 'S8r6sNCp');
-insert into user (id, email, password) values (36, 'ksimondz', '9zQtMN');
-insert into user (id, email, password) values (37, 'khuncoot10', 'UPIjZDpOtH');
-insert into user (id, email, password) values (38, 'rgovett11', 'gItRRWJz1ivf');
-insert into user (id, email, password) values (39, 'jsobczak12', 'PpJvaHkxUl');
-insert into user (id, email, password) values (40, 'tfalla13', '5IEsBQ');
-insert into user (id, email, password) values (41, 'aplumley14', 'MTXmIf8kyXn9');
-insert into user (id, email, password) values (42, 'gstangel15', 'q1HVeBPEV');
-insert into user (id, email, password) values (43, 'fkores16', 'oniIzM351OEr');
-insert into user (id, email, password) values (44, 'fsinncock17', 'HVzWa3K');
-insert into user (id, email, password) values (45, 'kantao18', '8eIKRU');
-insert into user (id, email, password) values (46, 'bseiler19', '3ooPcfV5Q3v1');
-insert into user (id, email, password) values (47, 'ecorsor1a', 'hTOYXCdgGq');
-insert into user (id, email, password) values (48, 'ewesgate1b', 'Whb5RZy9h9M');
-insert into user (id, email, password) values (49, 'ejuanico1c', '4kMcVCR1K');
-insert into user (id, email, password) values (50, 'pdyers1d', 'GFh7opjSWD');
-
--- teacher
-insert into teacher (id, first_name, last_name, title) values (1, 'Helenelizabeth', 'Bartholin', 'Community Outreach Specialist');
-insert into teacher (id, first_name, last_name, title) values (2, 'Kerri', 'Neat', 'Environmental Specialist');
-insert into teacher (id, first_name, last_name, title) values (3, 'Xever', 'Alpine', 'Clinical Specialist');
-insert into teacher (id, first_name, last_name, title) values (4, 'Emili', 'Mower', 'Staff Scientist');
-insert into teacher (id, first_name, last_name, title) values (5, 'Archer', 'Streets', 'Legal Assistant');
-insert into teacher (id, first_name, last_name, title) values (6, 'Alexandrina', 'Lemmers', 'Senior Editor');
-insert into teacher (id, first_name, last_name, title) values (7, 'Carey', 'Quarton', 'Civil Engineer');
-insert into teacher (id, first_name, last_name, title) values (8, 'Karoly', 'Conan', 'Quality Engineer');
-insert into teacher (id, first_name, last_name, title) values (9, 'Killy', 'Cicco', 'Operator');
-insert into teacher (id, first_name, last_name, title) values (10, 'Dulci', 'Winsley', 'Associate Professor');
-insert into teacher (id, first_name, last_name, title) values (11, 'Carline', 'Calver', 'VP Accounting');
-insert into teacher (id, first_name, last_name, title) values (12, 'Kristian', 'Boij', 'Pharmacist');
-insert into teacher (id, first_name, last_name, title) values (13, 'Rosemary', 'Kilpin', 'Help Desk Technician');
-insert into teacher (id, first_name, last_name, title) values (14, 'Kimbra', 'Deval', 'Nuclear Power Engineer');
-insert into teacher (id, first_name, last_name, title) values (15, 'Dallon', 'Dufore', 'Programmer I');
-insert into teacher (id, first_name, last_name, title) values (16, 'Truman', 'Reiach', 'Business Systems Development Analyst');
-insert into teacher (id, first_name, last_name, title) values (17, 'Kath', 'Renner', 'Internal Auditor');
-insert into teacher (id, first_name, last_name, title) values (18, 'Des', 'Ville', 'Human Resources Assistant IV');
-insert into teacher (id, first_name, last_name, title) values (19, 'Brok', 'Emmanuel', 'Recruiting Manager');
-insert into teacher (id, first_name, last_name, title) values (20, 'Dulcea', 'Glendzer', 'Payment Adjustment Coordinator');
-insert into teacher (id, first_name, last_name, title) values (21, 'Alyosha', 'Nickoles', 'Administrative Officer');
-insert into teacher (id, first_name, last_name, title) values (22, 'Brianna', 'Basketter', 'Assistant Manager');
-insert into teacher (id, first_name, last_name, title) values (23, 'Robinet', 'Bromell', 'Senior Quality Engineer');
-insert into teacher (id, first_name, last_name, title) values (24, 'Nessy', 'Crackel', 'Occupational Therapist');
-insert into teacher (id, first_name, last_name, title) values (25, 'Deedee', 'Walicki', 'Account Representative III');
-insert into teacher (id, first_name, last_name, title) values (26, 'Rafe', 'Casterot', 'Health Coach II');
-insert into teacher (id, first_name, last_name, title) values (27, 'Christiana', 'Forrestor', 'Account Representative I');
-insert into teacher (id, first_name, last_name, title) values (28, 'Gayle', 'Riehm', 'Developer I');
-insert into teacher (id, first_name, last_name, title) values (29, 'Adam', 'Newlands', 'General Manager');
-insert into teacher (id, first_name, last_name, title) values (30, 'Cammy', 'Terzi', 'Senior Editor');
-insert into teacher (id, first_name, last_name, title) values (31, 'Kimberley', 'Wilkenson', 'General Manager');
-insert into teacher (id, first_name, last_name, title) values (32, 'Alexandra', 'Treagust', 'Engineer II');
-insert into teacher (id, first_name, last_name, title) values (33, 'Jacquelyn', 'Mogg', 'Financial Advisor');
-insert into teacher (id, first_name, last_name, title) values (34, 'Koralle', 'Rouge', 'VP Quality Control');
-insert into teacher (id, first_name, last_name, title) values (35, 'Della', 'McPeck', 'Database Administrator II');
-insert into teacher (id, first_name, last_name, title) values (36, 'Grantley', 'Gansbuhler', 'Electrical Engineer');
-insert into teacher (id, first_name, last_name, title) values (37, 'Randy', 'Pfaffe', 'Financial Advisor');
-insert into teacher (id, first_name, last_name, title) values (38, 'Engracia', 'Oxburgh', 'Professor');
-insert into teacher (id, first_name, last_name, title) values (39, 'Rod', 'Booler', 'Media Manager III');
-insert into teacher (id, first_name, last_name, title) values (40, 'Renaldo', 'Brewins', 'Graphic Designer');
-insert into teacher (id, first_name, last_name, title) values (41, 'Cletis', 'Fleeming', 'Information Systems Manager');
-insert into teacher (id, first_name, last_name, title) values (42, 'Niels', 'Quin', 'Office Assistant III');
-insert into teacher (id, first_name, last_name, title) values (43, 'Artair', 'Wallice', 'Recruiter');
-insert into teacher (id, first_name, last_name, title) values (44, 'Noami', 'Hurdwell', 'Executive Secretary');
-insert into teacher (id, first_name, last_name, title) values (45, 'Lolita', 'Mallen', 'Statistician IV');
-insert into teacher (id, first_name, last_name, title) values (46, 'Adrea', 'Ibbotson', 'Executive Secretary');
-insert into teacher (id, first_name, last_name, title) values (47, 'Ephrem', 'Bilbery', 'Civil Engineer');
-insert into teacher (id, first_name, last_name, title) values (48, 'Levey', 'Lorimer', 'Registered Nurse');
-insert into teacher (id, first_name, last_name, title) values (49, 'Twila', 'Bulcroft', 'VP Marketing');
-insert into teacher (id, first_name, last_name, title) values (50, 'Fremont', 'Machen', 'Administrative Assistant III');
-
--- program
-insert into program (id, name, credits, master) values (1, 'Civilingenjör IT', 300, 1);
-insert into program (id, name, credits, master) values (2, 'Läkarprogrammet', 300, 1);
-insert into program (id, name, credits, master) values (3, 'Civilingenjör STS', 300, 1);
-insert into program (id, name, credits, master) values (4, 'Lärarprogrammet', 180, 0);
-insert into program (id, name, credits, master) values (5, 'Civilingenjör W', 300, 1);
-insert into program (id, name, credits, master) values (6, 'Juristkand', 180, 0);
-insert into program (id, name, credits, master) values (7, 'Ingenjör bygg', 180, 0);
-insert into program (id, name, credits, master) values (8, 'Fysioterapeut', 180, 0);
-insert into program (id, name, credits, master) values (9, 'Architect', 180, 0);
-insert into program (id, name, credits, master) values (10, 'Juristmaster', 120, 1);
+insert into user (id, username, email, password) values (1, 'admin', 'admin@reviuuer.se', '$2a$10$JRyL8idfsqGNFj9V5aS49elEW6e.tJ8/5GZz6/aU8tw8doJqDE39O');
+insert into user (id, username, email, password) values (2, 'lgodden1', 'lgodden1@mockuser.com', 'yRZaCdPo');
+insert into user (id, username, email, password) values (3, 'mnealand2', 'mnealand2@mockuser.com', 'F2ifBuNfvP');
+insert into user (id, username, email, password) values (4, 'ebrandoni3', 'ebrandoni3@mockuser.com', 'GbPMZ8x');
+insert into user (id, username, email, password) values (5, 'jminthorpe4', 'jminthorpe4@mockuser.com', '7cEeM40si0');
+insert into user (id, username, email, password) values (6, 'vrozenzweig5', 'vrozenzweig5@mockuser.com', 'UyLdAN31WJ');
+insert into user (id, username, email, password) values (7, 'cpedroli6', 'cpedroli6@mockuser.com', 'VQV8KyPq');
+insert into user (id, username, email, password) values (8, 'mpenreth7', 'mpenreth7@mockuser.com', '3VaaVq2');
+insert into user (id, username, email, password) values (9, 'jspadoni8', 'jspadoni8@mockuser.com', 'lkjqaepiW');
+insert into user (id, username, email, password) values (10, 'ahuckel9', 'ahuckel9@mockuser.com', 'OJ6A0L885');
+insert into user (id, username, email, password) values (11, 'bknolesa', 'bknolesa@mockuser.com', '51moL8vaYKph');
+insert into user (id, username, email, password) values (12, 'cjosuweitb', 'cjosuweitb@mockuser.com', 'X6W2LJXT9f5d');
+insert into user (id, username, email, password) values (13, 'astrangmanc', 'astrangmanc@mockuser.com', 'lMxISBsJS6');
+insert into user (id, username, email, password) values (14, 'dkelselld', 'dkelselld@mockuser.com', 'qzcXZWLL');
+insert into user (id, username, email, password) values (15, 'smirandoe', 'smirandoe@mockuser.com', 'nZRIjtQwtQM4');
+insert into user (id, username, email, password) values (16, 'drapinf', 'drapinf@mockuser.com', 'dgIHSefUy');
+insert into user (id, username, email, password) values (17, 'epurvessg', 'epurvessg@mockuser.com', 'CAN01XDOz');
+insert into user (id, username, email, password) values (18, 'sdavidgeh', 'sdavidgeh@mockuser.com', '6IvmO5O3h');
+insert into user (id, username, email, password) values (19, 'hklauseni', 'hklauseni@mockuser.com', 'VLHXdCF');
+insert into user (id, username, email, password) values (20, 'dkohtlerj', 'dkohtlerj@mockuser.com', 'z3uZ6IC7Ef');
+insert into user (id, username, email, password) values (21, 'jkynmank', 'jkynmank@mockuser.com', 'fYPVZF');
+insert into user (id, username, email, password) values (22, 'moverill', 'moverill@mockuser.com', '3K8veGg');
+insert into user (id, username, email, password) values (23, 'rblydem', 'rblydem@mockuser.com', 'neB77iOCob');
+insert into user (id, username, email, password) values (24, 'sdyen', 'sdyen@mockuser.com', 'jUJNpl');
+insert into user (id, username, email, password) values (25, 'awaterso', 'awaterso@mockuser.com', 'YPagu3h');
+insert into user (id, username, email, password) values (26, 'pprincep', 'pprincep@mockuser.com', 'aNkfWGzC');
+insert into user (id, username, email, password) values (27, 'kbedberryq', 'kbedberryq@mockuser.com', 'agaxjgM30jiK');
+insert into user (id, username, email, password) values (28, 'lorpinr', 'lorpinr@mockuser.com', 'hCzF8o6Jo8');
+insert into user (id, username, email, password) values (29, 'cboulders', 'cboulders@mockuser.com', 'UA84rdvqg');
+insert into user (id, username, email, password) values (30, 'dmacekt', 'dmacekt@mockuser.com', 'q2rCEn');
+insert into user (id, username, email, password) values (31, 'cmilbornu', 'cmilbornu@mockuser.com', 'v4dwOf');
+insert into user (id, username, email, password) values (32, 'dkenwardv', 'dkenwardv@mockuser.com', 'OyZBNqnSskc');
+insert into user (id, username, email, password) values (33, 'aharteganw', 'aharteganw@mockuser.com', 'jzNGGin5IuyR');
+insert into user (id, username, email, password) values (34, 'gfutcherx', 'gfutcherx@mockuser.com', 'jGuCpvr');
+insert into user (id, username, email, password) values (35, 'theliety', 'theliety@mockuser.com', 'S8r6sNCp');
+insert into user (id, username, email, password) values (36, 'ksimondz', 'ksimondz@mockuser.com', '9zQtMN');
+insert into user (id, username, email, password) values (37, 'khuncoot10', 'khuncoot10@mockuser.com', 'UPIjZDpOtH');
+insert into user (id, username, email, password) values (38, 'rgovett11', 'rgovett11@mockuser.com', 'gItRRWJz1ivf');
+insert into user (id, username, email, password) values (39, 'jsobczak12', 'jsobczak12@mockuser.com', 'PpJvaHkxUl');
+insert into user (id, username, email, password) values (40, 'tfalla13', 'tfalla13@mockuser.com', '5IEsBQ');
+insert into user (id, username, email, password) values (41, 'aplumley14', 'aplumley14@mockuser.com', 'MTXmIf8kyXn9');
+insert into user (id, username, email, password) values (42, 'gstangel15', 'gstangel15@mockuser.com', 'q1HVeBPEV');
+insert into user (id, username, email, password) values (43, 'fkores16', 'fkores16@mockuser.com', 'oniIzM351OEr');
+insert into user (id, username, email, password) values (44, 'fsinncock17', 'fsinncock17@mockuser.com', 'HVzWa3K');
+insert into user (id, username, email, password) values (45, 'kantao18', 'kantao18@mockuser.com', '8eIKRU');
+insert into user (id, username, email, password) values (46, 'bseiler19', 'bseiler19@mockuser.com', '3ooPcfV5Q3v1');
+insert into user (id, username, email, password) values (47, 'ecorsor1a', 'ecorsor1a@mockuser.com', 'hTOYXCdgGq');
+insert into user (id, username, email, password) values (48, 'ewesgate1b', 'ewesgate1b@mockuser.com', 'Whb5RZy9h9M');
+insert into user (id, username, email, password) values (49, 'ejuanico1c', 'ejuanico1c@mockuser.com', '4kMcVCR1K');
+insert into user (id, username, email, password) values (50, 'pdyers1d', 'pdyers1d@mockuser.com', 'GFh7opjSWD');
 
 -- course
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (1, 'course1', 'G1', 50, 'distans', 'Swedish', 'uzST20Rb8t', 1);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (2, 'course2', 'G2', 100, 'föreläsningar', 'Swedish', 'Xfe7t2oqZS', 0);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (3, 'course3', 'G2', 100, 'distans', 'English', 'IrVe75GK', 0);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (4, 'course4', 'A1', 100, 'distans', 'Other', 'hTv6lE', 0);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (5, 'course5', 'G2', 100, 'föreläsningar', 'English', 'OerHZeh', 0);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (6, 'course6', 'A2', 50, 'distans', 'English', 'SRuiNrQSHf9', 0);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (7, 'course7', 'A1', 100, 'distans', 'Other', '6cBgGP5', 0);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (8, 'course8', 'A2', 100, 'distans', 'Swedish', '1dBKmY5ib9', 1);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (9, 'course9', 'G2', 50, 'föreläsningar', 'English', '0Vypcy', 1);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (10, 'course10', 'G1', 100, 'distans', 'Swedish', 'hibGFtk5wK6q', 1);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (11, 'course11', 'A1', 50, 'föreläsningar', 'Swedish', 'wmViIZYDnpV', 0);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (12, 'course12', 'A1', 100, 'distans', 'Other', 'nBF7LSN', 0);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (13, 'course13', 'A2', 100, 'föreläsningar', 'Swedish', 'dyDfbczl1k6', 1);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (14, 'course14', 'A2', 100, 'distans', 'Swedish', 'q18oD3JkKX', 1);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (15, 'course15', 'A1', 50, 'föreläsningar', 'Other', 'oimXQXv', 1);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (16, 'course16', 'A2', 50, 'föreläsningar', 'English', 'eoDamS2J37h1', 0);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (17, 'course17', 'G1', 100, 'distans', 'Swedish', 'cL0l1DNOhYav', 0);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (18, 'course18', 'G2', 100, 'distans', 'English', 'umKesW', 1);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (19, 'course19', 'A1', 50, 'distans', 'English', '8uV92PhjnJ', 0);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (20, 'course20', 'A2', 50, 'föreläsningar', 'Swedish', '2tJoHBE0tWt', 1);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (21, 'course21', 'A1', 50, 'distans', 'English', 'j8RIvi', 1);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (22, 'course22', 'G2', 50, 'distans', 'Other', 'f9tlbDNP', 1);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (23, 'course23', 'A2', 50, 'distans', 'Other', 'ZTdPuz9e', 1);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (24, 'course24', 'A1', 100, 'distans', 'Other', 'VdUC2fj', 0);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (25, 'course25', 'G1', 100, 'föreläsningar', 'English', 'LjKK51ub8ze', 1);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (26, 'course26', 'A2', 100, 'distans', 'Swedish', '6HYgTWXScx', 0);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (27, 'course27', 'G1', 100, 'föreläsningar', 'English', 'Ww5yjEQ', 1);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (28, 'course28', 'G1', 100, 'distans', 'Swedish', 'n0lEGS75W', 0);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (29, 'course29', 'A1', 100, 'distans', 'Swedish', '5MAkaooQA', 1);
-insert into course (id, name, c_level, pace_of_study, teaching_form, course_language, app_code, course_online) values (30, 'course30', 'G2', 50, 'distans', 'English', 'o5y4vWnvt3P9', 1);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (1, 'course1', 'G1', 50, '1', 'swedish', 'uzST20Rb8t', 1);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (2, 'course2', 'G2', 100, '0', 'swedish', 'Xfe7t2oqZS', 0);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (3, 'course3', 'G2', 100, '1', 'english', 'IrVe75GK', 0);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (4, 'course4', 'A1', 100, '1', 'other', 'hTv6lE', 0);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (5, 'course5', 'G2', 100, '0', 'english', 'OerHZeh', 0);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (6, 'course6', 'A2', 50, '1', 'english', 'SRuiNrQSHf9', 0);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (7, 'course7', 'A1', 100, '1', 'other', '6cBgGP5', 0);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (8, 'course8', 'A2', 100, '1', 'swedish', '1dBKmY5ib9', 1);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (9, 'course9', 'G2', 50, '0', 'english', '0Vypcy', 1);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (10, 'course10', 'G1', 100, '1', 'swedish', 'hibGFtk5wK6q', 1);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (11, 'course11', 'A1', 50, '0', 'swedish', 'wmViIZYDnpV', 0);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (12, 'course12', 'A1', 100, '1', 'other', 'nBF7LSN', 0);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (13, 'course13', 'A2', 100, '0', 'swedish', 'dyDfbczl1k6', 1);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (14, 'course14', 'A2', 100, '1', 'swedish', 'q18oD3JkKX', 1);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (15, 'course15', 'A1', 50, '0', 'other', 'oimXQXv', 1);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (16, 'course16', 'A2', 50, '0', 'english', 'eoDamS2J37h1', 0);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (17, 'course17', 'G1', 100, '1', 'swedish', 'cL0l1DNOhYav', 0);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (18, 'course18', 'G2', 100, '1', 'english', 'umKesW', 1);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (19, 'course19', 'A1', 50, '1', 'english', '8uV92PhjnJ', 0);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (20, 'course20', 'A2', 50, '0', 'swedish', '2tJoHBE0tWt', 1);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (21, 'course21', 'A1', 50, '1', 'english', 'j8RIvi', 1);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (22, 'course22', 'G2', 50, '1', 'other', 'f9tlbDNP', 1);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (23, 'course23', 'A2', 50, '1', 'other', 'ZTdPuz9e', 1);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (24, 'course24', 'A1', 100, '1', 'other', 'VdUC2fj', 0);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (25, 'course25', 'G1', 100, '0', 'english', 'LjKK51ub8ze', 1);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (26, 'course26', 'A2', 100, '1', 'swedish', '6HYgTWXScx', 0);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (27, 'course27', 'G1', 100, '0', 'english', 'Ww5yjEQ', 1);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (28, 'course28', 'G1', 100, '1', 'swedish', 'n0lEGS75W', 0);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (29, 'course29', 'A1', 100, '1', 'swedish', '5MAkaooQA', 1);
+insert into course (id, name, c_level, pace_of_study, distance, course_language, app_code, course_online) values (30, 'course30', 'G2', 50, '1', 'english', 'o5y4vWnvt3P9', 1);
 
 -- review
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (1, 33, 18, 33, 2, 5, 1, 3, 1, 5, 1, 'Cotinus Mill.', 'Smoketree');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (2, 24, 1, 24, 5, 4, 0, 4, 1, 1, 0, 'Dicksonia squarrosa (G. Forst.) Sw.', 'Hard Treefern');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (3, 22, 30, 22, 4, 2, 1, 2, 1, 1, 0, 'Chamaesyce dioica (Kunth) Millsp.', 'Royal Sandmat');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (4, 35, 6, 35, 1, 2, 1, 3, 1, 5, 0, 'Valerianella umbilicata (Sull.) Alph. Wood', 'Navel Cornsalad');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (5, 30, 27, 30, 3, 2, 0, 2, 1, 2, 1, 'Taraxacum lyratum (Ledeb.) DC.', 'Harp Dandelion');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (6, 30, 28, 30, 2, 1, 0, 1, 0, 5, 1, 'Halimodendron Fisch. ex DC.', 'Halimodendron');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (7, 25, 28, 25, 5, 5, 0, 2, 1, 3, 0, 'Suaeda calceoliformis (Hook.) Moq.', 'Pursh Seepweed');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (8, 19, 22, 19, 3, 3, 1, 4, 0, 3, 0, 'Ipomoea pauciflora M. Martens & Galeotti', 'Tree Morning Glory');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (9, 11, 13, 11, 2, 1, 0, 5, 0, 2, 0, 'Jacaranda Juss.', 'Jacaranda');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (10, 37, 3, 37, 2, 1, 1, 5, 0, 4, 0, 'Carex specicola J.T. Howell', 'Navajo Sedge');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (11, 23, 17, 23, 2, 4, 1, 3, 0, 5, 1, 'Leptogium contortum Sierk', 'Contorted Skin Lichen');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (12, 43, 3, 43, 5, 1, 0, 1, 0, 3, 0, 'Calystegia macrostegia (Greene) Brummitt ssp. arida (Greene) Brummitt', 'Island False Bindweed');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (13, 21, 18, 21, 3, 3, 0, 3, 0, 5, 0, 'Helianthella californica A. Gray ssp. californica', 'California Helianthella');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (14, 16, 18, 16, 3, 3, 0, 5, 0, 3, 0, 'Gyroweisia Schimp.', 'Gyroweisia Moss');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (15, 28, 27, 28, 5, 4, 1, 3, 0, 5, 0, 'Paraserianthes I.C. Nielsen', 'Paraserianthes');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (16, 43, 21, 43, 5, 5, 0, 2, 0, 5, 0, 'Oligotrichum hercynicum (Hedw.) Lam. & DC.', 'Oligotrichum Moss');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (17, 35, 27, 35, 3, 5, 0, 4, 1, 3, 1, 'Eriogonum heermannii Durand & Hilg. var. floccosum Munz', 'Clark Mountain Buckwheat');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (18, 13, 30, 13, 4, 4, 0, 1, 0, 1, 0, 'Scutellaria elliptica Muhl. ex Spreng. var. elliptica', 'Hairy Skullcap');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (19, 37, 16, 37, 3, 3, 0, 3, 1, 3, 0, 'Tradescantia subacaulis Bush', 'Stemless Spiderwort');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (20, 21, 20, 21, 1, 5, 0, 1, 0, 1, 1, 'Penstemon calycosus Small', 'Longsepal Beardtongue');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (21, 24, 26, 24, 5, 4, 1, 5, 0, 5, 0, 'Hedeoma diffusa Greene', 'Spreading False Pennyroyal');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (22, 24, 16, 24, 4, 2, 0, 1, 1, 5, 0, 'Astragalus miser Douglas ex Hook. var. crispatus (M.E. Jones) Cronquist', 'Timber Milkvetch');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (23, 5, 20, 5, 3, 4, 1, 5, 0, 2, 1, 'Helianthella californica A. Gray ssp. californica', 'California Helianthella');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (24, 29, 3, 29, 4, 3, 1, 2, 1, 3, 1, 'Draba aureola S. Watson', 'Mt. Lassen Draba');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (25, 47, 15, 47, 2, 4, 1, 5, 1, 1, 0, 'Bryoria friabilis Brodo & D. Hawksw.', 'Horsehair Lichen');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (26, 47, 22, 47, 4, 4, 0, 2, 0, 5, 0, 'Hordeum jubatum L. ssp. jubatum', 'Foxtail Barley');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (27, 14, 29, 14, 2, 3, 1, 5, 0, 3, 1, 'Sabatia dodecandra (L.) Britton, Sterns & Poggenb.', 'Marsh Rose Gentian');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (28, 39, 3, 39, 4, 2, 1, 3, 1, 3, 1, 'Psorotichia segregata (Nyl.) Hasse', 'Psorotichia Lichen');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (29, 43, 16, 43, 1, 3, 1, 4, 0, 1, 1, 'Pleurochaete Lindb.', 'Pleurochaete Moss');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (30, 27, 14, 27, 2, 4, 1, 4, 0, 5, 1, 'Rumex pulcher L.', 'Fiddle Dock');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (31, 30, 24, 30, 4, 4, 1, 2, 0, 1, 1, 'Betula platyphylla Sukaczev', 'Asian White Birch');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (32, 8, 17, 8, 2, 1, 0, 3, 0, 3, 1, 'Trypethelium virens Tuck. ex Michener', 'Trypelthelium Lichen');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (33, 42, 17, 42, 5, 4, 1, 2, 1, 3, 1, 'Rubus lasiococcus A. Gray', 'Roughfruit Berry');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (34, 17, 23, 17, 1, 4, 1, 2, 1, 1, 1, 'Cryptantha micrantha (Torr.) I.M. Johnst. var. micrantha', 'Redroot Cryptantha');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (35, 14, 10, 14, 2, 3, 1, 2, 1, 1, 0, 'Agastache parvifolia Eastw.', 'Smallleaf Giant Hyssop');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (36, 21, 24, 21, 1, 3, 1, 2, 1, 3, 1, 'Chaenactis xantiana A. Gray', 'Fleshcolor Pincushion');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (37, 33, 24, 33, 1, 2, 1, 4, 0, 1, 1, 'Astragalus canadensis L. var. mortonii (Nutt.) S. Watson', 'Morton''s Canadian Milkvetch');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (38, 42, 7, 42, 1, 5, 0, 5, 0, 3, 0, 'Quercus ilex L.', 'Holly Oak');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (39, 38, 7, 38, 4, 4, 0, 5, 0, 2, 1, 'Celtis australis L.', 'European Hackberry');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (40, 45, 20, 45, 2, 5, 1, 2, 0, 2, 0, 'Lilium washingtonianum Kellogg ssp. purpurascens (Stearn) M.W. Skinner', 'Cascade Lily');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (41, 20, 28, 20, 5, 1, 1, 1, 1, 3, 1, 'Rhynchospora corniculata (Lam.) A. Gray', 'Shortbristle Horned Beaksedge');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (42, 42, 20, 42, 3, 4, 1, 2, 0, 2, 0, 'Ceanothus connivens Greene', 'Trailing Buckbrush');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (43, 38, 26, 38, 2, 2, 1, 1, 0, 3, 0, 'Spartina alterniflora Loisel.', 'Smooth Cordgrass');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (44, 11, 7, 11, 2, 4, 1, 5, 1, 1, 0, 'Platanthera lacera (Michx.) G. Don', 'Green Fringed Orchid');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (45, 45, 28, 45, 1, 1, 0, 1, 1, 4, 0, 'Polemonium foliosissimum A. Gray var. molle (Greene) Anway', 'Towering Jacob''s-ladder');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (46, 28, 4, 28, 4, 1, 0, 2, 0, 2, 1, 'Eucladium verticillatum (Brid.) Bruch & Schimp.', 'Eucladium Moss');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (47, 16, 13, 16, 4, 3, 1, 5, 1, 2, 1, 'Urochloa mutica (Forssk.) T.Q. Nguyen', 'Para Grass');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (48, 21, 12, 21, 2, 4, 0, 5, 0, 5, 1, 'Isopogon R. Br. ex Knight', 'Cone Flower');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (49, 27, 30, 27, 5, 1, 1, 5, 0, 3, 1, 'Ceanothus ×vanrensselaeri J.B. Roof', 'Ceanothus');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (50, 3, 4, 3, 4, 5, 1, 1, 0, 4, 1, 'Erigeron peregrinus (Banks ex Pursh) Greene ssp. peregrinus', 'Subalpine Fleabane');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (51, 17, 6, 17, 4, 1, 1, 3, 0, 4, 1, 'Pterostegia Fisch. & C.A. Mey.', 'Pterostegia');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (52, 4, 28, 4, 4, 1, 1, 1, 1, 4, 0, 'Opuntia martiniana (L.D. Benson) Parfitt', 'Seashore Cactus');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (53, 25, 20, 25, 5, 3, 0, 5, 0, 3, 1, 'Luzula multiflora (Ehrh.) Lej.', 'Common Woodrush');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (54, 37, 24, 37, 4, 5, 0, 3, 1, 5, 1, 'Plagiopus oederianus (Sw.) H.A. Crum & L.E. Anderson', 'Oeder''s Plagiopus Moss');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (55, 32, 9, 32, 1, 1, 0, 1, 0, 3, 1, 'Lupinus albifrons Benth. var. flumineus C.P. Sm.', 'Silver Lupine');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (56, 26, 16, 26, 1, 5, 0, 4, 0, 4, 0, 'Crataegus aemula Beadle', 'Rome Hawthorn');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (57, 22, 11, 22, 5, 1, 1, 1, 1, 1, 1, 'Spiranthes vernalis Engelm. & A. Gray', 'Spring Lady''s Tresses');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (58, 7, 10, 7, 2, 4, 0, 2, 0, 3, 1, 'Brassia caudata (L.) Lindl.', 'Cricket Orchid');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (59, 24, 21, 24, 1, 2, 1, 2, 0, 1, 1, 'Nelsonia canescens (Lam.) Spreng.', 'Blue Pussyleaf');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (60, 10, 24, 10, 1, 3, 1, 2, 1, 5, 0, 'Schoenus apogon Roem. & Schult.', 'Smooth Bogrush');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (61, 50, 18, 50, 4, 2, 1, 5, 0, 1, 1, 'Acalypha mexicana Müll. Arg.', 'Mexican Copperleaf');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (62, 19, 16, 19, 5, 3, 1, 5, 1, 3, 1, 'Pinus parviflora Siebold & Zucc.', 'Five-needle Pine');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (63, 8, 10, 8, 5, 3, 1, 3, 1, 4, 1, 'Gaillardia multiceps Greene var. microcephala B.L. Turner', 'Onion Blanketflower');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (64, 37, 1, 37, 3, 4, 1, 3, 1, 2, 0, 'Penstemon fremontii Torr. & A. Gray ex A. Gray var. fremontii', 'Fremont''s Beardtongue');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (65, 49, 23, 49, 1, 3, 0, 4, 0, 4, 1, 'Garcinia myrtifolia A.C. Sm.', 'Garcinia');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (66, 47, 23, 47, 2, 4, 0, 5, 0, 3, 1, 'Silene ×hampeana Meusel & K. Werner', 'Catchfly');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (67, 2, 27, 2, 2, 1, 0, 3, 0, 5, 1, 'Grindelia nuda Alph. Wood var. aphanactis (Rydb.) G.L. Nesom', 'Curlytop Gumweed');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (68, 35, 9, 35, 3, 2, 0, 5, 0, 5, 0, 'Rudbeckia heliopsidis Torr. & A. Gray', 'Sunfacing Coneflower');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (69, 34, 10, 34, 1, 1, 0, 4, 0, 4, 1, 'Bambusa polymorpha Munro', 'Polymorph Bamboo');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (70, 18, 8, 18, 5, 4, 1, 1, 1, 5, 1, 'Phyla nodiflora (L.) Greene', 'Turkey Tangle Fogfruit');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (71, 21, 28, 21, 5, 5, 1, 4, 0, 2, 1, 'Cladonia borealis S. Stenroos', 'Boreal Cup Lichen');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (72, 18, 23, 18, 3, 5, 1, 2, 0, 2, 1, 'Lavatera thuringiaca L.', 'Tree Lavatera');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (73, 46, 18, 46, 1, 4, 0, 3, 0, 3, 0, 'Navarretia hamata Greene ssp. hamata', 'Hooked Pincushionplant');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (74, 6, 15, 6, 1, 4, 1, 3, 1, 4, 1, 'Psiguria pedata (L.) Howard', 'Caribbean Pygmymelon');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (75, 30, 6, 30, 3, 3, 0, 2, 1, 5, 1, 'Alocasia brisbanensis (F.M. Bailey) Domin', 'Cunjevoi');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (76, 20, 3, 20, 5, 2, 0, 4, 0, 2, 0, 'Hackelia setosa (Piper) I.M. Johnst.', 'Bristly Stickseed');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (77, 47, 28, 47, 1, 3, 0, 2, 1, 4, 0, 'Ipomopsis congesta (Hook.) V.E. Grant ssp. pseudotypica (Constance & Rollins) Day', 'Ballhead Ipomopsis');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (78, 27, 9, 27, 4, 2, 0, 3, 0, 4, 0, 'Carex vallicola Dewey var. rusbyi (Mack.) F.J. Herm.', 'Rusby''s Sedge');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (79, 49, 15, 49, 5, 4, 0, 5, 0, 3, 0, 'Eriastrum pluriflorum (A. Heller) H. Mason ssp. pluriflorum', 'Tehachapi Woollystar');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (80, 14, 12, 14, 5, 1, 0, 4, 1, 2, 1, 'Sclerocactus Britton & Rose', 'Fishhook Cactus');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (81, 28, 4, 28, 3, 1, 0, 5, 1, 2, 0, 'Cryptantha abata I.M. Johnst.', 'Dentnut Cryptantha');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (82, 29, 23, 29, 1, 3, 0, 2, 1, 5, 0, 'Phyla ×intermedia Moldenke', 'Fogfruit');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (83, 8, 10, 8, 1, 2, 0, 3, 1, 2, 0, 'Spiranthes odorata (Nutt.) Lindl.', 'Marsh Lady''s Tresses');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (84, 35, 13, 35, 4, 2, 1, 1, 0, 5, 1, 'Rubus particularis L.H. Bailey', 'West Virginia Dewberry');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (85, 38, 12, 38, 3, 5, 1, 4, 0, 4, 0, 'Carex ×kenaica Lepage', 'Sedge');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (86, 20, 12, 20, 4, 1, 1, 4, 1, 3, 0, 'Monolepis nuttalliana (Schult.) Greene', 'Nuttall''s Povertyweed');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (87, 47, 16, 47, 2, 1, 0, 3, 0, 1, 1, 'Xyris longisepala Kral', 'Kral''s Yelloweyed Grass');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (88, 48, 11, 48, 3, 1, 0, 5, 1, 5, 0, 'Celosia L.', 'Cock''s Comb');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (89, 40, 18, 40, 1, 3, 1, 5, 1, 4, 1, 'Mertensia longiflora Greene', 'Small Bluebells');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (90, 23, 4, 23, 2, 3, 1, 2, 0, 2, 0, 'Nerium L.', 'Oleander');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (91, 41, 17, 41, 3, 3, 1, 4, 1, 4, 1, 'Arthonia gyalectoides Müll. Arg.', 'Dot Lichen');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (92, 24, 6, 24, 1, 5, 0, 4, 1, 2, 0, 'Miriquidica deusta (Stenham.) Hertel & Rambold', 'Miriquidica Lichen');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (93, 38, 27, 38, 4, 5, 0, 5, 0, 3, 1, 'Bothriochloa hybrida (Gould) Gould', 'Hybrid Beardgrass');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (94, 31, 27, 31, 5, 5, 1, 2, 1, 2, 0, 'Rinodina dirinoides Zahlbr.', 'Rinodina Lichen');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (95, 28, 26, 28, 1, 5, 1, 5, 1, 4, 0, 'Aphanisma blitoides Nutt. ex Moq.', 'San Diego Coastalcreeper');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (96, 48, 26, 48, 5, 2, 1, 5, 1, 4, 0, 'Lessingia lemmonii A. Gray var. peirsonii (J.T. Howell) Ferris', 'Peirson''s Lessingia');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (97, 6, 29, 6, 2, 1, 1, 2, 1, 1, 1, 'Digitaria velutina (Forssk.) P. Beauv.', 'Velvet Crabgrass');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (98, 1, 24, 1, 5, 4, 0, 2, 1, 3, 1, 'Cardamine cordifolia A. Gray', 'Heartleaf Bittercress');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (99, 20, 4, 20, 3, 2, 1, 3, 0, 5, 1, 'Sinocalamus McClure', 'Wideleaf Bamboo');
-insert into review (id, user_id, course_id, teacher_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (100, 32, 13, 32, 3, 1, 0, 3, 0, 3, 1, 'Solanum nelsonii Dunal', 'Nelson''s Horsenettle');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (1, 33, 18, 'Helenelizabeth Bartholin', 2, 5, 1, 3, 1, 5, 1, 'Cotinus Mill.', 'Smoketree');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (2, 24, 1, 'Kerri Neat', 5, 4, 0, 4, 1, 1, 0, 'Dicksonia squarrosa (G. Forst.) Sw.', 'Hard Treefern');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (3, 22, 30, 'Xever Alpine', 4, 2, 1, 2, 1, 1, 0, 'Chamaesyce dioica (Kunth) Millsp.', 'Royal Sandmat');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (4, 35, 6, 'Emili Mower', 1, 2, 1, 3, 1, 5, 0, 'Valerianella umbilicata (Sull.) Alph. Wood', 'Navel Cornsalad');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (5, 30, 27, 'Archer Streets', 3, 2, 0, 2, 1, 2, 1, 'Taraxacum lyratum (Ledeb.) DC.', 'Harp Dandelion');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (6, 30, 28, 'Alexandrina Lemmers', 2, 1, 0, 1, 0, 5, 1, 'Halimodendron Fisch. ex DC.', 'Halimodendron');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (7, 25, 28, 'Carey Quarton', 5, 5, 0, 2, 1, 3, 0, 'Suaeda calceoliformis (Hook.) Moq.', 'Pursh Seepweed');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (8, 19, 22, 'Karoly Conan', 3, 3, 1, 4, 0, 3, 0, 'Ipomoea pauciflora M. Martens & Galeotti', 'Tree Morning Glory');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (9, 11, 13, 'Killy Cicco', 2, 1, 0, 5, 0, 2, 0, 'Jacaranda Juss.', 'Jacaranda');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (10, 37, 3, 'Dulci Winsley', 2, 1, 1, 5, 0, 4, 0, 'Carex specicola J.T. Howell', 'Navajo Sedge');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (11, 23, 17, 'Carline Calver', 2, 4, 1, 3, 0, 5, 1, 'Leptogium contortum Sierk', 'Contorted Skin Lichen');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (12, 43, 3, 'Kristian Boij', 5, 1, 0, 1, 0, 3, 0, 'Calystegia macrostegia (Greene) Brummitt ssp. arida (Greene) Brummitt', 'Island False Bindweed');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (13, 21, 18, 'Rosemary Kilpin', 3, 3, 0, 3, 0, 5, 0, 'Helianthella californica A. Gray ssp. californica', 'California Helianthella');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (14, 16, 18, 'Kimbra Deval', 3, 3, 0, 5, 0, 3, 0, 'Gyroweisia Schimp.', 'Gyroweisia Moss');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (15, 28, 27, 'Dallon Dufore', 5, 4, 1, 3, 0, 5, 0, 'Paraserianthes I.C. Nielsen', 'Paraserianthes');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (16, 43, 21, 'Truman Reiach', 5, 5, 0, 2, 0, 5, 0, 'Oligotrichum hercynicum (Hedw.) Lam. & DC.', 'Oligotrichum Moss');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (17, 35, 27, 'Kath Renner', 3, 5, 0, 4, 1, 3, 1, 'Eriogonum heermannii Durand & Hilg. var. floccosum Munz', 'Clark Mountain Buckwheat');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (18, 13, 30, 'Des Ville', 4, 4, 0, 1, 0, 1, 0, 'Scutellaria elliptica Muhl. ex Spreng. var. elliptica', 'Hairy Skullcap');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (19, 37, 16, 'Brok Emmanuel', 3, 3, 0, 3, 1, 3, 0, 'Tradescantia subacaulis Bush', 'Stemless Spiderwort');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (20, 21, 20, 'Dulcea Glendzer', 1, 5, 0, 1, 0, 1, 1, 'Penstemon calycosus Small', 'Longsepal Beardtongue');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (21, 24, 26, 'Alyosha Nickoles', 5, 4, 1, 5, 0, 5, 0, 'Hedeoma diffusa Greene', 'Spreading False Pennyroyal');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (22, 24, 16, 'Brianna Basketter', 4, 2, 0, 1, 1, 5, 0, 'Astragalus miser Douglas ex Hook. var. crispatus (M.E. Jones) Cronquist', 'Timber Milkvetch');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (23, 5, 20, 'Robinet Bromell', 3, 4, 1, 5, 0, 2, 1, 'Helianthella californica A. Gray ssp. californica', 'California Helianthella');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (24, 29, 3, 'Nessy Crackel', 4, 3, 1, 2, 1, 3, 1, 'Draba aureola S. Watson', 'Mt. Lassen Draba');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (25, 47, 15, 'Deedee Walicki', 2, 4, 1, 5, 1, 1, 0, 'Bryoria friabilis Brodo & D. Hawksw.', 'Horsehair Lichen');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (26, 47, 22, 'Rafe Casterot', 4, 4, 0, 2, 0, 5, 0, 'Hordeum jubatum L. ssp. jubatum', 'Foxtail Barley');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (27, 14, 29, 'Christiana Forrestor', 2, 3, 1, 5, 0, 3, 1, 'Sabatia dodecandra (L.) Britton, Sterns & Poggenb.', 'Marsh Rose Gentian');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (28, 39, 3, 'Gayle Riehm', 4, 2, 1, 3, 1, 3, 1, 'Psorotichia segregata (Nyl.) Hasse', 'Psorotichia Lichen');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (29, 43, 16, 'Adam Newlands', 1, 3, 1, 4, 0, 1, 1, 'Pleurochaete Lindb.', 'Pleurochaete Moss');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (30, 27, 14, 'Cammy Terzi', 2, 4, 1, 4, 0, 5, 1, 'Rumex pulcher L.', 'Fiddle Dock');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (31, 30, 24, 'Kimberley Wilkenson', 4, 4, 1, 2, 0, 1, 1, 'Betula platyphylla Sukaczev', 'Asian White Birch');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (32, 8, 17, 'Alexandra Treagust', 2, 1, 0, 3, 0, 3, 1, 'Trypethelium virens Tuck. ex Michener', 'Trypelthelium Lichen');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (33, 42, 17, 'Jacquelyn Mogg', 5, 4, 1, 2, 1, 3, 1, 'Rubus lasiococcus A. Gray', 'Roughfruit Berry');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (34, 17, 23, 'Koralle Rouge', 1, 4, 1, 2, 1, 1, 1, 'Cryptantha micrantha (Torr.) I.M. Johnst. var. micrantha', 'Redroot Cryptantha');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (35, 14, 10, 'Della McPeck', 2, 3, 1, 2, 1, 1, 0, 'Agastache parvifolia Eastw.', 'Smallleaf Giant Hyssop');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (36, 21, 24, 'Grantley Gansbuhler', 1, 3, 1, 2, 1, 3, 1, 'Chaenactis xantiana A. Gray', 'Fleshcolor Pincushion');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (37, 33, 24, 'Randy Pfaffe', 1, 2, 1, 4, 0, 1, 1, 'Astragalus canadensis L. var. mortonii (Nutt.) S. Watson', 'Morton''s Canadian Milkvetch');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (38, 42, 7, 'Engracia Oxburgh', 1, 5, 0, 5, 0, 3, 0, 'Quercus ilex L.', 'Holly Oak');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (39, 38, 7, 'Rod Booler', 4, 4, 0, 5, 0, 2, 1, 'Celtis australis L.', 'European Hackberry');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (40, 45, 20, 'Renaldo Brewins', 2, 5, 1, 2, 0, 2, 0, 'Lilium washingtonianum Kellogg ssp. purpurascens (Stearn) M.W. Skinner', 'Cascade Lily');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (41, 20, 28, 'Cletis Fleeming', 5, 1, 1, 1, 1, 3, 1, 'Rhynchospora corniculata (Lam.) A. Gray', 'Shortbristle Horned Beaksedge');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (42, 42, 20, 'Niels Quin', 3, 4, 1, 2, 0, 2, 0, 'Ceanothus connivens Greene', 'Trailing Buckbrush');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (43, 38, 26, 'Artair Wallice', 2, 2, 1, 1, 0, 3, 0, 'Spartina alterniflora Loisel.', 'Smooth Cordgrass');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (44, 11, 7, 'Noami Hurdwell', 2, 4, 1, 5, 1, 1, 0, 'Platanthera lacera (Michx.) G. Don', 'Green Fringed Orchid');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (45, 45, 28, 'Lolita Mallen', 1, 1, 0, 1, 1, 4, 0, 'Polemonium foliosissimum A. Gray var. molle (Greene) Anway', 'Towering Jacob''s-ladder');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (46, 28, 4, 'Adrea Ibbotson', 4, 1, 0, 2, 0, 2, 1, 'Eucladium verticillatum (Brid.) Bruch & Schimp.', 'Eucladium Moss');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (47, 16, 13, 'Ephrem Bilbery', 4, 3, 1, 5, 1, 2, 1, 'Urochloa mutica (Forssk.) T.Q. Nguyen', 'Para Grass');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (48, 21, 12, 'Levey Lorimer', 2, 4, 0, 5, 0, 5, 1, 'Isopogon R. Br. ex Knight', 'Cone Flower');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (49, 27, 30, 'Twila Bulcroft', 5, 1, 1, 5, 0, 3, 1, 'Ceanothus ×vanrensselaeri J.B. Roof', 'Ceanothus');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (50, 3, 4, 'Fremont Machen', 4, 5, 1, 1, 0, 4, 1, 'Erigeron peregrinus (Banks ex Pursh) Greene ssp. peregrinus', 'Subalpine Fleabane');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (51, 17, 6, 'Helenelizabeth Bartholin', 4, 1, 1, 3, 0, 4, 1, 'Pterostegia Fisch. & C.A. Mey.', 'Pterostegia');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (52, 4, 28, 'Kerri Neat', 4, 1, 1, 1, 1, 4, 0, 'Opuntia martiniana (L.D. Benson) Parfitt', 'Seashore Cactus');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (53, 25, 20, 'Xever Alpine', 5, 3, 0, 5, 0, 3, 1, 'Luzula multiflora (Ehrh.) Lej.', 'Common Woodrush');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (54, 37, 24, 'Emili Mower', 4, 5, 0, 3, 1, 5, 1, 'Plagiopus oederianus (Sw.) H.A. Crum & L.E. Anderson', 'Oeder''s Plagiopus Moss');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (55, 32, 9, 'Archer Streets', 1, 1, 0, 1, 0, 3, 1, 'Lupinus albifrons Benth. var. flumineus C.P. Sm.', 'Silver Lupine');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (56, 26, 16, 'Alexandrina Lemmers', 1, 5, 0, 4, 0, 4, 0, 'Crataegus aemula Beadle', 'Rome Hawthorn');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (57, 22, 11, 'Carey Quarton', 5, 1, 1, 1, 1, 1, 1, 'Spiranthes vernalis Engelm. & A. Gray', 'Spring Lady''s Tresses');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (58, 7, 10, 'Karoly Conan', 2, 4, 0, 2, 0, 3, 1, 'Brassia caudata (L.) Lindl.', 'Cricket Orchid');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (59, 24, 21, 'Killy Cicco', 1, 2, 1, 2, 0, 1, 1, 'Nelsonia canescens (Lam.) Spreng.', 'Blue Pussyleaf');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (60, 10, 24, 'Dulci Winsley', 1, 3, 1, 2, 1, 5, 0, 'Schoenus apogon Roem. & Schult.', 'Smooth Bogrush');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (61, 50, 18, 'Carline Calver', 4, 2, 1, 5, 0, 1, 1, 'Acalypha mexicana Müll. Arg.', 'Mexican Copperleaf');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (62, 19, 16, 'Kristian Boij', 5, 3, 1, 5, 1, 3, 1, 'Pinus parviflora Siebold & Zucc.', 'Five-needle Pine');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (63, 8, 10, 'Rosemary Kilpin', 5, 3, 1, 3, 1, 4, 1, 'Gaillardia multiceps Greene var. microcephala B.L. Turner', 'Onion Blanketflower');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (64, 37, 1, 'Kimbra Deval', 3, 4, 1, 3, 1, 2, 0, 'Penstemon fremontii Torr. & A. Gray ex A. Gray var. fremontii', 'Fremont''s Beardtongue');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (65, 49, 23, 'Dallon Dufore', 1, 3, 0, 4, 0, 4, 1, 'Garcinia myrtifolia A.C. Sm.', 'Garcinia');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (66, 47, 23, 'Truman Reiach', 2, 4, 0, 5, 0, 3, 1, 'Silene ×hampeana Meusel & K. Werner', 'Catchfly');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (67, 2, 27, 'Kath Renner', 2, 1, 0, 3, 0, 5, 1, 'Grindelia nuda Alph. Wood var. aphanactis (Rydb.) G.L. Nesom', 'Curlytop Gumweed');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (68, 35, 9, 'Des Ville', 3, 2, 0, 5, 0, 5, 0, 'Rudbeckia heliopsidis Torr. & A. Gray', 'Sunfacing Coneflower');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (69, 34, 10, 'Brok Emmanuel', 1, 1, 0, 4, 0, 4, 1, 'Bambusa polymorpha Munro', 'Polymorph Bamboo');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (70, 18, 8, 'Dulcea Glendzer', 5, 4, 1, 1, 1, 5, 1, 'Phyla nodiflora (L.) Greene', 'Turkey Tangle Fogfruit');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (71, 21, 28, 'Alyosha Nickoles', 5, 5, 1, 4, 0, 2, 1, 'Cladonia borealis S. Stenroos', 'Boreal Cup Lichen');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (72, 18, 23, 'Brianna Basketter', 3, 5, 1, 2, 0, 2, 1, 'Lavatera thuringiaca L.', 'Tree Lavatera');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (73, 46, 18, 'Robinet Bromell', 1, 4, 0, 3, 0, 3, 0, 'Navarretia hamata Greene ssp. hamata', 'Hooked Pincushionplant');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (74, 6, 15, 'Nessy Crackel', 1, 4, 1, 3, 1, 4, 1, 'Psiguria pedata (L.) Howard', 'Caribbean Pygmymelon');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (75, 30, 6, 'Deedee Walicki', 3, 3, 0, 2, 1, 5, 1, 'Alocasia brisbanensis (F.M. Bailey) Domin', 'Cunjevoi');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (76, 20, 3, 'Rafe Casterot', 5, 2, 0, 4, 0, 2, 0, 'Hackelia setosa (Piper) I.M. Johnst.', 'Bristly Stickseed');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (77, 47, 28, 'Christiana Forrestor', 1, 3, 0, 2, 1, 4, 0, 'Ipomopsis congesta (Hook.) V.E. Grant ssp. pseudotypica (Constance & Rollins) Day', 'Ballhead Ipomopsis');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (78, 27, 9, 'Gayle Riehm', 4, 2, 0, 3, 0, 4, 0, 'Carex vallicola Dewey var. rusbyi (Mack.) F.J. Herm.', 'Rusby''s Sedge');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (79, 49, 15, 'Adam Newlands', 5, 4, 0, 5, 0, 3, 0, 'Eriastrum pluriflorum (A. Heller) H. Mason ssp. pluriflorum', 'Tehachapi Woollystar');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (80, 14, 12, 'Cammy Terzi', 5, 1, 0, 4, 1, 2, 1, 'Sclerocactus Britton & Rose', 'Fishhook Cactus');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (81, 28, 4, 'Kimberley Wilkenson', 3, 1, 0, 5, 1, 2, 0, 'Cryptantha abata I.M. Johnst.', 'Dentnut Cryptantha');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (82, 29, 23, 'Alexandra Treagust', 1, 3, 0, 2, 1, 5, 0, 'Phyla ×intermedia Moldenke', 'Fogfruit');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (83, 8, 10, 'Jacquelyn Mogg', 1, 2, 0, 3, 1, 2, 0, 'Spiranthes odorata (Nutt.) Lindl.', 'Marsh Lady''s Tresses');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (84, 35, 13, 'Koralle Rouge', 4, 2, 1, 1, 0, 5, 1, 'Rubus particularis L.H. Bailey', 'West Virginia Dewberry');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (85, 38, 12, 'Della McPeck', 3, 5, 1, 4, 0, 4, 0, 'Carex ×kenaica Lepage', 'Sedge');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (86, 20, 12, 'Grantley Gansbuhler', 4, 1, 1, 4, 1, 3, 0, 'Monolepis nuttalliana (Schult.) Greene', 'Nuttall''s Povertyweed');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (87, 47, 16, 'Randy Pfaffe', 2, 1, 0, 3, 0, 1, 1, 'Xyris longisepala Kral', 'Kral''s Yelloweyed Grass');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (88, 48, 11, 'Engracia Oxburgh', 3, 1, 0, 5, 1, 5, 0, 'Celosia L.', 'Cock''s Comb');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (89, 40, 18, 'Rod Booler', 1, 3, 1, 5, 1, 4, 1, 'Mertensia longiflora Greene', 'Small Bluebells');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (90, 23, 4, 'Renaldo Brewins', 2, 3, 1, 2, 0, 2, 0, 'Nerium L.', 'Oleander');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (91, 41, 17, 'Cletis Fleeming', 3, 3, 1, 4, 1, 4, 1, 'Arthonia gyalectoides Müll. Arg.', 'Dot Lichen');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (92, 24, 6, 'Niels Quin', 1, 5, 0, 4, 1, 2, 0, 'Miriquidica deusta (Stenham.) Hertel & Rambold', 'Miriquidica Lichen');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (93, 38, 27, 'Artair Wallice', 4, 5, 0, 5, 0, 3, 1, 'Bothriochloa hybrida (Gould) Gould', 'Hybrid Beardgrass');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (94, 31, 27, 'Noami Hurdwell', 5, 5, 1, 2, 1, 2, 0, 'Rinodina dirinoides Zahlbr.', 'Rinodina Lichen');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (95, 28, 26, 'Lolita Mallen', 1, 5, 1, 5, 1, 4, 0, 'Aphanisma blitoides Nutt. ex Moq.', 'San Diego Coastalcreeper');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (96, 48, 26, 'Adrea Ibbotson', 5, 2, 1, 5, 1, 4, 0, 'Lessingia lemmonii A. Gray var. peirsonii (J.T. Howell) Ferris', 'Peirson''s Lessingia');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (97, 6, 29, 'Ephrem Bilbery', 2, 1, 1, 2, 1, 1, 1, 'Digitaria velutina (Forssk.) P. Beauv.', 'Velvet Crabgrass');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (98, 1, 24, 'Levey Lorimer', 5, 4, 0, 2, 1, 3, 1, 'Cardamine cordifolia A. Gray', 'Heartleaf Bittercress');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (99, 20, 4, 'Twila Bulcroft', 3, 2, 1, 3, 0, 5, 1, 'Sinocalamus McClure', 'Wideleaf Bamboo');
+insert into review (id, user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) values (100, 32, 13, 'Fremont Machen', 3, 1, 0, 3, 0, 3, 1, 'Solanum nelsonii Dunal', 'Nelson''s Horsenettle');
 
 -- comment
 insert into comment (id, user_id, review_id, comment_text) values (1, 48, 91, 'Taxidea taxus');
@@ -466,90 +365,6 @@ insert into comment (id, user_id, review_id, comment_text) values (97, 41, 50, '
 insert into comment (id, user_id, review_id, comment_text) values (98, 13, 90, 'Marmota flaviventris');
 insert into comment (id, user_id, review_id, comment_text) values (99, 9, 68, 'Crotalus adamanteus');
 insert into comment (id, user_id, review_id, comment_text) values (100, 23, 53, 'Lepilemur rufescens');
-
--- courseAndProgram
-insert into courseAndProgram (id, course_id, program_id) values (1, 21, 8);
-insert into courseAndProgram (id, course_id, program_id) values (2, 19, 2);
-insert into courseAndProgram (id, course_id, program_id) values (3, 9, 4);
-insert into courseAndProgram (id, course_id, program_id) values (4, 8, 4);
-insert into courseAndProgram (id, course_id, program_id) values (5, 17, 2);
-insert into courseAndProgram (id, course_id, program_id) values (6, 20, 1);
-insert into courseAndProgram (id, course_id, program_id) values (7, 27, 7);
-insert into courseAndProgram (id, course_id, program_id) values (8, 19, 6);
-insert into courseAndProgram (id, course_id, program_id) values (9, 8, 4);
-insert into courseAndProgram (id, course_id, program_id) values (10, 11, 9);
-insert into courseAndProgram (id, course_id, program_id) values (11, 21, 2);
-insert into courseAndProgram (id, course_id, program_id) values (12, 24, 1);
-insert into courseAndProgram (id, course_id, program_id) values (13, 16, 6);
-insert into courseAndProgram (id, course_id, program_id) values (14, 24, 8);
-insert into courseAndProgram (id, course_id, program_id) values (15, 25, 5);
-insert into courseAndProgram (id, course_id, program_id) values (16, 1, 9);
-insert into courseAndProgram (id, course_id, program_id) values (17, 28, 5);
-insert into courseAndProgram (id, course_id, program_id) values (18, 8, 10);
-insert into courseAndProgram (id, course_id, program_id) values (19, 5, 4);
-insert into courseAndProgram (id, course_id, program_id) values (20, 10, 2);
-insert into courseAndProgram (id, course_id, program_id) values (21, 11, 8);
-insert into courseAndProgram (id, course_id, program_id) values (22, 25, 10);
-insert into courseAndProgram (id, course_id, program_id) values (23, 23, 6);
-insert into courseAndProgram (id, course_id, program_id) values (24, 12, 8);
-insert into courseAndProgram (id, course_id, program_id) values (25, 28, 1);
-insert into courseAndProgram (id, course_id, program_id) values (26, 13, 4);
-insert into courseAndProgram (id, course_id, program_id) values (27, 10, 8);
-insert into courseAndProgram (id, course_id, program_id) values (28, 28, 5);
-insert into courseAndProgram (id, course_id, program_id) values (29, 19, 7);
-insert into courseAndProgram (id, course_id, program_id) values (30, 12, 3);
-insert into courseAndProgram (id, course_id, program_id) values (31, 13, 9);
-insert into courseAndProgram (id, course_id, program_id) values (32, 19, 10);
-insert into courseAndProgram (id, course_id, program_id) values (33, 6, 3);
-insert into courseAndProgram (id, course_id, program_id) values (34, 25, 10);
-insert into courseAndProgram (id, course_id, program_id) values (35, 3, 3);
-insert into courseAndProgram (id, course_id, program_id) values (36, 29, 1);
-insert into courseAndProgram (id, course_id, program_id) values (37, 12, 9);
-insert into courseAndProgram (id, course_id, program_id) values (38, 6, 5);
-insert into courseAndProgram (id, course_id, program_id) values (39, 26, 8);
-insert into courseAndProgram (id, course_id, program_id) values (40, 22, 7);
-insert into courseAndProgram (id, course_id, program_id) values (41, 21, 10);
-insert into courseAndProgram (id, course_id, program_id) values (42, 20, 7);
-insert into courseAndProgram (id, course_id, program_id) values (43, 4, 2);
-insert into courseAndProgram (id, course_id, program_id) values (44, 30, 9);
-insert into courseAndProgram (id, course_id, program_id) values (45, 12, 6);
-insert into courseAndProgram (id, course_id, program_id) values (46, 8, 5);
-insert into courseAndProgram (id, course_id, program_id) values (47, 18, 2);
-insert into courseAndProgram (id, course_id, program_id) values (48, 29, 9);
-insert into courseAndProgram (id, course_id, program_id) values (49, 7, 5);
-insert into courseAndProgram (id, course_id, program_id) values (50, 3, 5);
-
--- courseAndTeacher
-insert into courseAndTeacher (id, course_id, teacher_id) values (1, 18, 7);
-insert into courseAndTeacher (id, course_id, teacher_id) values (2, 12, 44);
-insert into courseAndTeacher (id, course_id, teacher_id) values (3, 30, 4);
-insert into courseAndTeacher (id, course_id, teacher_id) values (4, 18, 15);
-insert into courseAndTeacher (id, course_id, teacher_id) values (5, 17, 15);
-insert into courseAndTeacher (id, course_id, teacher_id) values (6, 9, 2);
-insert into courseAndTeacher (id, course_id, teacher_id) values (7, 30, 25);
-insert into courseAndTeacher (id, course_id, teacher_id) values (8, 1, 14);
-insert into courseAndTeacher (id, course_id, teacher_id) values (9, 29, 48);
-insert into courseAndTeacher (id, course_id, teacher_id) values (10, 15, 36);
-insert into courseAndTeacher (id, course_id, teacher_id) values (11, 30, 45);
-insert into courseAndTeacher (id, course_id, teacher_id) values (12, 4, 7);
-insert into courseAndTeacher (id, course_id, teacher_id) values (13, 12, 31);
-insert into courseAndTeacher (id, course_id, teacher_id) values (14, 2, 15);
-insert into courseAndTeacher (id, course_id, teacher_id) values (15, 15, 5);
-insert into courseAndTeacher (id, course_id, teacher_id) values (16, 21, 28);
-insert into courseAndTeacher (id, course_id, teacher_id) values (17, 17, 21);
-insert into courseAndTeacher (id, course_id, teacher_id) values (18, 21, 20);
-insert into courseAndTeacher (id, course_id, teacher_id) values (19, 10, 21);
-insert into courseAndTeacher (id, course_id, teacher_id) values (20, 21, 31);
-insert into courseAndTeacher (id, course_id, teacher_id) values (21, 4, 47);
-insert into courseAndTeacher (id, course_id, teacher_id) values (22, 20, 49);
-insert into courseAndTeacher (id, course_id, teacher_id) values (23, 26, 47);
-insert into courseAndTeacher (id, course_id, teacher_id) values (24, 26, 19);
-insert into courseAndTeacher (id, course_id, teacher_id) values (25, 17, 26);
-insert into courseAndTeacher (id, course_id, teacher_id) values (26, 22, 29);
-insert into courseAndTeacher (id, course_id, teacher_id) values (27, 17, 41);
-insert into courseAndTeacher (id, course_id, teacher_id) values (28, 18, 8);
-insert into courseAndTeacher (id, course_id, teacher_id) values (29, 15, 44);
-insert into courseAndTeacher (id, course_id, teacher_id) values (30, 14, 25);
 
 -- likeAndDislike
 insert into likeAndDislike (id, user_id, review_id, comment_id, like_type) values (1, 30, 86, 90, 'like');

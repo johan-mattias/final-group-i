@@ -8,7 +8,6 @@ import PortalHome from './PortalHome.js';
 import PortalReview from './PortalReview.js';
 import Home from './Home.js';
 import Course from './Course.js';
-import Teacher from './Teacher.js'
 import myProfile from './MyProfile.js'
 import PortalAddReview from './PortalAddReview.js';
 
@@ -60,7 +59,6 @@ class Portal extends React.Component {
             <Route path="/portal" exact component={ PortalHome }/>
             <Route path="/portal/review" exact component={ PortalReview }/>
             <Route path="/portal/course" component={ Course }/>
-            <Route path="/portal/teacher" component={Teacher}/>
             <Route path="/portal/myprofile" component={myProfile}/>
             <Route path="/portal/addreview" exact component={ PortalAddReview }/>
           </div>

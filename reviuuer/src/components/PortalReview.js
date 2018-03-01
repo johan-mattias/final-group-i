@@ -8,7 +8,6 @@ import qs from "query-string";
 import Footer from './Footer';
 import Home from './Home.js';
 import Course from './Course.js';
-import Teacher from './Teacher.js';
 
 import backArrow from '../img/back-arrow.png';
 import addComment from '../img/addButton.png';
@@ -32,7 +31,7 @@ class PortalReview extends React.Component {
      this.handleSingOut = this.handleSingOut.bind(this);
   }
 
-  state = { 
+  state = {
     review: undefined,
     comments: [],
     addComment: false,
@@ -58,7 +57,7 @@ class PortalReview extends React.Component {
 
     var fetchURLUser = `/api/user?email=${email}`;
     fetch( fetchURLUser )
-      .then(res => { 
+      .then(res => {
         if(res.status !== 200) {
           console.log('Looks like there was a problem. Status Code: ' +
             res.status);
@@ -101,7 +100,7 @@ class PortalReview extends React.Component {
         console.log(res)
         res.json()
           .then(comments => {
-            this.setState({ 
+            this.setState({
               comments: comments,
               addComment: false,
               newComment: "", })
@@ -194,24 +193,24 @@ class PortalReview extends React.Component {
     return(
       <div className="reviewContainer">
         <h2 className="courseName">{review.course_name}</h2>
-        <h2 className="teacherName">with {review.first_name} {review.last_name}</h2>
+        <h2 className="teacherName">with {review.teacher_name ? review.teacher_name : "unkown teacher"}</h2>
         <hr className="review"/>
         <h2 className="attributesStyle">Quality<br/> {this.printGradedScale(review.quality)}</h2>
         <h2 className="attributesStyle">Difficulty<br/> {this.printGradedScale(review.difficulty)}</h2>
         <h2 className="attributesStyle">Worth credits<br/> {this.printGradedScale(review.worth_credits)}</h2>
         <h2 className="attributesStyle">Percentage mandatory<br/> {this.printGradedScale(review.percentage_mand)}</h2>
-        <h2 className="attributesStyle">Books required: </h2> 
+        <h2 className="attributesStyle">Books required: </h2>
         {review.books_req ? this.printRadio(true) : this.printRadio(false)}
-        <h2 className="attributesStyle">Has exam: </h2> 
+        <h2 className="attributesStyle">Has exam: </h2>
         {review.exam ? this.printRadio(true) : this.printRadio(false)}
-        <h2 className="attributesStyle">Can reccommend: </h2> 
-        {review.can_recommend ? 
-        <img onClick={this.context.router.history.goBack} src={thumbGreen} className="thumb" /> : 
+        <h2 className="attributesStyle">Can reccommend: </h2>
+        {review.can_recommend ?
+        <img onClick={this.context.router.history.goBack} src={thumbGreen} className="thumb" /> :
         <img onClick={this.context.router.history.goBack} src={thumbRed} className="thumb" />}
         <hr className="review"/>
-        <h2 className="attributesStyle">Course review: </h2> 
+        <h2 className="attributesStyle">Course review: </h2>
         <p className="reviewText">{review.course_review}</p>
-        <h2 className="attributesStyle">Teacher review: </h2> 
+        <h2 className="attributesStyle">Teacher review: </h2>
         <p className="reviewText">{review.teacher_review}</p>
         <hr className="review"/>
         <div className="user-comments-container margin">
@@ -219,7 +218,7 @@ class PortalReview extends React.Component {
           <img onClick={this.renderAddComment.bind(this)} src={addComment} className="addComment" />
         </div>
 
-        {this.state.addComment ? 
+        {this.state.addComment ?
         <div style={{width: "90%"}}>
           <p style={{margin: "5px 0 0 3px"}}>New comment:</p>
           <form className="comment-form" onSubmit={this.handleSubmit.bind(this)}>
@@ -231,7 +230,7 @@ class PortalReview extends React.Component {
         undefined
           }
         <ul style={{margin: 0, padding: 0, width: "100%"}}>
-          {comments.map( c => 
+          {comments.map( c =>
             <li key={c.id} id={c.id} style={{color: 'black', listStyleType: "none"}}>
             <div>
               <p className="commentEmail">user#{c.user_id}</p>
@@ -256,7 +255,7 @@ class PortalReview extends React.Component {
         <div>
           {review ? this.printReview() : undefined}
         </div>
-        <Footer/> 
+        <Footer/>
       </div>
     );
   };
