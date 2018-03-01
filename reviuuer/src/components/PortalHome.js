@@ -9,9 +9,14 @@ import Home from './Home.js';
 import Course from './Course.js';
 import Teacher from './Teacher.js'
 
+import LikeThumbIcon from '../img/Thumb.png'
+import DislikeThumbIcon from '../img/DislikeThumb.png'
 import '../Style/Button.css';
 import '../Style/Portal.css';
+import '../Style/Img.css'
 import 'typeface-roboto';
+
+var imgLike;
 
 class PortalHome extends React.Component {
   constructor(props) {
@@ -37,6 +42,15 @@ class PortalHome extends React.Component {
     //TODO add so we remove the cookie
     this.props.history.push(`/portal/review?review_id=${id}`);
     console.log("HANDLE CLICK")
+  }
+
+  likeOrDislike(status){
+    if(status == "like"){
+      imgLike = <img src = {LikeThumbIcon} className = "navIcon likeAndDislikeIcon"></img>
+    }  else if(status == "dislike"){
+      imgLike = <img src = {DislikeThumbIcon} className = "navIcon likeAndDislikeIcon"></img>
+    }
+    
   }
 
   componentWillMount() {
@@ -81,6 +95,7 @@ class PortalHome extends React.Component {
           })
         })
       }
+      
     document.body.classList.remove('home');
     document.body.classList.add('portal'); //adding the correct background by setting the class of the body
   }
@@ -94,7 +109,28 @@ class PortalHome extends React.Component {
         <ul className="portalList">
           {this.state.reviews.map( r =>
             <li className="reviueHomeli" onClick={this.handleClick.bind(this)} key={r.id} id={r.id}>
-              Course: {r.course_name} Quality: {r.quality}/5
+              
+              <div className = "liHomeLeftside">
+                <div className = "liCourseHome">{r.course_name}</div>
+                <div className = "liHomeFooter">
+                  <div className = "liQlty"> Quality <br /> 
+                    <div className = "liNum"> {r.quality}</div>
+                  </div>
+                  <div className = "liDiff"> Difficulty <br /> 
+                    <div className = "liNum"> {r.difficulty}</div>
+                  </div>
+                  <div className = "liCred"> Worth Credits <br /> 
+                    <div className = "liNum"> {r.worth_credits}</div>
+                  </div>
+                </div>
+              </div>
+              <div className = "liHomeRightside">
+                <div className = "liRec">Recommended</div>
+                <div className = "liLike">{ this.likeOrDislike(r.like_type)} {imgLike}</div>
+                <Link to="/portal" className = "courseNavLink" >Click to read more</Link>  
+              </div>
+              
+               
             </li>
           )}
         </ul>

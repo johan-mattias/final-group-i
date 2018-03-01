@@ -6,10 +6,11 @@ var mysqlConf = require('../config.js').mysql_pool;
 const fetchReviewsSpecific = (id, type, cb) => {
   mysqlConf.getConnection(function (err, connection) {
     connection.query({
-      sql: 'SELECT r.*, c.name course_name, t.first_name, t.last_name ' +
+      sql: 'SELECT r.*, c.name course_name, t.first_name, t.last_name, l.like_type ' +
            'FROM review r ' +
            'inner join course c on c.id = r.course_id ' +
            'inner join teacher t on t.id = r.teacher_id ' +
+           'inner join likeAndDislike l on l.id = r.id ' +
            'WHERE ' + type + ' = ? ' +
            'ORDER BY r.id',
       timeout: 40000, // 40s
