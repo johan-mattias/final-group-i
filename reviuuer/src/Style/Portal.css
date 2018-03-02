@@ -13,6 +13,7 @@ body.portal{
  * --------------------------------------------------------------
  */
 
+ 
 .portalList{
     margin-top: 80px;
     padding: 0;
@@ -41,8 +42,25 @@ body.portal{
  * --------------------------------------------------------------
  */
 
+ ul.reviueHomeul{
+    margin-top: 115px;
+    padding: 0;
+    list-style-type: none;
+}
+
+li.reviueHomeli{
+    padding: 5px;
+    margin: 5px;
+    color: black;
+    border: 1px #2F80ED solid;
+    border-radius: 25px;
+}
+
  .liHomeLeftside{
     flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
  }
  .liHomeRightside{
      flex: 1;
@@ -52,18 +70,26 @@ body.portal{
 
  .liCourseHome{
      font-size: 18px;
+     margin-left: 10px;
  }
 
  .liHomeFooter{
-   display: flex;
+    display: flex;
     flex-direction: row;
     font-size: 10px;
     justify-content: space-around;
     text-align: center;
+    align-content: flex-end;
+    margin-top: auto;
  }
  .liNum{
      font-size: 18px;
 
+ }
+
+ .liRead{
+     font-size: 10px;
+     opacity: 0.6;
  }
 
  
@@ -77,6 +103,7 @@ body.portal{
 
 
 .liLeftside{
+    margin-left: 10px;
     flex: 1;
      
  }
@@ -92,7 +119,7 @@ body.portal{
  .liRightside{
      text-align: center;
      flex: 1;
-     max-width: 250px;
+     max-width: 150px;
  
  }
 
@@ -102,6 +129,7 @@ body.portal{
 
  .liAvgScore{
      font-size: 36px;
+     color: orange;
  }
 
  .courseNavLink{
@@ -186,19 +214,7 @@ button.signOut{
     outline: none;
 }
 
-ul.reviueHomeul{
-    margin-top: 115px;
-    padding: 0;
-    list-style-type: none;
-}
 
-li.reviueHomeli{
-    padding: 10px;
-    margin: 10px;
-    color: black;
-    border: 1px #2F80ED solid;
-    border-radius: 25px;
-}
 
 .filter-list{
     margin: 10px 0px 10px 0px;

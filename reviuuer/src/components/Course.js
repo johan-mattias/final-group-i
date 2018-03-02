@@ -72,6 +72,16 @@ class Course extends React.Component{
       // this.props.history.push(`/portal/review?review_id=${id}`);
     }
 
+    subString(string){
+      if(string.length > 40){
+        let res = (string.substr(0,40) + '...')
+        return (res)
+      }
+      else{
+        return string
+      }
+    }
+
   render() {
     let filteredCourses = this.state.courses.filter(
       (course) => {
@@ -90,9 +100,9 @@ class Course extends React.Component{
         <div className='coursePage'>
           <ul className = 'portalList'>
           {filteredCourses.map(c =>
-            <li onClick={this.handleClick.bind(this)} key={c.id} id={c.id}>
+            <li className="reviueHomeli" onClick={this.handleClick.bind(this)} key={c.id} id={c.id}>
             <div className = "liLeftside"> 
-              <div className="liCourse">{c.name}</div>
+              <div className="liCourse">{this.subString(c.name)}</div>
               <div className ="liTeachForm">{c.teaching_form}</div>
             </div>
             <div className = "liRightside">

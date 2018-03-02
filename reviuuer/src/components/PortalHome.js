@@ -16,18 +16,16 @@ import '../Style/Portal.css';
 import '../Style/Img.css'
 import 'typeface-roboto';
 
-var imgLike;
-
 class PortalHome extends React.Component {
   constructor(props) {
     super(props);
-
+    this.state = {
+      reviews: []
+    }
+  
      this.handleSingOut = this.handleSingOut.bind(this);
   }
 
-  state = {
-    reviews: []
-  }
 
   handleSingOut(e) {
     e.preventDefault();
@@ -46,11 +44,10 @@ class PortalHome extends React.Component {
 
   likeOrDislike(status){
     if(status == "like"){
-      imgLike = <img src = {LikeThumbIcon} className = "navIcon likeAndDislikeIcon"></img>
+      return (LikeThumbIcon)
     }  else if(status == "dislike"){
-      imgLike = <img src = {DislikeThumbIcon} className = "navIcon likeAndDislikeIcon"></img>
-    }
-    
+      return (DislikeThumbIcon)
+    } 
   }
 
   componentWillMount() {
@@ -100,6 +97,16 @@ class PortalHome extends React.Component {
     document.body.classList.add('portal'); //adding the correct background by setting the class of the body
   }
 
+  subString(string){
+    if(string.length > 40){
+      let res = (string.substr(0,40) + '...')
+      return (res)
+    }
+    else{
+      return string
+    }
+  }
+
   render() {
     return (
       <div className="portal">
@@ -110,24 +117,24 @@ class PortalHome extends React.Component {
           {this.state.reviews.map( r =>
             <li className="reviueHomeli" onClick={this.handleClick.bind(this)} key={r.id} id={r.id}>
               
-              <div className = "liHomeLeftside">
-                <div className = "liCourseHome">{r.course_name}</div>
-                <div className = "liHomeFooter">
-                  <div className = "liQlty"> Quality <br /> 
-                    <div className = "liNum"> {r.quality}</div>
+              <div className = "liHomeLeftside" id = {r.id}>
+                <div className = "liCourseHome" id = {r.id}>{this.subString(r.course_name)}</div>
+                <div className = "liHomeFooter" id = {r.id}>
+                  <div className = "liQlty" id = {r.id}> Quality <br /> 
+                    <div className = "liNum" id = {r.id}> {r.quality}</div>
                   </div>
-                  <div className = "liDiff"> Difficulty <br /> 
-                    <div className = "liNum"> {r.difficulty}</div>
+                  <div className = "liDiff" id = {r.id}> Difficulty <br /> 
+                    <div className = "liNum" id = {r.id}> {r.difficulty}</div>
                   </div>
-                  <div className = "liCred"> Worth Credits <br /> 
-                    <div className = "liNum"> {r.worth_credits}</div>
+                  <div className = "liCred" id = {r.id}> Worth Credits <br /> 
+                    <div className = "liNum" id = {r.id}> {r.worth_credits}</div>
                   </div>
                 </div>
               </div>
-              <div className = "liHomeRightside">
-                <div className = "liRec">Recommended</div>
-                <div className = "liLike">{ this.likeOrDislike(r.like_type)} {imgLike}</div>
-                <Link to="/portal" className = "courseNavLink" >Click to read more</Link>  
+              <div className = "liHomeRightside" id = {r.id}>
+                <div className = "liRec" id = {r.id}>Recommended</div>
+                <div className = "liLike" id = {r.id}><img src = { this.likeOrDislike(r.like_type) } className = "navIcon likeAndDislikeIcon"></img></div>
+                <div className = "liRead" >Click to read more</div>  
               </div>
               
                
