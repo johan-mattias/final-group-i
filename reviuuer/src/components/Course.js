@@ -108,7 +108,7 @@ class Course extends React.Component{
             </div>
             <div className = "liRightside">
               <div className="liAvgHeader"> Average score </div>
-              <div className= "liAvgScore">{parseFloat(c.averageRating, 2)}</div>
+              <div className= "liAvgScore">{parseFloat(c.averageRating, 2).toFixed(2)}</div>
               <Link to="/portal" className = "courseNavLink" >Click for more info</Link>
             </div>
             </li>
