@@ -72,7 +72,7 @@ class Login extends React.Component {
   render() {
     return (
     <div>
-      <div><h1><Link className="link logo" to="/">ReviUUer</Link></h1></div>
+      <div><h1 className="logo"><Link className="link logo" to="/">ReviUUer</Link></h1></div>
       <hr/>
       <div className="flex-container">
         <form className="login-column" onSubmit={this.handleSubmit}>

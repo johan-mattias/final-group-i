@@ -31,10 +31,10 @@ body.home{
   font-size: large;
 }
 
-h1 {
+h1.logo {
     font-family: Roboto;
     color: #FFFFFF;
-    text-align: center; 
+    text-align: center;
     font-weight: lighter;
     padding: 0px;
     margin: 0px;
@@ -87,7 +87,7 @@ a:hover {
     padding-top: 50px;
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column; 
+    flex-direction: column;
     align-items: center;
 }
 

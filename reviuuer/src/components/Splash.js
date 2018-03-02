@@ -20,11 +20,11 @@ class Splash extends React.Component {
     render() {
     return (
         <div>
-          <div><h1><Link className="link logo" to="/">ReviUUer</Link></h1></div>
+          <div><h1 className="logo"><Link className="link logo" to="/">ReviUUer</Link></h1></div>
           <hr></hr>
           <div>
           <div className="flex-container">
-            <div className="row"> 
+            <div className="row">
               <div className="login-column">
                <Link className="link" to="/register"><button className="home">REGISTER</button></Link>
                  <br></br>
