@@ -72,8 +72,6 @@ class MyProfile extends React.Component{
     console.log(this.state.courses);
     return (
       <div className="portal">
-        <div className = 'header'>
-        </div>
           <div className = "signOutContainer">
             <button className="signOut" onClick={this.handleSingOut}>SIGN OUT</button>
           </div>

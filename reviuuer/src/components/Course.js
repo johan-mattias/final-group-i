@@ -91,6 +91,7 @@ class Course extends React.Component{
     return (
       <div className="portal">
         <div className = 'header'>
+        <h1 className="headerText">Courses</h1>
           <div className="filter-list">
             <form>
                 <input className="searchbar" type="text" placeholder="Search..." value={this.state.search || ''} onChange={this.searchClick.bind(this)}/>

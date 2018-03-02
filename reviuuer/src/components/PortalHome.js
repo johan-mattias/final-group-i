@@ -112,7 +112,7 @@ class PortalHome extends React.Component {
     return (
       <div className="portal">
         <div className = 'header'>
-          <h1 className="headerText">ReviUUer</h1>
+          <h1 className="headerText">Reviews</h1>
         </div>
         <ul className="portalList">
           {this.state.reviews.map( r =>
