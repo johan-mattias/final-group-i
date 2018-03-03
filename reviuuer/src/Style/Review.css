@@ -172,7 +172,7 @@ form.new-review {
     flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
-    margin-top: 65px;
+    margin-top: 70px;
     margin-bottom: 65px;
 }
 
@@ -195,4 +195,19 @@ input.teacher-name {
     width: 80%;
     text-indent: 8px;
     margin-bottom: 5px;
+}
+
+.radioSelectContainer {
+    display: flex;
+}
+
+.radioSelectItem {
+    margin: 0 15px 0 15px;
+}
+
+.radioText {
+    font-family: roboto;
+    font-weight: lighter;
+    margin: 0;
+    padding: 0;
 }

@@ -48,10 +48,6 @@ class PortalAddReview extends React.Component {
     teacher_review: '',
   }
 
-  handleChange = (selectedOption) => {
-    this.setState({ selectedOption });
-  }
-
   handleSubmit(event) {
     console.log(this.state);
     fetch('/api/addreview', {
@@ -63,13 +59,9 @@ class PortalAddReview extends React.Component {
         body: JSON.stringify({
             ...this.state
         })
-    })
+    }).then(this.context.router.history.goBack())
 
     event.preventDefault();
-  }
-
-  CommentClick(event) {
-    this.setState({newComment: event.target.value});
   }
 
   setupOptions(value, label) {
@@ -101,23 +93,6 @@ class PortalAddReview extends React.Component {
   }
 
   componentWillMount() {
-    const review_id = qs.parse(this.props.location.search).review_id;
-
-    let fetchURLreview = `/api/reviews?review_id=${review_id}`;
-    fetch( fetchURLreview )
-      .then((res) => {
-        if(res.status !== 200) {
-          console.log('Looks like there was a problem. Status Code: ' +
-            res.status);
-          return;
-        }
-        res.json()
-          .then(review => {
-            const data = review[0]
-            this.setState({ review: data })
-          });
-      })
-
     this.fetchCourses();
 
     document.body.classList.remove('home');
@@ -126,6 +101,10 @@ class PortalAddReview extends React.Component {
 
   handleGradedScaleClick(rating, cb) {
     cb(rating);
+  }
+
+  handleRadioClick(cb) {
+    cb();
   }
 
   printGradedScale(rating, cb) {
@@ -146,44 +125,25 @@ class PortalAddReview extends React.Component {
     );
   }
 
-  printRadio(bool) {
-    if(bool) {
+  printRadio(bool, cb) {
+    if(bool === true) {
       return(
-        <div className="radioTrue">
+        <div className="radioTrue" onClick={() => this.handleRadioClick(cb)}>
           <div className="radioWhiteBoarder" />
         </div>
       );
     } else {
       return(
-        <div className="radioFalse">
+        <div className="radioFalse" onClick={() => this.handleRadioClick(cb)}>
           <div className="radioWhiteBoarder" />
         </div>
       );
     }
   }
 
-  // Parses date from 2018-02-19T13:53:04.000Z into 13:53 2018-02-19
-  parseTimeStamp(ts) {
-    const tsSplit = ts.split("T");
-
-    const date = tsSplit[0].split("-");
-    const year = date[0];
-    const month = date[1];
-    const day = date[2];
-
-    const time = tsSplit[1].split(":");
-    const hour = time[0];
-    const minute = time[1];
-
-    return(year + "-" + month + "-" + day + " " + hour + ":" + minute);
-  }
-
-
   cbChangeCourse(course_id, error) {
     this.setState({course_id})
   }
-
-
 
   render() {
     console.log(this.state);
@@ -194,55 +154,88 @@ class PortalAddReview extends React.Component {
           <img onClick={this.context.router.history.goBack} src={backArrow} className="backArrow" />
         </div>
         <form className="new-review" onSubmit={this.handleSubmit}>
-            {/* <input className="login" placeholder="course_id" value={this.state.course_id} onChange={(event) => this.setState({course_id: event.target.value})} /><br/>
-            <input className="login" placeholder="quality" value={this.state.quality} onChange={(event) => this.setState({quality: event.target.value})} /><br/>
-            <input className="login" placeholder="difficulty" value={this.state.difficulty} onChange={(event) => this.setState({difficulty: event.target.value})} /><br/>
-            <input className="login" placeholder="can_recommend" value={this.state.can_recommend} onChange={(event) => this.setState({can_recommend: event.target.value})} /><br/>
-            <input className="login" placeholder="worth_credits" value={this.state.worth_credits} onChange={(event) => this.setState({worth_credits: event.target.value})} /><br/>
-            <input className="login" placeholder="books_req" value={this.state.books_req} onChange={(event) => this.setState({books_req: event.target.value})} /><br/>
-            <input className="login" placeholder="percentage_mand" value={this.state.percentage_mand} onChange={(event) => this.setState({percentage_mand: event.target.value})} /><br/>
-            <input className="login" placeholder="exam" value={this.state.exam} onChange={(event) => this.setState({exam: event.target.value})} /><br/>
-            <input className="login" placeholder="course_review" value={this.state.course_review} onChange={(event) => this.setState({course_review: event.target.value})} /><br/>
-            <input className="login" placeholder="teacher_review" value={this.state.teacher_review} onChange={(event) => this.setState({teacher_review: event.target.value})} /><br/> */}
+          <h2 className="select-text">Select course</h2>
+          <SelectCourse value={this.state.course_id} onChangeCB={this.cbChangeCourse.bind(this)} options={this.state.course_options} />
 
+          <h2 className="select-text">Select teacher</h2>
+          <input className="teacher-name" placeholder="Write teacher(s) name(s) here..." value={this.state.teacher_name} onChange={(event) => this.setState({teacher_name: event.target.value})} />
 
-            <h2 className="select-text">Select course</h2>
-            <SelectCourse value={this.state.course_id} onChangeCB={this.cbChangeCourse.bind(this)} options={this.state.course_options} />
-            <h2 className="select-text">Select teacher</h2>
-            <input className="teacher-name" placeholder="Write teacher(s) name(s) here..." value={this.state.teacher_name} onChange={(event) => this.setState({teacher_name: event.target.value})} />
+          <hr className="review"/>
 
-            <hr className="review"/>
-            <h2 className="attributesStyle">Quality<br/>
-            {/* {this.printGradedScale(0, (rating) => { console.log(rating); } )} */}
+          <h2 className="attributesStyle">Quality<br/>
             {this.printGradedScale(this.state.quality, (rating) => { this.setState({quality: rating}); })}
-            </h2>
-            <h2 className="attributesStyle">Difficulty<br/>
+          </h2>
+
+          <h2 className="attributesStyle">Difficulty<br/>
             {this.printGradedScale(this.state.difficulty, (rating) => { this.setState({difficulty: rating}); })}
-            </h2>
-            <h2 className="attributesStyle">Worth credits<br/>
+          </h2>
+
+          <h2 className="attributesStyle">Worth credits<br/>
             {this.printGradedScale(this.state.worth_credits, (rating) => { this.setState({worth_credits: rating}); })}
-            </h2>
-            <h2 className="attributesStyle">Percentage mandatory<br/>
+          </h2>
+
+          <h2 className="attributesStyle">Percentage mandatory<br/>
             {this.printGradedScale(this.state.percentage_mand, (rating) => { this.setState({percentage_mand: rating}); })}
-            </h2>
-            <h2 className="attributesStyle">Books required: </h2>
-            {0 ? this.printRadio(true) : this.printRadio(false)}
-            <h2 className="attributesStyle">Has exam: </h2>
-            {0 ? this.printRadio(true) : this.printRadio(false)}
-            <h2 className="attributesStyle">Can reccommend: </h2>
-            {0 ?
-            <img onClick={this.context.router.history.goBack} src={thumbGreen} className="thumb" /> :
-            <img onClick={this.context.router.history.goBack} src={thumbRed} className="thumb" />}
-            <hr className="review"/>
-            <h2 className="attributesStyle">Course review: </h2>
-            <textarea cols="40" rows="5" className="text-review" placeholder="Write course review here..." value={this.state.course_review} onChange={(event) => this.setState({course_review: event.target.value})} />
+          </h2>
 
-            <h2 className="attributesStyle">Teacher review: </h2>
-            <textarea cols="40" rows="5" className="text-review" placeholder="Write teacher review here..." value={this.state.teacher_review} onChange={(event) => this.setState({teacher_review: event.target.value})} />
+          <h2 className="attributesStyle">Books required: </h2>
+          <div className="radioSelectContainer">
+            <div className="radioSelectItem">
+              <p className="radioText">No</p>
+              {this.state.books_req === 0
+              ? this.printRadio(true, () => { this.setState({books_req: 0}); })
+              : this.printRadio(false, () => { this.setState({books_req: 0}); })}
+            </div>
+            <div className="radioSelectItem">
+              <p className="radioText">Yes</p>
+              {this.state.books_req === 1
+              ? this.printRadio(true, () => { this.setState({books_req: 1}); })
+              : this.printRadio(false, () => { this.setState({books_req: 1}); })}
+            </div>
+          </div>
 
-            <hr className="review"/>
 
-            <input className="submit" type="submit" value="SUBMIT" />
+          <h2 className="attributesStyle">Has exam: </h2>
+          <div className="radioSelectContainer">
+            <div className="radioSelectItem">
+              <p className="radioText">No</p>
+              {this.state.exam === 0
+              ? this.printRadio(true, () => { this.setState({exam: 0}); })
+              : this.printRadio(false, () => { this.setState({exam: 0}); })}
+            </div>
+            <div className="radioSelectItem">
+              <p className="radioText">Yes</p>
+              {this.state.exam === 1
+              ? this.printRadio(true, () => { this.setState({exam: 1}); })
+              : this.printRadio(false, () => { this.setState({exam: 1}); })}
+            </div>
+          </div>
+
+
+          <h2 className="attributesStyle">Can reccommend: </h2>
+          <div className="radioSelectContainer">
+            <div className="radioSelectItem">
+              <p className="radioText">No</p>
+              {this.state.can_recommend === 0
+              ? this.printRadio(true, () => { this.setState({can_recommend: 0}); })
+              : this.printRadio(false, () => { this.setState({can_recommend: 0}); })}
+            </div>
+            <div className="radioSelectItem">
+              <p className="radioText">Yes</p>
+              {this.state.can_recommend === 1
+              ? this.printRadio(true, () => { this.setState({can_recommend: 1}); })
+              : this.printRadio(false, () => { this.setState({can_recommend: 1}); })}
+            </div>
+          </div>
+
+          <hr className="review"/>
+          <h2 className="attributesStyle">Course review: </h2>
+          <textarea cols="40" rows="5" className="text-review" placeholder="Write course review here..." value={this.state.course_review} onChange={(event) => this.setState({course_review: event.target.value})} />
+
+          <h2 className="attributesStyle">Teacher review: </h2>
+          <textarea cols="40" rows="5" className="text-review" placeholder="Write teacher review here..." value={this.state.teacher_review} onChange={(event) => this.setState({teacher_review: event.target.value})} />
+
+          <input className="comment-submit" type="submit" value="SUBMIT" />
         </form>
 
         <Footer/>
