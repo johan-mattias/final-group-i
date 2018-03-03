@@ -205,8 +205,8 @@ class PortalReview extends React.Component {
         {review.exam ? this.printRadio(true) : this.printRadio(false)}
         <h2 className="attributesStyle">Can reccommend: </h2>
         {review.can_recommend ?
-        <img onClick={this.context.router.history.goBack} src={thumbGreen} className="thumb" /> :
-        <img onClick={this.context.router.history.goBack} src={thumbRed} className="thumb" />}
+        <img src={thumbGreen} className="thumb" /> :
+        <img src={thumbRed} className="thumb" />}
         <hr className="review"/>
         <h2 className="attributesStyle">Course review: </h2>
         <p className="reviewText">{review.course_review}</p>
