@@ -5,12 +5,12 @@ var mysqlConf = require('../config.js').mysql_pool;
 var bodyParser = require('body-parser');
 
 
-const addReview = (user_id, course_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review, cb) => {
+const addReview = (user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review, cb) => {
   mysqlConf.getConnection(function (err, connection) {
     connection.query({
-      sql: 'INSERT INTO review (user_id, course_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      sql: 'INSERT INTO review (user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
       timeout: 40000, // 40s
-      values: [user_id, course_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review]
+      values: [user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review]
     }, function (error, results, fields) {
       connection.release();
 
@@ -29,6 +29,7 @@ const addReview = (user_id, course_id, quality, difficulty, can_recommend, worth
 router.post('/', function(req, res) {
     var user_id = req.param('user_id');
     var course_id = req.param('course_id');
+    var teacher_name = req.param('teacher_name') ? req.param('teacher_name') : "unknown teacher";
     var quality = req.param('quality');
     var difficulty = req.param('difficulty');
     var can_recommend = req.param('can_recommend');
@@ -50,7 +51,7 @@ router.post('/', function(req, res) {
         exam !== undefined &&
         course_review !== undefined &&
         teacher_review !== undefined) {
-      addReview(user_id, course_id, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review, (error, added) => {
+      addReview(user_id, course_id, teacher_name, quality, difficulty, can_recommend, worth_credits, books_req, percentage_mand, exam, course_review, teacher_review, (error, added) => {
         if(added) {
             console.log('New review added')
             res.json({added: true});
