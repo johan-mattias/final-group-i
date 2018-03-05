@@ -233,7 +233,7 @@ class PortalReview extends React.Component {
           {comments.map( c =>
             <li key={c.id} id={c.id} style={{color: 'black', listStyleType: "none"}}>
             <div>
-              <p className="commentEmail">user#{c.user_id}</p>
+              <p className="commentEmail">{c.username}</p>
               <p className="commentDate"> {this.parseTimeStamp(c.date)} </p>
             </div>
               <p className="reviewText">{c.comment_text}</p>
