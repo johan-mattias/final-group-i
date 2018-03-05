@@ -8,8 +8,8 @@ import Footer from './Footer';
 import Home from './Home.js';
 import Course from './Course.js';
 
-import LikeThumbIcon from '../img/Thumb.png'
-import DislikeThumbIcon from '../img/DislikeThumb.png'
+import LikeThumbIcon from '../img/thumb_green.png'
+import DislikeThumbIcon from '../img/thumb_red.png'
 import '../Style/Button.css';
 import '../Style/Portal.css';
 import '../Style/Img.css'
@@ -42,9 +42,10 @@ class PortalHome extends React.Component {
   }
 
   likeOrDislike(status){
-    if(status == "like"){
+  
+    if(status == 1){
       return (LikeThumbIcon)
-    }  else if(status == "dislike"){
+    }  else if(status == 0){
       return (DislikeThumbIcon)
     } 
   }
@@ -134,7 +135,7 @@ class PortalHome extends React.Component {
               </div>
               <div className = "liHomeRightside" id = {r.id}>
                 <div className = "liRec" id = {r.id}>Recommended</div>
-                <div className = "liLike" id = {r.id}><img src = { this.likeOrDislike(r.like_type) } className = "navIcon likeAndDislikeIcon"></img></div>
+                <div className = "liLike" id = {r.id}><img src = { this.likeOrDislike(r.can_recommend) } className = "navIcon likeAndDislikeIcon"></img></div>
                 <div className = "liRead" >Click to read more</div>  
               </div>
               
