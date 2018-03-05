@@ -7,12 +7,18 @@ import 'typeface-roboto';
 class Register extends Component {
   constructor(props) {
     super(props);
-    this.state = {email: '',
-                  password: '',
-                  passwordVerify:'',
+    this.state = {
+      username: '',
+      email: '',
+      password: '',
+      passwordVerify:'',
                 };
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.UsernameClick = this.UsernameClick.bind(this);
+    this.EmailClick = this.EmailClick.bind(this);
+    this.PwdClick = this.PwdClick.bind(this);
+    this.PwdClickCheck = this.PwdClickCheck.bind(this);
   }
 
   componentWillMount() {
@@ -21,6 +27,9 @@ class Register extends Component {
     document.body.classList.add('home');
   }
 
+  UsernameClick(event) {
+    this.setState({username: event.target.value});
+  }
 
   EmailClick(event) {
     this.setState({email: event.target.value});
@@ -55,6 +64,7 @@ class Register extends Component {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
+              username: this.state.username,
               email: this.state.email,
               password: this.state.password
           })
@@ -94,9 +104,10 @@ class Register extends Component {
         <div className="flex-container">
           <div className="row">
             <form className="login-column" onSubmit={this.handleSubmit}>
-              <input className="login" placeholder="Email" type="email" value={this.state.email} onChange={this.EmailClick.bind(this)} /> {/*TODO add type="email"*/}
-              <input className="login" type="password" placeholder="Password" value={this.state.password} onChange={this.PwdClick.bind(this)} />
-              <input className="login" type="password" placeholder="Password" value={this.state.passwordVerify} onChange={this.PwdClickCheck.bind(this)} />
+              <input className="login" placeholder="Username" value={this.state.username} onChange={this.UsernameClick} />
+              <input className="login" placeholder="Email" type="email" value={this.state.email} onChange={this.EmailClick} />
+              <input className="login" type="password" placeholder="Password" value={this.state.password} onChange={this.PwdClick} />
+              <input className="login" type="password" placeholder="Password" value={this.state.passwordVerify} onChange={this.PwdClickCheck} />
               <input className="submit" type="submit" value="REGISTER" />
             </form>
           </div>
