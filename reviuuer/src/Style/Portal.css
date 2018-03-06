@@ -85,6 +85,7 @@ li.reviueHomeli{
  }
  .liNum{
      font-size: 18px;
+     opacity: 0.7;
 
  }
 
@@ -104,18 +105,31 @@ li.reviueHomeli{
 
 
 .liLeftside{
-    margin-left: 10px;
     flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
 
  }
  .liCourse{
-     font-size: 18px;
+     font-size: 16px;
+     margin-left: 10px;
  }
 
  .liTeachForm{
-     font-size: 18px;
-     font-weight: lighter;
+     font-size: 14px;
      opacity: 0.6;
+     margin-left: 10px;
+ }
+
+ .liCourseFooter{
+    display: flex;
+    flex-direction: row;
+    font-size: 10px;
+    justify-content: space-around;
+    text-align: center;
+    align-content: flex-end;
+    margin-top: auto;
  }
  .liRightside{
      text-align: center;

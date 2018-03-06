@@ -104,7 +104,18 @@ class Course extends React.Component{
             <li className="reviueHomeli" onClick={this.handleClick.bind(this)} key={c.id} id={c.id}>
             <div className = "liLeftside">
               <div className="liCourse">{this.subString(c.name)}</div>
-              <div className ="liTeachForm">{c.teaching_form}</div>
+              <div className="liTeachForm">{c.distance ? "Distance course": "Campus"}</div>
+              <div className = "liCourseFooter" id = {c.id}>
+                  <div className = "liCred" id = {c.id}> Credits <br /> 
+                    <div className = "liNum" id = {c.id}> {c.credits} </div>
+                  </div>
+                  <div className = "liPace" id = {c.id}> Pace <br /> 
+                    <div className = "liNum" id = {c.id}> {c.pace_of_study}% </div>
+                  </div>
+                  <div className = "liSem" id = {c.id}> Semester <br /> 
+                    <div className = "liNum" id = {c.id}></div>
+                  </div>
+                </div>
             </div>
             <div className = "liRightside">
               <div className="liAvgHeader"> Average score </div>

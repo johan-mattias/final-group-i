@@ -43,9 +43,9 @@ class PortalHome extends React.Component {
 
   likeOrDislike(status){
   
-    if(status == 1){
+    if(status === 1){
       return (LikeThumbIcon)
-    }  else if(status == 0){
+    }  else if(status === 0){
       return (DislikeThumbIcon)
     } 
   }
