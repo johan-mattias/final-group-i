@@ -9,10 +9,10 @@ input{
 input.login {
       background-color:  white;
       color: #828282;
-      height: 68px;
+      height: 50px;
       width: 300px;
       border-radius:  20px;
-      font-size:  35px;
+      font-size:  20px;
       text-align: center;
 }
 
@@ -25,7 +25,7 @@ input.submit {
       border-color:white;
       font-size: 25px;
       fill: solid;
-      margin-top: 50px; 
+      margin-top: 25px;
 }
 
 
@@ -33,7 +33,7 @@ button {
       color:white;
       font-family: Roboto;
       font-weight: lighter;
-   
+
 }
 
 button.singout{
@@ -48,7 +48,7 @@ button.singout{
 button.nav{
       background-color: #2F80ED;
       border: 1px solid white;
-      color:white; 
+      color:white;
       font-size: 11px;
       height: 69px;
       flex-grow: 1;
@@ -57,13 +57,13 @@ button.nav{
 }
 
 button.add{
-      background-color: #27AE60; 
+      background-color: #27AE60;
 }
 
 .selectedAdd button.add{
       background-color: #1b7943;
  }
-  
+
 
 .selected button.nav {
       background-color: #3B5E8F;
@@ -80,7 +80,7 @@ button.home {
       border-radius: 20px;
       border-style: solid;
       font-Size: 35px;
-      
+
 
 }
 

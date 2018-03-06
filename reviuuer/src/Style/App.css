@@ -69,6 +69,7 @@ a:hover {
   font-family: Roboto;
   color: #FFFFFF;
   font-size: 55px;
+  text-decoration: none;
 }
 
 .flex-container {
