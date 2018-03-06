@@ -146,6 +146,16 @@ li.reviueHomeli{
      font-size: 36px;
  }
 
+ .redstyle{
+    color: red;
+}
+.greenstyle{
+    color: green;
+}
+.orangestyle{
+    color: orange;
+}
+
  .courseNavLink{
     font-size: 14px;
     text-decoration:  none;

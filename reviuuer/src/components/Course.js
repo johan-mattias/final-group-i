@@ -5,18 +5,6 @@ import {withRouter, NavLink, Link} from "react-router-dom";
 import Footer from './Footer';
 import '../Style/Portal.css';
 
-const lowAvgStyle = {
-  color : 'red'
-};
-
-const middleAvgStyle = {
-  color : 'orange'
-};
-
-const highAvgStyle = {
-  color : 'green'
-};
-
 class Course extends React.Component{
   constructor(props) {
     super(props);
@@ -75,11 +63,11 @@ class Course extends React.Component{
 
   setStyle(rating){
     if(rating < 2.5){
-      return lowAvgStyle;
+      return <div className= "liAvgScore redstyle">{parseFloat(rating, 2).toFixed(2)}</div>;
     } else if( rating > 3.4){
-      return highAvgStyle;
+      return <div className= "liAvgScore greenstyle">{parseFloat(rating, 2).toFixed(2)}</div>;
     } else {
-      return middleAvgStyle;
+      return <div className= "liAvgScore orangestyle">{parseFloat(rating, 2).toFixed(2)}</div>;
     }
     
   }
@@ -144,7 +132,7 @@ class Course extends React.Component{
             </div>
             <div className = "liRightside">
               <div className="liAvgHeader"> Average score </div>
-              <div className= "liAvgScore" style={this.setStyle(c.averageRating)}>{parseFloat(c.averageRating, 2).toFixed(2)}</div>
+              {this.setStyle(c.averageRating)}
               <Link to="/portal" className = "courseNavLink" >Click for more info</Link>
             </div>
             </li>
