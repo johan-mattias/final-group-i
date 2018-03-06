@@ -5,6 +5,18 @@ import {withRouter, NavLink, Link} from "react-router-dom";
 import Footer from './Footer';
 import '../Style/Portal.css';
 
+const lowAvgStyle = {
+  color : 'red'
+};
+
+const middleAvgStyle = {
+  color : 'orange'
+};
+
+const highAvgStyle = {
+  color : 'green'
+};
+
 class Course extends React.Component{
   constructor(props) {
     super(props);
@@ -57,6 +69,19 @@ class Course extends React.Component{
         })
     document.body.classList.remove('home');
     document.body.classList.add('portal'); //adding the correct background by setting the class of the body
+  }
+
+  
+
+  setStyle(rating){
+    if(rating < 2.5){
+      return lowAvgStyle;
+    } else if( rating > 3.4){
+      return highAvgStyle;
+    } else {
+      return middleAvgStyle;
+    }
+    
   }
 
   searchClick(e){
@@ -119,7 +144,7 @@ class Course extends React.Component{
             </div>
             <div className = "liRightside">
               <div className="liAvgHeader"> Average score </div>
-              <div className= "liAvgScore">{parseFloat(c.averageRating, 2).toFixed(2)}</div>
+              <div className= "liAvgScore" style={this.setStyle(c.averageRating)}>{parseFloat(c.averageRating, 2).toFixed(2)}</div>
               <Link to="/portal" className = "courseNavLink" >Click for more info</Link>
             </div>
             </li>
