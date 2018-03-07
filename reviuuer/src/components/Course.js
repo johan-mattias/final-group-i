@@ -1,6 +1,6 @@
 import React from 'react'
 import Cookies from "universal-cookie";
-import {withRouter, NavLink, Link} from "react-router-dom";
+import {withRouter, NavLink, Link, Router} from "react-router-dom";
 
 import Footer from './Footer';
 import '../Style/Portal.css';
@@ -133,7 +133,7 @@ class Course extends React.Component{
             <div className = "liRightside">
               <div className="liAvgHeader"> Average score </div>
               {this.setStyle(c.averageRating)}
-              <Link to="/portal" className = "courseNavLink" >Click for more info</Link>
+              <Link to={`/portal/course/${c.id}`} className = "courseNavLink" >Click for more info</Link>
             </div>
             </li>
           )}

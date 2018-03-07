@@ -1,36 +1,28 @@
 import React, { Component } from 'react';
 import {NavLink} from 'react-router-dom';
-import {ReactDOM, BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import {ReactDOM, BrowserRouter as Router, Route, Link, withRouter} from 'react-router-dom';
 import Cookies from "universal-cookie";
-import {withRouter} from "react-router-dom";
 
 import Footer from './Footer';
 import Home from './Home.js';
 import Course from './Course.js';
 
-import LikeThumbIcon from '../img/thumb_green.png'
-import DislikeThumbIcon from '../img/thumb_red.png'
+import backArrow from '../img/back-arrow.png';
+import thumbGreen from '../img/thumb_green.png';
+import thumbRed from '../img/thumb_red.png';
+
 import '../Style/Button.css';
 import '../Style/Portal.css';
 import '../Style/Img.css'
 import 'typeface-roboto';
 
-class PortalHome extends React.Component {
+class CourseReviews extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      courseID: props.match.params.course_id,
       reviews: []
     }
-  
-     this.handleSingOut = this.handleSingOut.bind(this);
-  }
-
-
-  handleSingOut(e) {
-    e.preventDefault();
-    //TODO add so we remove the cookie
-    this.props.history.push('/');
-    console.log("TRY TO SIGN OUT")
   }
 
   handleClick(e) {
@@ -44,9 +36,9 @@ class PortalHome extends React.Component {
   likeOrDislike(status){
   
     if(status === 1){
-      return (LikeThumbIcon)
+      return (thumbGreen)
     }  else if(status === 0){
-      return (DislikeThumbIcon)
+      return (thumbRed)
     } 
   }
 
@@ -74,7 +66,7 @@ class PortalHome extends React.Component {
             console.log(access)
             if (access === true) {
                console.log("correct cookie ")
-                fetch('/api/reviews')
+                fetch('/api/reviews?course_id='  + this.state.courseID)
                 .then((res) => {
                   if(res.status !== 200) {
                     console.log('Looks like there was a problem. Status Code: ' +
@@ -110,10 +102,11 @@ class PortalHome extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <div className="portal">
-        <div className = 'header'>
-          <h1 className="headerText">Reviews</h1>
+      <div className='header'>
+        <img onClick={()=> {this.props.history.push('/portal/course');} } src={backArrow} className="backArrow" />
         </div>
         <ul className="portalList">
           {this.state.reviews.map( r =>
@@ -143,10 +136,11 @@ class PortalHome extends React.Component {
             </li>
           )}
         </ul>
-        <Footer/>
-      </div>
+      <Footer/>
+    </div>
+
     );
   };
 }
 
-export default withRouter(PortalHome);
+export default withRouter(CourseReviews);
