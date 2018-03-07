@@ -199,6 +199,10 @@ h1.headerText{
     padding: 0;
 }
 
+.headerText.courseReviewHeader{
+    font-size: 20px;
+}
+
 
 h1{
     color: black;
@@ -266,3 +270,4 @@ input.searchbar{
 input.searchbar{
 
 }
+

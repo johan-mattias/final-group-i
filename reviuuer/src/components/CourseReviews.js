@@ -20,6 +20,7 @@ class CourseReviews extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      headerText: "",
       courseID: props.match.params.course_id,
       reviews: []
     }
@@ -77,8 +78,9 @@ class CourseReviews extends React.Component {
                   console.log(res)
                   console.log('RESULT');
                   res.json()
-                    .then(reviews => this.setState({ reviews }));
-                  })
+                    .then(reviews => 
+                      {this.setState({ reviews, headerText:reviews[0].course_name })});
+                  }) // TODO: WILL CRASH IF COURSE HAVE NO COMMENTS
               } else {
                 console.log("Wrong cookie ")
                 this.props.history.push('/')
@@ -102,11 +104,12 @@ class CourseReviews extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <div className="portal">
       <div className='header'>
         <img onClick={()=> {this.props.history.push('/portal/course');} } src={backArrow} className="backArrow" />
+        
+        <h1 className="headerText courseReviewHeader">{this.state.headerText}</h1>
         </div>
         <ul className="portalList">
           {this.state.reviews.map( r =>
