@@ -33,6 +33,7 @@ class PortalReview extends React.Component {
 
   state = {
     review: undefined,
+    user_email: 0,
     comments: [],
     addComment: false,
     newComment: "",
@@ -51,7 +52,7 @@ class PortalReview extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    var email = 'admin@reviuuer.se' // TODO remove hard coding later
+    var email = this.state.user_email
     var comment = this.state.newComment;
     var review_id = qs.parse(this.props.location.search).review_id;
 
@@ -109,27 +110,56 @@ class PortalReview extends React.Component {
   }
 
   componentWillMount() {
-    const review_id = qs.parse(this.props.location.search).review_id;
+    const c = new Cookies();
+    var cookieFromUser = c.get('user');
+    console.log(cookieFromUser);
 
-    let fetchURLreview = `/api/reviews?review_id=${review_id}`;
-    fetch( fetchURLreview )
-      .then((res) => {
-        if(res.status !== 200) {
-          console.log('Looks like there was a problem. Status Code: ' +
-            res.status);
-          return;
-        }
-        res.json()
-          .then(review => {
-            const data = review[0]
-            this.setState({ review: data })
-          });
+    if(cookieFromUser == undefined){
+      console.log("Wrong cookie ")
+      this.props.history.push('/')
+    } else {
+    var fetchURL = `/api/auth?cookie=${cookieFromUser}`;
+    fetch( fetchURL )
+    .then(
+      (res) => {
+      if(res.status !== 200) {
+        console.log('Looks like there was a problem. Status Code: ' +
+          res.status);
+        return;
+      }
+      res.json()
+        .then((json) => {
+          const access = json.accessCookie
+          if (access === true) {
+            this.fetchComments();
+
+            document.body.classList.remove('home');
+            document.body.classList.add('portal'); //adding the correct background by setting the class of the body
+
+            const review_id = qs.parse(this.props.location.search).review_id;
+
+            let fetchURLreview = `/api/reviews?review_id=${review_id}`;
+            fetch( fetchURLreview )
+              .then((res) => {
+                if(res.status !== 200) {
+                  console.log('Looks like there was a problem. Status Code: ' +
+                    res.status);
+                  return;
+                }
+                res.json()
+                  .then(review => {
+                    const data = review[0]
+                    this.setState({ review: data, user_email: json.user_email })
+                  });
+              })
+            } else {
+              console.log("Wrong cookie ")
+              this.props.history.push('/')
+          }
+        })
       })
+    }
 
-    this.fetchComments();
-
-    document.body.classList.remove('home');
-    document.body.classList.add('portal'); //adding the correct background by setting the class of the body
   }
 
   printGradedScale(rating) {
@@ -203,10 +233,13 @@ class PortalReview extends React.Component {
         {review.books_req ? this.printRadio(true) : this.printRadio(false)}
         <h2 className="attributesStyle">Has exam: </h2>
         {review.exam ? this.printRadio(true) : this.printRadio(false)}
-        <h2 className="attributesStyle">Can reccommend: </h2>
+
         {review.can_recommend ?
-        <img src={thumbGreen} className="thumb" /> :
-        <img src={thumbRed} className="thumb" />}
+        <h2 className="attributesStyle">Can recommend: </h2> :
+        <h2 className="attributesStyle">Can not recommend: </h2>}
+        {review.can_recommend ?
+          <img src={thumbGreen} className="thumb" /> :
+          <img src={thumbRed} className="thumb" />}
         <hr className="review"/>
         <h2 className="attributesStyle">Course review: </h2>
         <p className="reviewText">{review.course_review}</p>

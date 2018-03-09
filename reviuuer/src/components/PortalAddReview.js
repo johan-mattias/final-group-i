@@ -34,7 +34,7 @@ class PortalAddReview extends React.Component {
 
   state = {
     course_options: [],
-    user_id: '1',
+    user_id: 0,
     course_id: null,
     teacher_name: '',
     quality: '',
@@ -93,10 +93,60 @@ class PortalAddReview extends React.Component {
   }
 
   componentWillMount() {
-    this.fetchCourses();
+    const c = new Cookies();
+    var cookieFromUser = c.get('user');
+    console.log(cookieFromUser);
 
-    document.body.classList.remove('home');
-    document.body.classList.add('portal'); //adding the correct background by setting the class of the body
+    if(cookieFromUser == undefined){
+      console.log("Wrong cookie ")
+      this.props.history.push('/')
+    } else {
+    var fetchURL = `/api/auth?cookie=${cookieFromUser}`;
+    fetch( fetchURL )
+    .then(
+      (res) => {
+      if(res.status !== 200) {
+        console.log('Looks like there was a problem. Status Code: ' +
+          res.status);
+        return;
+      }
+      res.json()
+        .then((json) => {
+          const access = json.accessCookie
+          console.log(access)
+          console.log("correct cookie ")
+          console.log(json);
+          console.log("correct cookie ")
+          if (access === true) {
+            this.fetchCourses();
+
+            document.body.classList.remove('home');
+            document.body.classList.add('portal'); //adding the correct background by setting the class of the body
+
+
+            var fetchURLUser = `/api/user?email=${json.user_email}`;
+            fetch( fetchURLUser )
+              .then(res => {
+                if(res.status !== 200) {
+                  console.log('Looks like there was a problem. Status Code: ' +
+                    res.status);
+                  return;
+                }
+                res.json()
+                  .then(data => {
+                    const user = data[0]
+
+                    this.setState({user_id: user.id})
+                  })
+              })
+
+            } else {
+              console.log("Wrong cookie ")
+              this.props.history.push('/')
+          }
+        })
+      })
+    }
   }
 
   handleGradedScaleClick(rating, cb) {
@@ -157,28 +207,28 @@ class PortalAddReview extends React.Component {
           <h2 className="select-text">Select course</h2>
           <SelectCourse value={this.state.course_id} onChangeCB={this.cbChangeCourse.bind(this)} options={this.state.course_options} />
 
-          <h2 className="select-text">Select teacher</h2>
+          <h2 className="select-text">Name of teacher</h2>
           <input className="teacher-name" placeholder="Write teacher(s) name(s) here..." value={this.state.teacher_name} onChange={(event) => this.setState({teacher_name: event.target.value})} />
 
           <hr className="review"/>
 
-          <h2 className="attributesStyle">Quality<br/>
+          <h2 className="attributesStyle">Quality?<br/>
             {this.printGradedScale(this.state.quality, (rating) => { this.setState({quality: rating}); })}
           </h2>
 
-          <h2 className="attributesStyle">Difficulty<br/>
+          <h2 className="attributesStyle">Difficulty?<br/>
             {this.printGradedScale(this.state.difficulty, (rating) => { this.setState({difficulty: rating}); })}
           </h2>
 
-          <h2 className="attributesStyle">Worth credits<br/>
+          <h2 className="attributesStyle">Worth credits?<br/>
             {this.printGradedScale(this.state.worth_credits, (rating) => { this.setState({worth_credits: rating}); })}
           </h2>
 
-          <h2 className="attributesStyle">Percentage mandatory<br/>
+          <h2 className="attributesStyle">Percentage mandatory?<br/>
             {this.printGradedScale(this.state.percentage_mand, (rating) => { this.setState({percentage_mand: rating}); })}
           </h2>
 
-          <h2 className="attributesStyle">Books required: </h2>
+          <h2 className="attributesStyle">Books required? </h2>
           <div className="radioSelectContainer">
             <div className="radioSelectItem">
               <p className="radioText">No</p>
@@ -195,7 +245,7 @@ class PortalAddReview extends React.Component {
           </div>
 
 
-          <h2 className="attributesStyle">Has exam: </h2>
+          <h2 className="attributesStyle">Has exam? </h2>
           <div className="radioSelectContainer">
             <div className="radioSelectItem">
               <p className="radioText">No</p>
@@ -212,7 +262,7 @@ class PortalAddReview extends React.Component {
           </div>
 
 
-          <h2 className="attributesStyle">Can reccommend: </h2>
+          <h2 className="attributesStyle">Can recommend? </h2>
           <div className="radioSelectContainer">
             <div className="radioSelectItem">
               <p className="radioText">No</p>

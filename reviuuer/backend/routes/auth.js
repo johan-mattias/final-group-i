@@ -20,9 +20,9 @@ app.use(session({
 
 function generateToken(email, admin, access){
   var u = {
-   email: email,
-   admin: admin,//user.admin, // TODO add so we can manage admin in DB
-   access: access, //remove this and add a user id for each user THIS is no good
+    email: email,
+    admin: admin,//user.admin, // TODO add so we can manage admin in DB
+    access: access, //remove this and add a user id for each user THIS is no good
   };
   return token = jwt.sign(u, secretJWT,{
      expiresIn: 60 * 60 * 24 * 30 // expires in 30 days
@@ -45,12 +45,12 @@ const authenticateUser = (email, myPlaintextPassword, cb) => {
         var bcryptAuth = bcrypt.compareSync(myPlaintextPassword, results[0].password);
         if(bcryptAuth) {
           console.log('Authentication accepted');
-          cb(error, true);
+          cb(error, true, email);
           return;
         }
       }
       console.log('Authentication declined');
-      cb(error, false);
+      cb(error, false, 0);
       return;
     });
   });
@@ -62,12 +62,12 @@ const authenticateCookie = (cookie, cb) => {
     if (user.access === true){
       console.log("True callback i funktion");
       console.log(user);
-      cb(true);
+      cb(true, user.email);
       return;
     }
     else{
       console.log("False callback i funktion");
-      cb(false);
+      cb(false, 0);
       return;
     }
 
@@ -96,13 +96,13 @@ router.get('/', function(req, res) {
         }
       });
     } else if (cookie !== undefined) { // redan inloggad
-        authenticateCookie(cookie, (accessCookie) => {
+      authenticateCookie(cookie, (accessCookie, user_email) => {
         if(accessCookie === true){
-            console.log('Authenticated')
-            res.json({accessCookie: true });
+          console.log('Authenticated')
+          res.json({accessCookie: true, user_email: user_email });
         } else {
-            console.log('Not authenticated')
-            res.json({accessCookie: false});
+          console.log('Not authenticated')
+          res.json({accessCookie: false, user_email: 0});
         }
       });
     } else {

@@ -21,7 +21,7 @@ class PortalHome extends React.Component {
     this.state = {
       reviews: []
     }
-  
+
      this.handleSingOut = this.handleSingOut.bind(this);
   }
 
@@ -42,12 +42,12 @@ class PortalHome extends React.Component {
   }
 
   likeOrDislike(status){
-  
+
     if(status === 1){
       return (LikeThumbIcon)
     }  else if(status === 0){
       return (DislikeThumbIcon)
-    } 
+    }
   }
 
   componentWillMount() {
@@ -94,7 +94,7 @@ class PortalHome extends React.Component {
           })
         })
       }
-      
+
     document.body.classList.remove('home');
     document.body.classList.add('portal'); //adding the correct background by setting the class of the body
   }
@@ -118,28 +118,28 @@ class PortalHome extends React.Component {
         <ul className="portalList">
           {this.state.reviews.map( r =>
             <li className="reviueHomeli" onClick={this.handleClick.bind(this)} key={r.id} id={r.id}>
-              
+
               <div className = "liHomeLeftside" id = {r.id}>
                 <div className = "liCourseHome" id = {r.id}>{this.subString(r.course_name)}</div>
                 <div className = "liHomeFooter" id = {r.id}>
-                  <div className = "liQlty" id = {r.id}> Quality <br /> 
+                  <div className = "liQlty" id = {r.id}> Quality <br />
                     <div className = "liNum" id = {r.id}> {r.quality}</div>
                   </div>
-                  <div className = "liDiff" id = {r.id}> Difficulty <br /> 
+                  <div className = "liDiff" id = {r.id}> Difficulty <br />
                     <div className = "liNum" id = {r.id}> {r.difficulty}</div>
                   </div>
-                  <div className = "liCred" id = {r.id}> Worth Credits <br /> 
+                  <div className = "liCred" id = {r.id}> Worth Credits <br />
                     <div className = "liNum" id = {r.id}> {r.worth_credits}</div>
                   </div>
                 </div>
               </div>
               <div className = "liHomeRightside" id = {r.id}>
-                <div className = "liRec" id = {r.id}>Recommended</div>
+                <div className = "liRec" id = {r.id}>Overall opinion</div>
                 <div className = "liLike" id = {r.id}><img src = { this.likeOrDislike(r.can_recommend) } className = "navIcon likeAndDislikeIcon"></img></div>
-                <div className = "liRead" id = {r.id} >Click to read more</div>  
+                <div className = "liRead" id = {r.id} >Click to read more</div>
               </div>
-              
-               
+
+
             </li>
           )}
         </ul>
