@@ -10,7 +10,7 @@ const fetchReviewsSpecific = (id, type, cb) => {
            'FROM review r ' +
            'inner join course c on c.id = r.course_id ' +
            'WHERE ' + type + ' = ? ' +
-           'ORDER BY r.id',
+           'ORDER BY r.date DESC',
       timeout: 40000, // 40s
       values: [id]
     }, function (error, results, fields) {
