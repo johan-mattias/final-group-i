@@ -35,10 +35,9 @@ class Login extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    // var email = this.state.email
-    // var pwd = this.state.password
-    var email = 'admin@reviuuer.se' // TODO remove this later
-    var pwd = 'admin'  // TODO remove this later
+    var email = this.state.email === '' ? this.state.email: 'admin@reviuuer.se' // TODO remove this later
+    var pwd = this.state.password === '' ? this.state.password : 'admin'  // TODO remove this later
+
     var fetchURL = `/api/auth?email=${email}&password=${pwd}`;
     fetch( fetchURL )
       .then(
