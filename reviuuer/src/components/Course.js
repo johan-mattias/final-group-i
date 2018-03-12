@@ -80,9 +80,9 @@ class Course extends React.Component{
     handleClick(e) {
     e.preventDefault();
     console.log("HANDLE CLICK")
-      // const id = e.target.id;
+      const id = e.target.id;
       // //TODO add so we remove the cookie
-      // this.props.history.push(`/portal/review?review_id=${id}`);
+      this.props.history.push(`/portal/course/${id}`);
     }
 
     subString(string){
@@ -115,9 +115,9 @@ class Course extends React.Component{
           <ul className = 'portalList'>
           {filteredCourses.map(c =>
             <li className="reviueHomeli" onClick={this.handleClick.bind(this)} key={c.id} id={c.id}>
-            <div className = "liLeftside">
-              <div className="liCourse">{this.subString(c.name)}</div>
-              <div className="liTeachForm">{c.distance ? "Distance course": "Campus"}</div>
+            <div className = "liLeftside" id = {c.id}>
+              <div className="liCourse" id = {c.id}>{this.subString(c.name)}</div>
+              <div className="liTeachForm" id = {c.id}>{c.distance ? "Distance course": "Campus"}</div>
               <div className = "liCourseFooter" id = {c.id}>
                   <div className = "liCred" id = {c.id}> Credits <br /> 
                     <div className = "liNum" id = {c.id}> {c.credits} </div>
@@ -130,10 +130,10 @@ class Course extends React.Component{
                   </div>
                 </div>
             </div>
-            <div className = "liRightside">
-              <div className="liAvgHeader"> Average score </div>
+            <div className = "liRightside" id = {c.id}>
+              <div className="liAvgHeader" id = {c.id}> Average score </div>
               {this.setStyle(c.averageRating)}
-              <Link to={`/portal/course/${c.id}`} className = "courseNavLink" >Click for more info</Link>
+              <div className = "liRead" id = {c.id}>Click for more info</div>
             </div>
             </li>
           )}
