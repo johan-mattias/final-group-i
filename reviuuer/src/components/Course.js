@@ -23,7 +23,7 @@ class Course extends React.Component{
       console.log("Wrong cookie ")
       this.props.history.push('/')
     }
-    var fetchURL = `/api/auth?cookie=${cookieFromUser}`;
+    var fetchURL = `:3001/api/auth?cookie=${cookieFromUser}`;
     fetch( fetchURL )
     .then(
         (res) => {
@@ -38,7 +38,7 @@ class Course extends React.Component{
             console.log(access)
             if (access === true) {
                console.log("correct cookie ")
-               fetch('/api/courses')
+               fetch(':3001/api/courses')
                .then((res) => {
                  if(res.status !== 200){
                   console.log('Looks like there was a problem. Status Code: ' +
@@ -59,7 +59,7 @@ class Course extends React.Component{
     document.body.classList.add('portal'); //adding the correct background by setting the class of the body
   }
 
-  
+
 
   setStyle(rating){
     if(rating < 2.5){
@@ -69,7 +69,7 @@ class Course extends React.Component{
     } else {
       return <div className= "liAvgScore orangestyle">{parseFloat(rating, 2).toFixed(2)}</div>;
     }
-    
+
   }
 
   searchClick(e){
@@ -119,13 +119,13 @@ class Course extends React.Component{
               <div className="liCourse" id = {c.id}>{this.subString(c.name)}</div>
               <div className="liTeachForm" id = {c.id}>{c.distance ? "Distance course": "Campus"}</div>
               <div className = "liCourseFooter" id = {c.id}>
-                  <div className = "liCred" id = {c.id}> Credits <br /> 
+                  <div className = "liCred" id = {c.id}> Credits <br />
                     <div className = "liNum" id = {c.id}> {c.credits} </div>
                   </div>
-                  <div className = "liPace" id = {c.id}> Pace <br /> 
+                  <div className = "liPace" id = {c.id}> Pace <br />
                     <div className = "liNum" id = {c.id}> {c.pace_of_study}% </div>
                   </div>
-                  <div className = "liSem" id = {c.id}> Semester <br /> 
+                  <div className = "liSem" id = {c.id}> Semester <br />
                     <div className = "liNum" id = {c.id}></div>
                   </div>
                 </div>

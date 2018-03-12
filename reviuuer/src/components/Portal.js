@@ -27,7 +27,7 @@ class Portal extends React.Component {
       this.props.history.push('/')
     }
     else{
-    var fetchURL = `/api/auth?cookie=${cookieFromUser}`;
+    var fetchURL = `:3001/api/auth?cookie=${cookieFromUser}`;
     fetch( fetchURL )
     .then(
         (res) => {

@@ -57,7 +57,7 @@ class Register extends Component {
     }
 
     else{
-      fetch('/api/reg', {
+      fetch(':3001/api/reg', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',

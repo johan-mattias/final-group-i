@@ -35,12 +35,12 @@ class CourseReviews extends React.Component {
   }
 
   likeOrDislike(status){
-  
+
     if(status === 1){
       return (thumbGreen)
     }  else if(status === 0){
       return (thumbRed)
-    } 
+    }
   }
 
   componentWillMount() {
@@ -52,7 +52,7 @@ class CourseReviews extends React.Component {
       console.log("Wrong cookie ")
       this.props.history.push('/')
     } else {
-    var fetchURL = `/api/auth?cookie=${cookieFromUser}`;
+    var fetchURL = `:3001/api/auth?cookie=${cookieFromUser}`;
     fetch( fetchURL )
     .then(
         (res) => {
@@ -67,7 +67,7 @@ class CourseReviews extends React.Component {
             console.log(access)
             if (access === true) {
                console.log("correct cookie ")
-                fetch('/api/reviews?course_id='  + this.state.courseID)
+                fetch(':3001/api/reviews?course_id='  + this.state.courseID)
                 .then((res) => {
                   if(res.status !== 200) {
                     console.log('Looks like there was a problem. Status Code: ' +
@@ -78,7 +78,7 @@ class CourseReviews extends React.Component {
                   console.log(res)
                   console.log('RESULT');
                   res.json()
-                    .then(reviews => 
+                    .then(reviews =>
                       {this.setState({ reviews, headerText:reviews[0].course_name })});
                   }) // TODO: WILL CRASH IF COURSE HAVE NO COMMENTS
               } else {
@@ -88,7 +88,7 @@ class CourseReviews extends React.Component {
           })
         })
       }
-      
+
     document.body.classList.remove('home');
     document.body.classList.add('portal'); //adding the correct background by setting the class of the body
   }
@@ -108,23 +108,23 @@ class CourseReviews extends React.Component {
       <div className="portal">
       <div className='header'>
         <img onClick={()=> {this.props.history.push('/portal/course');} } src={backArrow} className="backArrow" />
-        
+
         <h1 className="headerText courseReviewHeader">{this.state.headerText}</h1>
         </div>
         <ul className="portalList">
           {this.state.reviews.map( r =>
             <li className="reviueHomeli" onClick={this.handleClick.bind(this)} key={r.id} id={r.id}>
-              
+
               <div className = "liHomeLeftside" id = {r.id}>
                 <div className = "liCourseHome" id = {r.id}>{this.subString(r.course_name)}</div>
                 <div className = "liHomeFooter" id = {r.id}>
-                  <div className = "liQlty" id = {r.id}> Quality <br /> 
+                  <div className = "liQlty" id = {r.id}> Quality <br />
                     <div className = "liNum" id = {r.id}> {r.quality}</div>
                   </div>
-                  <div className = "liDiff" id = {r.id}> Difficulty <br /> 
+                  <div className = "liDiff" id = {r.id}> Difficulty <br />
                     <div className = "liNum" id = {r.id}> {r.difficulty}</div>
                   </div>
-                  <div className = "liCred" id = {r.id}> Worth Credits <br /> 
+                  <div className = "liCred" id = {r.id}> Worth Credits <br />
                     <div className = "liNum" id = {r.id}> {r.worth_credits}</div>
                   </div>
                 </div>
@@ -132,10 +132,10 @@ class CourseReviews extends React.Component {
               <div className = "liHomeRightside" id = {r.id}>
                 <div className = "liRec" id = {r.id}>Recommended</div>
                 <div className = "liLike" id = {r.id}><img src = { this.likeOrDislike(r.can_recommend) } className = "navIcon likeAndDislikeIcon"></img></div>
-                <div className = "liRead" id = {r.id} >Click to read more</div>  
+                <div className = "liRead" id = {r.id} >Click to read more</div>
               </div>
-              
-               
+
+
             </li>
           )}
         </ul>
