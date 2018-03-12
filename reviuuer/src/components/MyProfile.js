@@ -4,6 +4,13 @@ import Cookies from "universal-cookie";
 import Footer from './Footer';
 import '../Style/Portal.css';
 
+import space_dolphin from "../img/space_dolphin.jpg";
+
+var sectionStyle = {
+  width: "100%",
+  height: "700px",
+  backgroundImage: `url(${space_dolphin})`
+}
 class MyProfile extends React.Component{
   constructor(props) {
     super(props);
@@ -71,12 +78,14 @@ class MyProfile extends React.Component{
   render() {
     console.log(this.state.courses);
     return (
-      <div className="portal">
-          <div className = "signOutContainer">
-            <button className="signOut" onClick={this.handleSingOut}>SIGN OUT</button>
-          </div>
-        <Footer/>
-      </div>
+      <section style={ sectionStyle }>
+        <div className="portal">
+            <div className = "signOutContainer">
+              <button className="signOut" onClick={this.handleSingOut}>SIGN OUT</button>
+            </div>
+          <Footer/>
+        </div>
+      </section>
     )
   }
 }
