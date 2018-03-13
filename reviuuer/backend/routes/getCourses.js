@@ -18,7 +18,6 @@ const fetchCourses = (cb) => {
       if(error) console.error(error);
 
       cb(error, results);
-      console.log(results);
       return;
     });
   });
