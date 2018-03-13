@@ -58,7 +58,18 @@ class PortalAddReview extends React.Component {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            ...this.state
+          user_id: this.state.user_id,
+          course_id: this.state.course_id,
+          teacher_name: this.state.teacher_name,
+          quality: this.state.quality,
+          difficulty: this.state.difficulty,
+          can_recommend: this.state.can_recommend,
+          worth_credits: this.state.worth_credits,
+          books_req: this.state.books_req,
+          percentage_mand: this.state.percentage_mand,
+          exam: this.state.exam,
+          course_review: this.state.course_review,
+          teacher_review: this.state.teacher_review
         })
     }).then(this.context.router.history.goBack())
 
