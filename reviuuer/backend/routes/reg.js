@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-var secretJWT = '@Q4&SuqQegjJwUkQy@rMNW2@hetjsZwKgs&@guV^MvG^$tbrvN34GKn^D#Mz5^cmrHzjWbvF$YqQzy6Mr'
+var secretJWT = process.env.JWT_SECRET;
 var jwt  = require('jsonwebtoken');
 
 function generateToken(username, email, admin, access){
