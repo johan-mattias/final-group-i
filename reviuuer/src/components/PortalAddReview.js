@@ -46,7 +46,7 @@ class PortalAddReview extends React.Component {
     percentage_mand: '',
     exam: '',
     course_review: '',
-    teacher_review: '',
+    teacher_review: 'NA',
   }
 
   handleSubmit(event) {
@@ -282,9 +282,6 @@ class PortalAddReview extends React.Component {
           <hr className="review"/>
           <h2 className="attributesStyle">Course review: </h2>
           <textarea cols="40" rows="5" className="text-review" placeholder="Write course review here..." value={this.state.course_review} onChange={(event) => this.setState({course_review: event.target.value})} />
-
-          <h2 className="attributesStyle">Teacher review: </h2>
-          <textarea cols="40" rows="5" className="text-review" placeholder="Write teacher review here..." value={this.state.teacher_review} onChange={(event) => this.setState({teacher_review: event.target.value})} />
 
           <input className="comment-submit" type="submit" value="SUBMIT" />
         </form>

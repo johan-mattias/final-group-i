@@ -241,11 +241,10 @@ class PortalReview extends React.Component {
         {review.can_recommend ?
           <img src={thumbGreen} className="thumb" /> :
           <img src={thumbRed} className="thumb" />}
-        <hr className="review"/>
+
         <h2 className="attributesStyle">Course review: </h2>
         <p className="reviewText">{review.course_review}</p>
-        <h2 className="attributesStyle">Teacher review: </h2>
-        <p className="reviewText">{review.teacher_review}</p>
+
         <hr className="review"/>
         <div className="user-comments-container margin">
           <h2 className="attributesStyle user-comments">User comments</h2>
