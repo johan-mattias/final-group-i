@@ -50,7 +50,7 @@ class PortalAddReview extends React.Component {
 
   handleSubmit(event) {
     console.log(this.state);
-    fetch(':3001/api/addreview', {
+    fetch('http://reviuuer.se/:3001/api/addreview', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -72,7 +72,7 @@ class PortalAddReview extends React.Component {
   }
 
   fetchCourses() {
-    let fetchURL = `:3001/api/courses?all_courses=1`;
+    let fetchURL = `http://reviuuer.se/:3001/api/courses?all_courses=1`;
     fetch( fetchURL )
       .then((res) => {
         if(res.status !== 200) {
@@ -101,7 +101,7 @@ class PortalAddReview extends React.Component {
       console.log("Wrong cookie ")
       this.props.history.push('/')
     } else {
-    var fetchURL = `:3001/api/auth?cookie=${cookieFromUser}`;
+    var fetchURL = `http://reviuuer.se/:3001/api/auth?cookie=${cookieFromUser}`;
     fetch( fetchURL )
     .then(
       (res) => {
@@ -124,7 +124,7 @@ class PortalAddReview extends React.Component {
             document.body.classList.add('portal'); //adding the correct background by setting the class of the body
 
 
-            var fetchURLUser = `:3001/api/user?email=${json.user_email}`;
+            var fetchURLUser = `http://reviuuer.se/:3001/api/user?email=${json.user_email}`;
             fetch( fetchURLUser )
               .then(res => {
                 if(res.status !== 200) {
