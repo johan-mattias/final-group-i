@@ -14,7 +14,6 @@ const {
     SL_DB_PORT = exitWithMessage("Missing SL_DB_PORT"),
     SL_DB_MULTIPLE_STATEMENTS = "false",
     SL_DB_FORCE = "false",
-    SL_SECRET = exitWithMessage("Missing SL_SECRET"),
   } = process.env;
 
 var config = {
