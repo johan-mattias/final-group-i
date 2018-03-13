@@ -2,6 +2,9 @@ import React from 'react';
 import {ReactDOM, BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import Cookies from "universal-cookie";
 import {withRouter} from "react-router-dom";
+
+import config from '../config';
+
 import 'typeface-roboto';
 import '../Style/Button.css';
 import '../Style/App.css';
@@ -38,7 +41,7 @@ class Login extends React.Component {
     var email = this.state.email !== '' ? this.state.email: 'admin@reviuuer.se' // TODO remove this later
     var pwd = this.state.password !== '' ? this.state.password : 'admin'  // TODO remove this later
 
-    var fetchURL = `http://reviuuer.se:3001/api/auth?email=${email}&password=${pwd}`;
+    var fetchURL = `https://reviuuer.se:3001/api/auth?email=${email}&password=${pwd}`;
     fetch( fetchURL )
       .then(
         (res) => {

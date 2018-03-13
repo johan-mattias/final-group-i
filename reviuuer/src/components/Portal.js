@@ -11,6 +11,7 @@ import Course from './Course.js';
 import myProfile from './MyProfile.js'
 import PortalAddReview from './PortalAddReview.js';
 import CourseReviews from './CourseReviews.js';
+import config from '../config';
 
 class Portal extends React.Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class Portal extends React.Component {
       this.props.history.push('/')
     }
     else{
-    var fetchURL = `http://reviuuer.se:3001/api/auth?cookie=${cookieFromUser}`;
+    var fetchURL = `https://reviuuer.se:3001/api/auth?cookie=${cookieFromUser}`;
     fetch( fetchURL )
     .then(
         (res) => {

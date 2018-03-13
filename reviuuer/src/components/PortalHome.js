@@ -7,6 +7,7 @@ import {withRouter} from "react-router-dom";
 import Footer from './Footer';
 import Home from './Home.js';
 import Course from './Course.js';
+import config from '../config';
 
 import LikeThumbIcon from '../img/thumb_green.png'
 import DislikeThumbIcon from '../img/thumb_red.png'
@@ -59,7 +60,7 @@ class PortalHome extends React.Component {
       console.log("Wrong cookie ")
       this.props.history.push('/')
     } else {
-    var fetchURL = `http://reviuuer.se:3001/api/auth?cookie=${cookieFromUser}`;
+    var fetchURL = `https://reviuuer.se:3001/api/auth?cookie=${cookieFromUser}`;
     fetch( fetchURL )
     .then(
         (res) => {
@@ -74,7 +75,7 @@ class PortalHome extends React.Component {
             console.log(access)
             if (access === true) {
                console.log("correct cookie ")
-                fetch('http://reviuuer.se:3001/api/reviews')
+                fetch(`https://reviuuer.se:3001/api/reviews`)
                 .then((res) => {
                   if(res.status !== 200) {
                     console.log('Looks like there was a problem. Status Code: ' +

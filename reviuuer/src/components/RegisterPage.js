@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import {ReactDOM, BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import Cookies from "universal-cookie";
+
+import config from '../config';
+
 import '../Style/Button.css';
 import 'typeface-roboto';
 
@@ -57,7 +60,7 @@ class Register extends Component {
     }
 
     else{
-      fetch('http://reviuuer.se:3001/api/reg', {
+      fetch(`https://reviuuer.se:3001/api/reg`, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
