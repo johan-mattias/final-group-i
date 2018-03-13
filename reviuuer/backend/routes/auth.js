@@ -7,13 +7,12 @@ var mysqlConf = require('../config.js').mysql_pool;
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-var secretJWT = '@Q4&SuqQegjJwUkQy@rMNW2@hetjsZwKgs&@guV^MvG^$tbrvN34GKn^D#Mz5^cmrHzjWbvF$YqQzy6Mr'
 var jwt  = require('jsonwebtoken');
-// var secret = process.env.JWT_SECRET // use this later and set enviormental variable when we run node
+var secretJWT = process.env.JWT_SECRET
 
 session = require('express-session');
 app.use(session({
-    secret: '2C44-4D44-WppQ38S',
+    secret: process.env.HASH_SECRET,
     resave: true,
     saveUninitialized: true
 }));
