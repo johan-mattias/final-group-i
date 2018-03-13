@@ -7,24 +7,24 @@ const exitWithMessage = (msg) => {
 
 const {
     NODE_ENV = exitWithMessage("Missing NODE_ENV"),
-    SL_DB_HOST = exitWithMessage("Missing SL_DB_HOST"),
-    SL_DB_USER = exitWithMessage("Missing SL_DB_USER"),
-    SL_DB_PASSWORD = exitWithMessage("Missing SL_DB_PASSWORD"),
-    SL_DB_DATABASE = exitWithMessage("Missing SL_DB_DATABASE"),
-    SL_DB_PORT = exitWithMessage("Missing SL_DB_PORT"),
-    SL_DB_MULTIPLE_STATEMENTS = "false",
-    SL_DB_FORCE = "false",
+    DB_HOST = exitWithMessage("Missing DB_HOST"),
+    DB_USER = exitWithMessage("Missing DB_USER"),
+    DB_PASSWORD = exitWithMessage("Missing DB_PASSWORD"),
+    DB_DATABASE = exitWithMessage("Missing DB_DATABASE"),
+    DB_PORT = exitWithMessage("Missing DB_PORT"),
+    DB_MULTIPLE_STATEMENTS = "false",
+    DB_FORCE = "false",
   } = process.env;
 
 var config = {
     mysql_pool : mysql.createPool({
-        host: SL_DB_HOST,
-        user: SL_DB_USER,
-        password: SL_DB_PASSWORD,
-        database: SL_DB_DATABASE,
-        port: SL_DB_PORT,
-        multipleStatements: SL_DB_MULTIPLE_STATEMENTS === "true",
-        force: SL_DB_FORCE === "true",
+        host: DB_HOST,
+        user: DB_USER,
+        password: DB_PASSWORD,
+        database: DB_DATABASE,
+        port: DB_PORT,
+        multipleStatements: DB_MULTIPLE_STATEMENTS === "true",
+        force: DB_FORCE === "true",
     })
 };
 
