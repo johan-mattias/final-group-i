@@ -38,7 +38,7 @@ class Login extends React.Component {
     var email = this.state.email !== '' ? this.state.email: 'admin@reviuuer.se' // TODO remove this later
     var pwd = this.state.password !== '' ? this.state.password : 'admin'  // TODO remove this later
 
-    var fetchURL = `:3001/api/auth?email=${email}&password=${pwd}`;
+    var fetchURL = `http://reviuuer.se:3001/api/auth?email=${email}&password=${pwd}`;
     fetch( fetchURL )
       .then(
         (res) => {

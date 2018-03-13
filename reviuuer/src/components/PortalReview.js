@@ -56,7 +56,7 @@ class PortalReview extends React.Component {
     var comment = this.state.newComment;
     var review_id = qs.parse(this.props.location.search).review_id;
 
-    var fetchURLUser = `http://reviuuer.se/:3001/api/user?email=${email}`;
+    var fetchURLUser = `http://reviuuer.se:3001/api/user?email=${email}`;
     fetch( fetchURLUser )
       .then(res => {
         if(res.status !== 200) {
@@ -68,7 +68,7 @@ class PortalReview extends React.Component {
           .then(data => {
             const user = data[0]
 
-            var fetchURLComment = `http://reviuuer.se/:3001/api/addcomment`
+            var fetchURLComment = `http://reviuuer.se:3001/api/addcomment`
             fetch(fetchURLComment, {
               method: 'POST',
               headers: {
@@ -90,7 +90,7 @@ class PortalReview extends React.Component {
   fetchComments() {
     const review_id = qs.parse(this.props.location.search).review_id;
 
-    let fetchURLcomment = `http://reviuuer.se/:3001/api/comments?review_id=${review_id}`;
+    let fetchURLcomment = `http://reviuuer.se:3001/api/comments?review_id=${review_id}`;
     fetch( fetchURLcomment )
       .then((res) => {
         if(res.status !== 200) {
@@ -118,7 +118,7 @@ class PortalReview extends React.Component {
       console.log("Wrong cookie ")
       this.props.history.push('/')
     } else {
-    var fetchURL = `http://reviuuer.se/:3001/api/auth?cookie=${cookieFromUser}`;
+    var fetchURL = `http://reviuuer.se:3001/api/auth?cookie=${cookieFromUser}`;
     fetch( fetchURL )
     .then(
       (res) => {
@@ -138,7 +138,7 @@ class PortalReview extends React.Component {
 
             const review_id = qs.parse(this.props.location.search).review_id;
 
-            let fetchURLreview = `http://reviuuer.se/:3001/api/reviews?review_id=${review_id}`;
+            let fetchURLreview = `http://reviuuer.se:3001/api/reviews?review_id=${review_id}`;
             fetch( fetchURLreview )
               .then((res) => {
                 if(res.status !== 200) {
