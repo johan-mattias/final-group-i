@@ -1,5 +1,10 @@
 var mysql = require('mysql');
 
+const exitWithMessage = (msg) => {
+    console.log(`\n\n${msg}\n\n`);
+    process.exit(1);
+  }
+
 const {
     NODE_ENV = exitWithMessage("Missing NODE_ENV"),
     SL_DB_HOST = exitWithMessage("Missing SL_DB_HOST"),
