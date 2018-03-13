@@ -96,6 +96,16 @@ class Course extends React.Component{
       }
     }
 
+  language(language) {
+    if(language === 'Svenska') {
+      return('in Swedish');
+    } else if(language === 'Engelska') {
+      return('in English');
+    } else if(language === 'EvEngelska') {
+      return('possibly in English')
+    }
+  }
+
   render() {
     let filteredCourses = this.state.courses.filter(
       (course) => {
@@ -118,7 +128,7 @@ class Course extends React.Component{
             <li className="reviueHomeli" onClick={this.handleClick.bind(this)} key={c.id} id={c.id}>
             <div className = "liLeftside" id = {c.id}>
               <div className="liCourse" id = {c.id}>{this.subString(c.name)}</div>
-              <div className="liTeachForm" id = {c.id}>{c.distance ? "Distance course": "Campus"}</div>
+              <div className="liTeachForm" id = {c.id}>{c.distance ? "Distance course": c.location}, {this.language(c.course_language)}</div>
               <div className = "liCourseFooter" id = {c.id}>
                   <div className = "liCred" id = {c.id}> Credits <br />
                     <div className = "liNum" id = {c.id}> {c.credits} </div>
@@ -127,7 +137,7 @@ class Course extends React.Component{
                     <div className = "liNum" id = {c.id}> {c.pace_of_study}% </div>
                   </div>
                   <div className = "liSem" id = {c.id}> Semester <br />
-                    <div className = "liNum" id = {c.id}></div>
+                    <div className = "liNum" id = {c.id}> {c.period} </div>
                   </div>
                 </div>
             </div>
