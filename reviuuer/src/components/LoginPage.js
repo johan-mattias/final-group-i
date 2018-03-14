@@ -41,7 +41,7 @@ class Login extends React.Component {
     var email = this.state.email;
     var pwd = this.state.password;
 
-    var fetchURL = `https://reviuuer.se:3001/api/auth?email=${email}&password=${pwd}`;
+    var fetchURL = `http://reviuuer.se:3001/api/auth?email=${email}&password=${pwd}`;
     fetch( fetchURL )
       .then(
         (res) => {

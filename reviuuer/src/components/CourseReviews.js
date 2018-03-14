@@ -53,7 +53,7 @@ class CourseReviews extends React.Component {
       console.log("Wrong cookie ")
       this.props.history.push('/')
     } else {
-    var fetchURL = `https://reviuuer.se:3001/api/auth?cookie=${cookieFromUser}`;
+    var fetchURL = `http://reviuuer.se:3001/api/auth?cookie=${cookieFromUser}`;
     fetch( fetchURL )
     .then(
         (res) => {
@@ -68,7 +68,7 @@ class CourseReviews extends React.Component {
             console.log(access)
             if (access === true) {
                console.log("correct cookie ")
-                fetch(`https://reviuuer.se:3001/api/reviews?course_id=${this.state.courseID}`)
+                fetch(`http://reviuuer.se:3001/api/reviews?course_id=${this.state.courseID}`)
                 .then((res) => {
                   if(res.status !== 200) {
                     console.log('Looks like there was a problem. Status Code: ' +
