@@ -60,7 +60,7 @@ class Register extends Component {
     }
 
     else{
-      fetch(`http://reviuuer.se:3001/api/reg`, {
+      fetch(`http://localhost:3001/api/reg`, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
