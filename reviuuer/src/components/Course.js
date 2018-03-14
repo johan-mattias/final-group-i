@@ -106,6 +106,18 @@ class Course extends React.Component{
     }
   }
 
+  location(l) {
+    if(l == 'Flexibel') {
+      return('Flexible');
+    } else if(l == 'Kina') {
+      return('China');
+    } else if(l == 'Indien') {
+      return('India');
+    } else {
+      return(l);
+    }
+  }
+
   render() {
     let filteredCourses = this.state.courses.filter(
       (course) => {
@@ -128,7 +140,7 @@ class Course extends React.Component{
             <li className="reviueHomeli" onClick={this.handleClick.bind(this)} key={c.id} id={c.id}>
             <div className = "liLeftside" id = {c.id}>
               <div className="liCourse" id = {c.id}>{this.subString(c.name)}</div>
-              <div className="liTeachForm" id = {c.id}>{c.distance ? "Distance course": c.location}, {this.language(c.course_language)}</div>
+              <div className="liTeachForm" id = {c.id}>{c.distance ? "Distance course": this.location(c.location)}, {this.language(c.course_language)}</div>
               <div className = "liCourseFooter" id = {c.id}>
                   <div className = "liCred" id = {c.id}> Credits <br />
                     <div className = "liNum" id = {c.id}> {c.credits} </div>

@@ -15,7 +15,7 @@ CREATE TABLE reviuuer.course (
 	pace_of_study int,
 	period ENUM('Sommar', 'VT', 'HT'),
 	distance bool,
-	location ENUM('Uppsala', 'Gotland', 'Flexibel', 'Kina'),
+	location ENUM('Uppsala', 'Gotland', 'Flexibel', 'Kina', 'Indien', 'Västerås', 'Sundsvall', 'Lysekil', 'Stockholm'),
 	course_language ENUM('Engelska', 'Svenska', 'EvEngelska'),
     credits FLOAT(3,1),
 
